@@ -1,0 +1,1133 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Contact Us | Crime Reporting System</title><style>
+
+/* ================= RESET ================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+
+/* ================= BODY ================= */
+
+body{
+    min-height:100vh;
+
+    background:
+    radial-gradient(circle at top left,#123c70,transparent 35%),
+    radial-gradient(circle at bottom right,#064c78,transparent 35%),
+    #061326;
+
+    color:white;
+}
+
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+
+    width:250px;
+    height:100vh;
+
+    padding:25px 18px;
+
+    background:rgba(5,20,42,.92);
+
+    border-right:1px solid rgba(255,255,255,.10);
+
+    backdrop-filter:blur(15px);
+
+    z-index:100;
+}
+
+
+/* ================= LOGO ================= */
+
+.logo{
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    padding:10px;
+
+    margin-bottom:35px;
+}
+
+.logo-icon{
+    width:45px;
+    height:45px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:13px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00b7ff,
+        #0055ff
+    );
+
+    font-weight:bold;
+    font-size:17px;
+
+    box-shadow:
+    0 8px 25px rgba(0,120,255,.3);
+}
+
+.logo-text{
+    font-size:17px;
+    font-weight:bold;
+}
+
+.logo-text span{
+    color:#36bdff;
+}
+
+
+/* ================= MENU ================= */
+
+.menu-title{
+    color:#71849d;
+
+    font-size:11px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+    padding:0 12px;
+
+    margin-bottom:12px;
+}
+
+.menu{
+    list-style:none;
+}
+
+.menu li{
+    margin:7px 0;
+}
+
+.menu a{
+    display:flex;
+
+    align-items:center;
+
+    gap:13px;
+
+    padding:13px 14px;
+
+    border-radius:11px;
+
+    text-decoration:none;
+
+    color:#aebdd0;
+
+    font-size:14px;
+
+    transition:.3s;
+}
+
+.menu a:hover,
+.menu a.active{
+
+    color:white;
+
+    background:
+    linear-gradient(
+        90deg,
+        rgba(0,130,255,.25),
+        rgba(0,130,255,.08)
+    );
+
+    border-left:3px solid #16aaff;
+}
+
+.icon{
+    width:22px;
+
+    text-align:center;
+
+    font-size:16px;
+}
+
+
+/* ================= LOGOUT ================= */
+
+.logout{
+    position:absolute;
+
+    left:18px;
+    right:18px;
+
+    bottom:25px;
+}
+
+.logout a{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:13px;
+
+    border-radius:11px;
+
+    color:#ff8b8b;
+
+    text-decoration:none;
+
+    background:
+    rgba(255,70,70,.06);
+
+    transition:.3s;
+}
+
+.logout a:hover{
+    background:
+    rgba(255,70,70,.12);
+}
+
+
+/* ================= MAIN ================= */
+
+.main{
+    margin-left:250px;
+
+    padding:30px;
+
+    min-height:100vh;
+}
+
+
+/* ================= TOP BAR ================= */
+
+.topbar{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+}
+
+.welcome h1{
+    font-size:28px;
+
+    margin-bottom:7px;
+}
+
+.welcome p{
+    color:#9fb0c5;
+
+    font-size:14px;
+}
+
+.back-btn{
+    display:inline-block;
+
+    padding:10px 16px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    color:white;
+
+    background:
+    rgba(0,130,255,.15);
+
+    border:
+    1px solid rgba(0,170,255,.25);
+
+    font-size:13px;
+
+    transition:.3s;
+}
+
+.back-btn:hover{
+    background:
+    rgba(0,130,255,.28);
+}
+
+
+/* ================= CONTACT GRID ================= */
+
+.contact-grid{
+    display:grid;
+
+    grid-template-columns:1fr 1.5fr;
+
+    gap:20px;
+}
+
+
+/* ================= CARD ================= */
+
+.card{
+    background:
+    rgba(255,255,255,.07);
+
+    border:
+    1px solid rgba(255,255,255,.10);
+
+    border-radius:18px;
+
+    padding:25px;
+
+    backdrop-filter:blur(10px);
+}
+
+.card h2{
+    font-size:19px;
+
+    margin-bottom:8px;
+}
+
+.card-description{
+    color:#8fa1b6;
+
+    font-size:12px;
+
+    line-height:1.6;
+
+    margin-bottom:22px;
+}
+
+
+/* ================= CONTACT INFO ================= */
+
+.contact-item{
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:15px;
+
+    margin-bottom:12px;
+
+    border-radius:13px;
+
+    background:
+    rgba(0,0,0,.15);
+
+    border:
+    1px solid rgba(255,255,255,.07);
+}
+
+.contact-icon{
+    width:43px;
+    height:43px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:12px;
+
+    background:
+    rgba(0,140,255,.15);
+
+    font-size:19px;
+}
+
+.contact-item h3{
+    font-size:13px;
+
+    margin-bottom:4px;
+}
+
+.contact-item p{
+    color:#91a3b8;
+
+    font-size:11px;
+}
+
+
+/* ================= FORM ================= */
+
+.form-group{
+    margin-bottom:17px;
+}
+
+.form-group label{
+    display:block;
+
+    color:#b9c7d8;
+
+    font-size:12px;
+
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group textarea{
+
+    width:100%;
+
+    padding:13px;
+
+    border-radius:10px;
+
+    outline:none;
+
+    border:
+    1px solid rgba(255,255,255,.10);
+
+    background:
+    rgba(0,0,0,.18);
+
+    color:white;
+
+    font-size:13px;
+
+    transition:.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus{
+
+    border-color:#16aaff;
+
+    box-shadow:
+    0 0 0 2px rgba(22,170,255,.08);
+}
+
+.form-group textarea{
+    min-height:130px;
+
+    resize:vertical;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder{
+    color:#65788f;
+}
+
+
+/* ================= SEND BUTTON ================= */
+
+.send-btn{
+    width:100%;
+
+    padding:13px;
+
+    border:none;
+
+    border-radius:11px;
+
+    cursor:pointer;
+
+    color:white;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00aaff,
+        #0055ff
+    );
+
+    transition:.3s;
+}
+
+.send-btn:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 8px 25px rgba(0,100,255,.25);
+}
+
+
+/* ================= EMERGENCY ================= */
+
+.emergency{
+    margin-top:20px;
+}
+
+.emergency-grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:12px;
+}
+
+.emergency-box{
+    text-align:center;
+
+    padding:18px 8px;
+
+    border-radius:13px;
+
+    background:
+    rgba(255,255,255,.04);
+
+    border:
+    1px solid rgba(255,255,255,.07);
+}
+
+.emergency-box strong{
+    display:block;
+
+    color:#ff7777;
+
+    font-size:20px;
+
+    margin-bottom:5px;
+}
+
+.emergency-box span{
+    color:#9eafc2;
+
+    font-size:10px;
+}
+
+
+/* ================= FOOTER NOTE ================= */
+
+.note{
+    margin-top:20px;
+
+    padding:17px;
+
+    border-radius:14px;
+
+    background:
+    rgba(255,193,7,.06);
+
+    border:
+    1px solid rgba(255,193,7,.15);
+}
+
+.note h3{
+    color:#ffd45c;
+
+    font-size:14px;
+
+    margin-bottom:7px;
+}
+
+.note p{
+    color:#aebdd0;
+
+    font-size:11px;
+
+    line-height:1.6;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:900px){
+
+    .contact-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+
+@media(max-width:700px){
+
+    .sidebar{
+        position:relative;
+
+        width:100%;
+        height:auto;
+
+        border-right:none;
+
+        border-bottom:
+        1px solid rgba(255,255,255,.10);
+    }
+
+    .logout{
+        position:relative;
+
+        left:auto;
+        right:auto;
+        bottom:auto;
+
+        margin-top:20px;
+    }
+
+    .main{
+        margin-left:0;
+
+        padding:20px;
+    }
+
+    .topbar{
+        gap:15px;
+
+        align-items:flex-start;
+    }
+
+}
+
+
+@media(max-width:480px){
+
+    .welcome h1{
+        font-size:23px;
+    }
+
+    .back-btn{
+        font-size:11px;
+
+        padding:9px 12px;
+    }
+
+    .emergency-grid{
+        grid-template-columns:
+        repeat(3,1fr);
+    }
+
+}
+
+</style></head><body><!-- =====================================================
+                         SIDEBAR
+===================================================== --><aside class="sidebar"><!-- LOGO -->
+
+<div class="logo">
+
+    <div class="logo-icon">
+        CR
+    </div>
+
+    <div class="logo-text">
+        Crime <span>Reporting</span>
+    </div>
+
+</div>
+
+
+<div class="menu-title">
+    Main Menu
+</div>
+
+
+<ul class="menu">
+
+
+    <li>
+
+        <a href="Dashboard.html">
+
+            <span class="icon">
+                🏠
+            </span>
+
+            Dashboard
+
+        </a>
+
+    </li>
+
+
+    <li>
+
+        <a href="Report.html">
+
+            <span class="icon">
+                🚨
+            </span>
+
+            Report Crime
+
+        </a>
+
+    </li>
+
+
+    <li>
+
+        <a href="Status.html">
+
+            <span class="icon">
+                📊
+            </span>
+
+            Complaint Status
+
+        </a>
+
+    </li>
+
+
+    <li>
+
+        <a href="My_complaint.html">
+
+            <span class="icon">
+                📋
+            </span>
+
+            My Complaint
+
+        </a>
+
+    </li>
+
+
+    <li>
+
+        <a href="My_profile.html">
+
+            <span class="icon">
+                👤
+            </span>
+
+            My Profile
+
+        </a>
+
+    </li>
+
+
+    <li>
+
+        <a href=.Contact.htmll"
+           class="active">
+
+            <span class="icon">
+                📞
+            </span>
+
+            Contact Us
+
+        </a>
+
+    </li>
+
+
+    <li>
+
+        <a href="About_us.html">
+
+            <span class="icon">
+                ℹ️
+            </span>
+
+            About Us
+
+        </a>
+
+    </li>
+
+
+</ul>
+
+
+<!-- LOGOUT -->
+
+<div class="logout">
+
+    <a href="Signup.html">
+
+        <span>
+            🚪
+        </span>
+
+        Logout
+
+    </a>
+
+</div>
+
+</aside><!-- =====================================================
+                          MAIN
+===================================================== --><main class="main"><!-- TOP BAR -->
+
+<div class="topbar">
+
+
+    <div class="welcome">
+
+        <h1>
+            Contact Us 📞
+        </h1>
+
+        <p>
+            Need help? Our support team is here to assist you.
+        </p>
+
+    </div>
+
+
+    <a href="Dashboard.html"
+       class="back-btn">
+
+        ← Dashboard
+
+    </a>
+
+
+</div>
+
+
+
+<!-- =====================================================
+                    CONTACT CONTENT
+===================================================== -->
+
+<div class="contact-grid">
+
+
+    <!-- ================= LEFT ================= -->
+
+    <div>
+
+
+        <div class="card">
+
+            <h2>
+                Get In Touch
+            </h2>
+
+            <p class="card-description">
+
+                If you have any questions, technical issues,
+                or need assistance with the crime reporting
+                system, you can contact us using the information
+                below.
+
+            </p>
+
+
+            <!-- EMAIL -->
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    📧
+                </div>
+
+                <div>
+
+                    <h3>
+                        Email Support
+                    </h3>
+
+                    <p>
+                        support@crimereporting.in
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    📞
+                </div>
+
+                <div>
+
+                    <h3>
+                        Support Helpline
+                    </h3>
+
+                    <p>
+                        1800-XXX-XXXX
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- LOCATION -->
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    📍
+                </div>
+
+                <div>
+
+                    <h3>
+                        Office
+                    </h3>
+
+                    <p>
+                        Crime Reporting System
+                        Support Centre, India
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- WORKING HOURS -->
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    🕐
+                </div>
+
+                <div>
+
+                    <h3>
+                        Support Hours
+                    </h3>
+
+                    <p>
+                        Monday - Saturday | 9:00 AM - 6:00 PM
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- EMERGENCY -->
+
+        <div class="card emergency">
+
+
+            <div class="card-header">
+
+                <h2>
+                    🚨 Emergency Numbers
+                </h2>
+
+            </div>
+
+
+            <div class="emergency-grid">
+
+
+                <div class="emergency-box">
+
+                    <strong>
+                        112
+                    </strong>
+
+                    <span>
+                        Police
+                    </span>
+
+                </div>
+
+
+                <div class="emergency-box">
+
+                    <strong>
+                        108
+                    </strong>
+
+                    <span>
+                        Ambulance
+                    </span>
+
+                </div>
+
+
+                <div class="emergency-box">
+
+                    <strong>
+                        101
+                    </strong>
+
+                    <span>
+                        Fire
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= RIGHT ================= -->
+
+    <div class="card">
+
+
+        <h2>
+            Send Us a Message
+        </h2>
+
+        <p class="card-description">
+
+            Fill out the form below and our support team
+            will get back to you.
+
+        </p>
+
+
+        <form
+            onsubmit="sendMessage(event)">
+
+
+            <!-- NAME -->
+
+            <div class="form-group">
+
+                <label>
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your name"
+                    required>
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label>
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required>
+
+            </div>
+
+
+            <!-- SUBJECT -->
+
+            <div class="form-group">
+
+                <label>
+                    Subject
+                </label>
+
+                <input
+                    type="text"
+                    id="subject"
+                    placeholder="Enter message subject"
+                    required>
+
+            </div>
+
+
+            <!-- MESSAGE -->
+
+            <div class="form-group">
+
+                <label>
+                    Message
+                </label>
+
+                <textarea
+                    id="message"
+                    placeholder="Write your message here..."
+                    required></textarea>
+
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <button
+                type="submit"
+                class="send-btn">
+
+                Send Message
+
+            </button>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+                      SAFETY NOTE
+===================================================== -->
+
+<div class="note">
+
+    <h3>
+        ⚠️ Important
+    </h3>
+
+    <p>
+
+        This contact form is intended for website support
+        and general assistance. For immediate danger or
+        emergency situations, please contact the appropriate
+        emergency service directly.
+
+    </p>
+
+</div>
+
+</main><!-- =====================================================
+                         JAVASCRIPT
+===================================================== --><script>
+
+function sendMessage(event){
+
+    event.preventDefault();
+
+    const name =
+        document.getElementById("name").value;
+
+    alert(
+        "Thank you " +
+        name +
+        "! Your message has been submitted."
+    );
+
+    document.querySelector("form").reset();
+
+}
+
+</script></body>
+</html>

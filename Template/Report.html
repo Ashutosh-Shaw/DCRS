@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Report Crime | Digital Crime Reporting System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                linear-gradient(rgba(3, 20, 45, 0.90),
+                rgba(3, 20, 45, 0.96)),
+                linear-gradient(135deg, #061a35, #0b315c);
+            color: #fff;
+        }
+
+        /* NAVBAR */
+        nav {
+            min-height: 75px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 7%;
+            background: rgba(4, 24, 48, 0.92);
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.25);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chakra {
+            width: 42px;
+            height: 42px;
+            border: 3px solid #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+        }
+
+        .logo-text h2 {
+            font-size: 18px;
+            color: #fff;
+        }
+
+        .logo-text p {
+            font-size: 11px;
+            color: #b7c9dc;
+            margin-top: 3px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 22px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            color: #dcecff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links .active {
+            color: #55b7ff;
+        }
+
+        .logout {
+            padding: 9px 17px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        /* MAIN */
+        .container {
+            width: 90%;
+            max-width: 950px;
+            margin: 45px auto;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .heading h1 {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .heading p {
+            color: #b8c9db;
+            font-size: 15px;
+        }
+
+        /* FORM CARD */
+        .form-card {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.13);
+            border-radius: 20px;
+            padding: 35px;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.28);
+        }
+
+        .section-title {
+            font-size: 19px;
+            color: #55b7ff;
+            margin-bottom: 22px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 14px;
+            color: #d9e7f5;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.16);
+            background: rgba(2,18,38,0.75);
+            color: #fff;
+            outline: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #55b7ff;
+            box-shadow: 0 0 0 3px rgba(85,183,255,0.10);
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #7890a8;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        select option {
+            background: #08213d;
+            color: #fff;
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        small {
+            color: #91a7bc;
+            font-size: 11px;
+            margin-top: 6px;
+        }
+
+        /* FILE UPLOAD */
+        .file-box {
+            padding: 18px;
+            border: 1px dashed rgba(85,183,255,0.5);
+            border-radius: 10px;
+            background: rgba(85,183,255,0.04);
+        }
+
+        .file-box input {
+            border: none;
+            padding: 5px 0;
+            background: transparent;
+        }
+
+        /* NOTICE */
+        .notice {
+            margin-top: 22px;
+            padding: 14px 15px;
+            border-radius: 9px;
+            background: rgba(255,193,7,0.08);
+            border: 1px solid rgba(255,193,7,0.20);
+            color: #d9e5f0;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        /* BUTTON */
+        .submit-area {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #087eea, #35b6ff);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 8px 25px rgba(0,126,234,0.25);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0,126,234,0.4);
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 50px;
+            color: #8196ab;
+            font-size: 12px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* MOBILE */
+        @media(max-width: 750px) {
+
+            nav {
+                padding: 15px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                width: 100%;
+                gap: 12px;
+            }
+
+            .container {
+                width: 94%;
+                margin: 30px auto;
+            }
+
+            .heading h1 {
+                font-size: 27px;
+            }
+
+            .form-card {
+                padding: 22px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 17px;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+
+        <div class="logo">
+
+            <div class="chakra">☸</div>
+
+            <div class="logo-text">
+                <h2>Digital Crime Reporting System</h2>
+                <p>Secure • Responsible • Transparent</p>
+            </div>
+
+        </div>
+
+        <div class="nav-links">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="report.html" class="active">
+                Report Crime
+            </a>
+
+            <a href="complaint-status.html">
+                Complaint Status
+            </a>
+
+            <a href="profile.html">
+                My Profile
+            </a>
+
+            <a href="contact.html">
+                Contact Us
+            </a>
+
+            <a href="login.html" class="logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN -->
+    <div class="container">
+
+        <div class="heading">
+
+            <h1>Report a Crime</h1>
+
+            <p>
+                Please provide accurate information to help us process your complaint.
+            </p>
+
+        </div>
+
+
+        <!-- FORM -->
+        <div class="form-card">
+
+            <form>
+
+                <!-- PERSONAL INFORMATION -->
+                <div class="section-title">
+                    Personal Information
+                </div>
+
+                <div class="form-grid">
+
+                    <!-- FULL NAME -->
+                    <div class="form-group">
+
+                        <label for="fullname">
+                            Full Name *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="fullname"
+                            name="fullname"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address *
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email address"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- MOBILE -->
+                    <div class="form-group">
+
+                        <label for="mobile">
+                            Mobile Number *
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="mobile"
+                            name="mobile"
+                            placeholder="Enter 10-digit mobile number"
+                            pattern="[0-9]{10}"
+                            maxlength="10"
+                            inputmode="numeric"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- AADHAAR -->
+                    <div class="form-group">
+
+                        <label for="aadhaar">
+                            Aadhaar Card Number *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="aadhaar"
+                            name="aadhaar"
+                            placeholder="Enter 12-digit Aadhaar number"
+                            pattern="[0-9]{12}"
+                            maxlength="12"
+                            minlength="12"
+                            inputmode="numeric"
+                            autocomplete="off"
+                            required
+                        >
+
+                        <small>
+                            Enter your 12-digit Aadhaar number.
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <br><br>
+
+
+                <!-- CRIME INFORMATION -->
+                <div class="section-title">
+                    Crime Information
+                </div>
+
+                <div class="form-grid">
+
+                    <!-- CRIME TYPE -->
+                    <div class="form-group">
+
+                        <label for="crime_type">
+                            Crime Type *
+                        </label>
+
+                        <select
+                            id="crime_type"
+                            name="crime_type"
+                            required
+                        >
+
+                            <option value="">
+                                Select Crime Type
+                            </option>
+
+                            <option value="Theft">
+                                Theft
+                            </option>
+
+                            <option value="Cyber Crime">
+                                Cyber Crime
+                            </option>
+
+                            <option value="Fraud">
+                                Fraud
+                            </option>
+
+                            <option value="Harassment">
+                                Harassment
+                            </option>
+
+                            <option value="Assault">
+                                Assault
+                            </option>
+
+                            <option value="Missing Person">
+                                Missing Person
+                            </option>
+
+                            <option value="Property Crime">
+                                Property Crime
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- LOCATION -->
+                    <div class="form-group">
+
+                        <label for="location">
+                            Crime Location *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="location"
+                            name="location"
+                            placeholder="Enter location of incident"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- DATE -->
+                    <div class="form-group">
+
+                        <label for="date">
+                            Date of Incident *
+                        </label>
+
+                        <input
+                            type="date"
+                            id="date"
+                            name="date"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- TIME -->
+                    <div class="form-group">
+
+                        <label for="time">
+                            Time of Incident *
+                        </label>
+
+                        <input
+                            type="time"
+                            id="time"
+                            name="time"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- DESCRIPTION -->
+                    <div class="form-group full">
+
+                        <label for="description">
+                            Description of Incident *
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            placeholder="Describe the incident in detail..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <br><br>
+
+
+                <!-- EVIDENCE -->
+                <div class="section-title">
+                    Supporting Evidence
+                </div>
+
+                <div class="form-group">
+
+                    <label for="evidence">
+                        Upload Photo / Evidence
+                    </label>
+
+                    <div class="file-box">
+
+                        <input
+                            type="file"
+                            id="evidence"
+                            name="evidence"
+                            accept="image/jpeg,image/png,image/jpg"
+                        >
+
+                    </div>
+
+                    <small>
+                        Maximum file size: 10 MB. Accepted formats:
+                        JPG, JPEG and PNG.
+                    </small>
+
+                </div>
+
+
+                <!-- NOTICE -->
+                <div class="notice">
+
+                    <strong>Important:</strong>
+                    Please ensure that all information provided is correct.
+                    False or misleading information may affect the processing
+                    of your complaint.
+
+                </div>
+
+
+                <!-- SUBMIT -->
+                <div class="submit-area">
+
+                    <a href="submit.html" class="submit-btn">
+                        Submit Crime Report
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        © 2026 Digital Crime Reporting System |
+        College Major Project
+
+    </footer>
+
+</body>
+</html>

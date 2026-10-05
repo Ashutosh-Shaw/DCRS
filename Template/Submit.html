@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Complaint Submitted | Digital Crime Reporting System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                linear-gradient(rgba(3, 20, 45, 0.92),
+                rgba(3, 20, 45, 0.97)),
+                linear-gradient(135deg, #061a35, #0b315c);
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* NAVBAR */
+        nav {
+            min-height: 75px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 7%;
+            background: rgba(4, 24, 48, 0.94);
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.25);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chakra {
+            width: 42px;
+            height: 42px;
+            border: 3px solid white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+
+        .logo-text h2 {
+            font-size: 18px;
+        }
+
+        .logo-text p {
+            color: #aebfd1;
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #dcecff;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #55b7ff;
+        }
+
+        .logout {
+            padding: 9px 17px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        /* MAIN */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
+        }
+
+        .success-card {
+            width: 100%;
+            max-width: 650px;
+            text-align: center;
+            padding: 42px 35px;
+            border-radius: 22px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.14);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+        }
+
+        /* SUCCESS ICON */
+        .success-icon {
+            width: 85px;
+            height: 85px;
+            margin: 0 auto 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+            background: rgba(35, 210, 130, 0.12);
+            border: 2px solid rgba(35, 210, 130, 0.65);
+            box-shadow: 0 0 30px rgba(35,210,130,0.12);
+        }
+
+        .success-card h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .success-card > p {
+            color: #b9c9d9;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* STATUS */
+        .status {
+            display: inline-block;
+            margin-top: 22px;
+            padding: 8px 18px;
+            border-radius: 30px;
+            background: rgba(35,210,130,0.12);
+            border: 1px solid rgba(35,210,130,0.35);
+            color: #62e6a2;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* COMPLAINT ID */
+        .complaint-box {
+            margin: 28px 0;
+            padding: 20px;
+            border-radius: 14px;
+            background: rgba(2,18,38,0.75);
+            border: 1px solid rgba(85,183,255,0.25);
+        }
+
+        .complaint-box .label {
+            color: #9eb2c7;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .complaint-id {
+            font-size: 25px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #55b7ff;
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            margin-top: 12px;
+            padding: 8px 16px;
+            border: 1px solid rgba(85,183,255,0.35);
+            border-radius: 7px;
+            background: rgba(85,183,255,0.08);
+            color: #bfe5ff;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .copy-btn:hover {
+            background: rgba(85,183,255,0.16);
+        }
+
+        /* INFO */
+        .info {
+            text-align: left;
+            padding: 18px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .info h3 {
+            color: #55b7ff;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .info p {
+            color: #aebfd0;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        /* BUTTONS */
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 13px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .primary {
+            background: linear-gradient(135deg, #087eea, #35b6ff);
+            color: white;
+        }
+
+        .secondary {
+            background: rgba(255,255,255,0.07);
+            color: #dcecff;
+            border: 1px solid rgba(255,255,255,0.14);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 22px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            color: #8196ab;
+            font-size: 12px;
+        }
+
+        /* MOBILE */
+        @media(max-width: 650px) {
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 5%;
+            }
+
+            .nav-links {
+                justify-content: center;
+                gap: 12px;
+            }
+
+            main {
+                padding: 30px 15px;
+            }
+
+            .success-card {
+                padding: 32px 20px;
+            }
+
+            .success-card h1 {
+                font-size: 25px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+
+        <div class="logo">
+
+            <div class="chakra">☸</div>
+
+            <div class="logo-text">
+                <h2>Digital Crime Reporting System</h2>
+                <p>Secure • Responsible • Transparent</p>
+            </div>
+
+        </div>
+
+
+        <div class="nav-links">
+
+            <!-- Dashboard -->
+            <a href="Dashboard.html">
+                Dashboard
+            </a>
+
+            <!-- Report Crime -->
+            <a href="Report.html">
+                Report Crime
+            </a>
+
+            <!-- Complaint Status -->
+            <a href="status.html">
+                Complaint Status
+            </a>
+
+            <!-- My Profile -->
+            <a href="Profile.html">
+                My Profile
+            </a>
+
+            <!-- Contact -->
+            <a href="contact_us.html">
+                Contact Us
+            </a>
+
+            <!-- Logout -->
+            <a href="login.html" class="logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN -->
+    <main>
+
+        <div class="success-card">
+
+            <!-- SUCCESS ICON -->
+            <div class="success-icon">
+                ✓
+            </div>
+
+
+            <!-- HEADING -->
+            <h1>
+                Complaint Submitted Successfully
+            </h1>
+
+            <p>
+                Your crime report has been successfully submitted
+                to the Digital Crime Reporting System.
+            </p>
+
+
+            <!-- STATUS -->
+            <div class="status">
+                ● Report Received
+            </div>
+
+
+            <!-- COMPLAINT ID -->
+            <div class="complaint-box">
+
+                <div class="label">
+                    YOUR COMPLAINT ID
+                </div>
+
+                <div class="complaint-id" id="complaintId">
+                    CR-2026-001
+                </div>
+
+                <button
+                    class="copy-btn"
+                    onclick="copyComplaintId()"
+                >
+                    Copy Complaint ID
+                </button>
+
+            </div>
+
+
+            <!-- INFORMATION -->
+            <div class="info">
+
+                <h3>
+                    What happens next?
+                </h3>
+
+                <p>
+                    Your complaint will be reviewed by the concerned
+                    authority. You can use your Complaint ID to check
+                    the current status of your report anytime from the
+                    <strong>Complaint Status</strong> section.
+                </p>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+            <div class="buttons">
+
+                <!-- Complaint Status -->
+                <a
+                    href="status.html"
+                    class="btn primary"
+                >
+                    Check Complaint Status
+                </a>
+
+
+                <!-- Dashboard -->
+                <a
+                    href="Dashboard.html"
+                    class="btn secondary"
+                >
+                    Go to Dashboard
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        © 2026 Digital Crime Reporting System |
+        College Major Project
+
+    </footer>
+
+
+    <!-- COPY SCRIPT -->
+    <script>
+
+        function copyComplaintId() {
+
+            const complaintId =
+                document.getElementById("complaintId").innerText;
+
+            navigator.clipboard.writeText(complaintId)
+                .then(function() {
+
+                    const button =
+                        document.querySelector(".copy-btn");
+
+                    button.innerText = "✓ Copied";
+
+                    setTimeout(function() {
+                        button.innerText = "Copy Complaint ID";
+                    }, 2000);
+
+                })
+                .catch(function() {
+
+                    alert("Unable to copy Complaint ID");
+
+                });
+
+        }
+
+    </script>
+
+</body>
+</html>

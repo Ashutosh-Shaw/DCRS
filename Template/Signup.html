@@ -1,0 +1,924 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Crime Reporting System</title><style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body{
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:20px;
+
+    background:
+    radial-gradient(
+        circle at top left,
+        #123c70,
+        transparent 40%
+    ),
+    radial-gradient(
+        circle at bottom right,
+        #064c78,
+        transparent 40%
+    ),
+    #061326;
+
+    color:white;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container{
+    width:100%;
+    max-width:1000px;
+    min-height:600px;
+
+    display:flex;
+
+    background:rgba(255,255,255,0.08);
+
+    border:1px solid rgba(255,255,255,0.15);
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    backdrop-filter:blur(15px);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,0.5);
+}
+
+
+/* =========================
+   LEFT SECTION
+========================= */
+
+.left{
+    width:45%;
+
+    padding:55px 45px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
+    background:rgba(0,120,255,0.10);
+}
+
+
+/* LOGO */
+
+.logo{
+    width:65px;
+    height:65px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00b7ff,
+            #0055ff
+        );
+
+    font-size:24px;
+    font-weight:bold;
+
+    margin-bottom:25px;
+
+    box-shadow:
+        0 10px 30px rgba(0,120,255,0.35);
+}
+
+
+/* HEADING */
+
+.left h1{
+    font-size:36px;
+    margin-bottom:15px;
+}
+
+.left h1 span{
+    color:#35bdff;
+}
+
+
+/* DESCRIPTION */
+
+.left p{
+    color:#c5d4e7;
+
+    line-height:1.7;
+
+    font-size:15px;
+
+    margin-bottom:25px;
+}
+
+
+/* FEATURES */
+
+.features{
+    list-style:none;
+}
+
+.features li{
+    margin:14px 0;
+
+    color:#e5eef9;
+
+    font-size:14px;
+}
+
+.features li::before{
+
+    content:"✓";
+
+    display:inline-flex;
+
+    justify-content:center;
+    align-items:center;
+
+    width:23px;
+    height:23px;
+
+    margin-right:10px;
+
+    border-radius:50%;
+
+    background:#087cff;
+
+    font-weight:bold;
+}
+
+
+/* =========================
+   RIGHT SECTION
+========================= */
+
+.right{
+    width:55%;
+
+    padding:45px 55px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+}
+
+
+/* =========================
+   LOGIN / SIGNUP TABS
+========================= */
+
+.switch{
+
+    display:flex;
+
+    background:rgba(0,0,0,0.25);
+
+    padding:5px;
+
+    border-radius:12px;
+
+    margin-bottom:28px;
+}
+
+
+.switch button{
+
+    width:50%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:9px;
+
+    background:transparent;
+
+    color:#aebdd0;
+
+    font-size:14px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+
+.switch button.active{
+
+    background:
+        linear-gradient(
+            135deg,
+            #008cff,
+            #0055ff
+        );
+
+    color:white;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-box h2{
+
+    font-size:30px;
+
+    margin-bottom:8px;
+}
+
+
+.subtitle{
+
+    color:#aebdd0;
+
+    font-size:14px;
+
+    margin-bottom:25px;
+}
+
+
+/* INPUT BOX */
+
+.input-box{
+
+    margin-bottom:17px;
+}
+
+
+.input-box label{
+
+    display:block;
+
+    font-size:13px;
+
+    margin-bottom:7px;
+
+    color:#dce7f5;
+}
+
+
+.input-box input{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border-radius:12px;
+
+    border:1px solid rgba(255,255,255,0.18);
+
+    outline:none;
+
+    background:rgba(0,0,0,0.20);
+
+    color:white;
+
+    font-size:14px;
+
+    transition:0.3s;
+}
+
+
+.input-box input::placeholder{
+
+    color:#8494a8;
+}
+
+
+.input-box input:focus{
+
+    border-color:#18a9ff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(24,169,255,0.12);
+}
+
+
+/* =========================
+   PASSWORD
+========================= */
+
+.password{
+
+    position:relative;
+}
+
+
+.password input{
+
+    padding-right:55px;
+}
+
+
+.show{
+
+    position:absolute;
+
+    right:15px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#36b8ff;
+
+    font-size:12px;
+
+    cursor:pointer;
+}
+
+
+/* =========================
+   MAIN BUTTON
+========================= */
+
+.main-btn{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #008cff,
+            #0055ff
+        );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    margin-top:5px;
+
+    transition:0.3s;
+
+    box-shadow:
+        0 10px 25px
+        rgba(0,100,255,0.25);
+
+    display:block;
+    text-align:center;
+    text-decoration:none;
+}
+
+
+.main-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 15px 30px
+        rgba(0,130,255,0.4);
+}
+
+
+/* =========================
+   SAFETY BOX
+========================= */
+
+.safety{
+
+    margin-top:22px;
+
+    padding:13px;
+
+    border-radius:12px;
+
+    background:
+        rgba(255,193,7,0.07);
+
+    border:
+        1px solid
+        rgba(255,193,7,0.18);
+
+    color:#d5dfeb;
+
+    font-size:12px;
+
+    line-height:1.5;
+}
+
+
+.safety strong{
+
+    color:#ffd45c;
+}
+
+
+/* =========================
+   SIGNUP HIDDEN INITIALLY
+========================= */
+
+#signupForm{
+
+    display:none;
+}
+
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media(max-width:800px){
+
+    .container{
+
+        flex-direction:column;
+
+        max-width:500px;
+    }
+
+
+    .left,
+    .right{
+
+        width:100%;
+    }
+
+
+    .left{
+
+        padding:35px 30px;
+    }
+
+
+    .left h1{
+
+        font-size:28px;
+    }
+
+
+    .features{
+
+        display:none;
+    }
+
+
+    .right{
+
+        padding:30px;
+    }
+
+}
+
+</style></head><body><div class="container"><!-- =========================
+     LEFT SECTION
+========================== -->
+
+<div class="left">
+
+    <div class="logo">
+        CR
+    </div>
+
+
+    <h1>
+
+        Crime
+        <span>Reporting</span>
+
+    </h1>
+
+
+    <p>
+
+        A secure platform to report crimes,
+        manage complaints and access important
+        safety information.
+
+    </p>
+
+
+    <ul class="features">
+
+        <li>
+            Secure complaint reporting
+        </li>
+
+        <li>
+            Track complaint status
+        </li>
+
+        <li>
+            Manage your profile
+        </li>
+
+        <li>
+            Protect your personal information
+        </li>
+
+    </ul>
+
+</div>
+
+
+
+<!-- =========================
+     RIGHT SECTION
+========================== -->
+
+<div class="right">
+
+
+    <!-- LOGIN / SIGNUP SWITCH -->
+
+    <div class="switch">
+
+        <button
+            id="loginTab"
+            class="active"
+            onclick="showLogin()">
+
+            Login
+
+        </button>
+
+
+        <button
+            id="signupTab"
+            onclick="showSignup()">
+
+            Sign Up
+
+        </button>
+
+    </div>
+
+
+
+    <!-- =========================
+         LOGIN FORM
+    ========================== -->
+
+    <div
+        class="form-box"
+        id="loginForm">
+
+        <h2>
+            Welcome Back
+        </h2>
+
+
+        <p class="subtitle">
+
+            Login to your account
+
+        </p>
+
+
+        <form>
+
+
+            <!-- EMAIL -->
+
+            <div class="input-box">
+
+                <label>
+                    Email Address
+                </label>
+
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required>
+
+            </div>
+
+
+
+            <!-- PASSWORD -->
+
+            <div class="input-box">
+
+                <label>
+                    Password
+                </label>
+
+
+                <div class="password">
+
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        name="password"
+                        placeholder="Enter your password"
+                        required>
+
+
+                    <span
+                        class="show"
+                        onclick="togglePassword('loginPassword',this)">
+
+                        Show
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- LOGIN BUTTON -->
+
+            <a
+                href="Dashboard.html"
+                class="main-btn">
+
+                Login
+
+            </a>
+
+
+        </form>
+
+
+
+        <div class="safety">
+
+            <strong>
+                🔐 Safety Tip:
+            </strong>
+
+            Never share your password or OTP
+            with anyone.
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         SIGNUP FORM
+    ========================== -->
+
+    <div
+        class="form-box"
+        id="signupForm">
+
+        <h2>
+            Create Account
+        </h2>
+
+
+        <p class="subtitle">
+
+            Register yourself to continue
+
+        </p>
+
+
+        <form>
+
+
+            <!-- FULL NAME -->
+
+            <div class="input-box">
+
+                <label>
+                    Full Name
+                </label>
+
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Enter your full name"
+                    required>
+
+            </div>
+
+
+
+            <!-- EMAIL -->
+
+            <div class="input-box">
+
+                <label>
+                    Email Address
+                </label>
+
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required>
+
+            </div>
+
+
+
+            <!-- MOBILE -->
+
+            <div class="input-box">
+
+                <label>
+                    Mobile Number
+                </label>
+
+
+                <input
+                    type="tel"
+                    name="mobile"
+                    placeholder="Enter your mobile number"
+                    maxlength="10"
+                    pattern="[0-9]{10}"
+                    required>
+
+            </div>
+
+
+
+            <!-- PASSWORD -->
+
+            <div class="input-box">
+
+                <label>
+                    Password
+                </label>
+
+
+                <div class="password">
+
+                    <input
+                        type="password"
+                        id="signupPassword"
+                        name="password"
+                        placeholder="Create a password"
+                        required>
+
+
+                    <span
+                        class="show"
+                        onclick="togglePassword('signupPassword',this)">
+
+                        Show
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CREATE ACCOUNT -->
+
+            <a
+                href="Dashboard.html"
+                class="main-btn">
+
+                Create Account
+
+            </a>
+
+
+        </form>
+
+
+
+        <div class="safety">
+
+            <strong>
+                🔐 Safety Tip:
+            </strong>
+
+            Never share your password, OTP or
+            sensitive information with anyone.
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+</div><script>
+
+
+/* =========================
+   SHOW LOGIN
+========================= */
+
+function showLogin(){
+
+    document.getElementById("loginForm")
+        .style.display = "block";
+
+
+    document.getElementById("signupForm")
+        .style.display = "none";
+
+
+    document.getElementById("loginTab")
+        .classList.add("active");
+
+
+    document.getElementById("signupTab")
+        .classList.remove("active");
+
+}
+
+
+
+/* =========================
+   SHOW SIGNUP
+========================= */
+
+function showSignup(){
+
+    document.getElementById("loginForm")
+        .style.display = "none";
+
+
+    document.getElementById("signupForm")
+        .style.display = "block";
+
+
+    document.getElementById("loginTab")
+        .classList.remove("active");
+
+
+    document.getElementById("signupTab")
+        .classList.add("active");
+
+}
+
+
+
+/* =========================
+   SHOW / HIDE PASSWORD
+========================= */
+
+function togglePassword(id,element){
+
+    const password =
+        document.getElementById(id);
+
+
+    if(password.type === "password"){
+
+        password.type = "text";
+
+        element.innerText = "Hide";
+
+    }
+
+    else{
+
+        password.type = "password";
+
+        element.innerText = "Show";
+
+    }
+
+}
+
+</script></body></html>

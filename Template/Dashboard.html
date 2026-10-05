@@ -1,0 +1,1368 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>User Dashboard | Crime Reporting System</title><style>
+
+/* ================= RESET ================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+
+/* ================= BODY ================= */
+
+body{
+    min-height:100vh;
+    background:
+    radial-gradient(circle at top left,#123c70,transparent 35%),
+    radial-gradient(circle at bottom right,#064c78,transparent 35%),
+    #061326;
+    color:white;
+}
+
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:250px;
+    height:100vh;
+    padding:25px 18px;
+
+    background:rgba(5,20,42,.92);
+    border-right:1px solid rgba(255,255,255,.10);
+
+    backdrop-filter:blur(15px);
+
+    z-index:100;
+}
+
+
+/* ================= LOGO ================= */
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px;
+    margin-bottom:35px;
+}
+
+.logo-icon{
+    width:45px;
+    height:45px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:13px;
+
+    background:linear-gradient(
+        135deg,
+        #00b7ff,
+        #0055ff
+    );
+
+    font-weight:bold;
+    font-size:17px;
+
+    box-shadow:
+    0 8px 25px rgba(0,120,255,.3);
+}
+
+.logo-text{
+    font-size:17px;
+    font-weight:bold;
+}
+
+.logo-text span{
+    color:#36bdff;
+}
+
+
+/* ================= MENU ================= */
+
+.menu-title{
+    color:#71849d;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+
+    padding:0 12px;
+    margin-bottom:12px;
+}
+
+.menu{
+    list-style:none;
+}
+
+.menu li{
+    margin:7px 0;
+}
+
+.menu a{
+    display:flex;
+    align-items:center;
+
+    gap:13px;
+
+    padding:13px 14px;
+
+    border-radius:11px;
+
+    text-decoration:none;
+
+    color:#aebdd0;
+
+    font-size:14px;
+
+    transition:.3s;
+}
+
+.menu a:hover,
+.menu a.active{
+    color:white;
+
+    background:linear-gradient(
+        90deg,
+        rgba(0,130,255,.25),
+        rgba(0,130,255,.08)
+    );
+
+    border-left:3px solid #16aaff;
+}
+
+.icon{
+    width:22px;
+    text-align:center;
+    font-size:16px;
+}
+
+
+/* ================= LOGOUT ================= */
+
+.logout{
+    position:absolute;
+
+    left:18px;
+    right:18px;
+    bottom:25px;
+}
+
+.logout a{
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    padding:13px;
+
+    border-radius:11px;
+
+    color:#ff8b8b;
+
+    text-decoration:none;
+
+    background:rgba(255,70,70,.06);
+
+    transition:.3s;
+}
+
+.logout a:hover{
+    background:rgba(255,70,70,.12);
+}
+
+
+/* ================= MAIN ================= */
+
+.main{
+    margin-left:250px;
+
+    padding:30px;
+
+    min-height:100vh;
+}
+
+
+/* ================= TOP BAR ================= */
+
+.topbar{
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:30px;
+}
+
+.welcome h1{
+    font-size:28px;
+    margin-bottom:7px;
+}
+
+.welcome p{
+    color:#9fb0c5;
+    font-size:14px;
+}
+
+
+/* ================= PROFILE ================= */
+
+.profile{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:8px 13px;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        #00aaff,
+        #0055ff
+    );
+
+    font-weight:bold;
+}
+
+.profile-info{
+    font-size:13px;
+}
+
+.profile-info small{
+    display:block;
+
+    color:#8293a9;
+
+    margin-top:3px;
+}
+
+
+/* ================= STATS ================= */
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:18px;
+
+    margin-bottom:25px;
+}
+
+.stat-card{
+    padding:20px;
+
+    border-radius:17px;
+
+    background:rgba(255,255,255,.07);
+
+    border:1px solid rgba(255,255,255,.10);
+
+    backdrop-filter:blur(10px);
+
+    transition:.3s;
+}
+
+.stat-card:hover{
+    transform:translateY(-3px);
+
+    border-color:
+    rgba(30,170,255,.35);
+}
+
+.stat-top{
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:18px;
+}
+
+.stat-icon{
+    width:42px;
+    height:42px;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    border-radius:12px;
+
+    background:
+    rgba(0,140,255,.15);
+
+    font-size:19px;
+}
+
+.stat-card h2{
+    font-size:27px;
+}
+
+.stat-card p{
+    color:#94a6bb;
+
+    font-size:13px;
+}
+
+
+/* ================= CONTENT GRID ================= */
+
+.content-grid{
+    display:grid;
+
+    grid-template-columns:
+    1.6fr 1fr;
+
+    gap:20px;
+}
+
+
+/* ================= CARD ================= */
+
+.card{
+    background:
+    rgba(255,255,255,.07);
+
+    border:
+    1px solid rgba(255,255,255,.10);
+
+    border-radius:18px;
+
+    padding:22px;
+
+    backdrop-filter:blur(10px);
+}
+
+.card-header{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+}
+
+.card-header h2{
+    font-size:18px;
+}
+
+.card-header a{
+    color:#36b8ff;
+
+    font-size:12px;
+
+    text-decoration:none;
+}
+
+
+/* ================= QUICK ACTIONS ================= */
+
+.actions{
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:14px;
+}
+
+.action{
+    padding:20px;
+
+    border-radius:15px;
+
+    text-decoration:none;
+
+    color:white;
+
+    background:
+    rgba(0,0,0,.15);
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+    transition:.3s;
+}
+
+.action:hover{
+    transform:translateY(-3px);
+
+    background:
+    rgba(0,120,255,.12);
+
+    border-color:#138dca;
+}
+
+.action-icon{
+    width:42px;
+    height:42px;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    border-radius:12px;
+
+    background:
+    rgba(0,140,255,.15);
+
+    margin-bottom:12px;
+
+    font-size:20px;
+}
+
+.action h3{
+    font-size:14px;
+
+    margin-bottom:5px;
+}
+
+.action p{
+    color:#8799af;
+
+    font-size:11px;
+
+    line-height:1.5;
+}
+
+
+/* ================= COMPLAINT ================= */
+
+.complaint{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:15px;
+
+    margin-bottom:12px;
+
+    border-radius:12px;
+
+    background:
+    rgba(0,0,0,.13);
+
+    border:
+    1px solid rgba(255,255,255,.06);
+}
+
+.complaint-id{
+    color:#36b8ff;
+
+    font-size:12px;
+
+    margin-bottom:5px;
+}
+
+.complaint-name{
+    font-size:13px;
+}
+
+.date{
+    color:#7f91a7;
+
+    font-size:11px;
+
+    margin-top:4px;
+}
+
+
+/* ================= STATUS ================= */
+
+.status{
+    padding:6px 10px;
+
+    border-radius:20px;
+
+    font-size:10px;
+
+    font-weight:bold;
+}
+
+.pending{
+    color:#ffd45c;
+
+    background:
+    rgba(255,193,7,.10);
+}
+
+.resolved{
+    color:#57e49a;
+
+    background:
+    rgba(0,200,100,.10);
+}
+
+.progress{
+    color:#62c9ff;
+
+    background:
+    rgba(0,150,255,.10);
+}
+
+
+/* ================= EMERGENCY ================= */
+
+.emergency{
+    margin-top:20px;
+}
+
+.emergency-grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:10px;
+}
+
+.emergency-box{
+    text-align:center;
+
+    padding:14px 8px;
+
+    border-radius:12px;
+
+    background:
+    rgba(255,255,255,.04);
+
+    border:
+    1px solid rgba(255,255,255,.07);
+}
+
+.emergency-box strong{
+    display:block;
+
+    font-size:18px;
+
+    margin-bottom:5px;
+
+    color:#ff7777;
+}
+
+.emergency-box span{
+    color:#9eafc2;
+
+    font-size:10px;
+}
+
+
+/* ================= SAFETY ================= */
+
+.safety{
+    margin-top:20px;
+
+    padding:17px;
+
+    border-radius:14px;
+
+    background:
+    rgba(255,193,7,.06);
+
+    border:
+    1px solid rgba(255,193,7,.15);
+}
+
+.safety h3{
+    color:#ffd45c;
+
+    font-size:14px;
+
+    margin-bottom:9px;
+}
+
+.safety p{
+    color:#aebdd0;
+
+    font-size:12px;
+
+    line-height:1.6;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:1000px){
+
+    .stats{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .content-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+
+@media(max-width:700px){
+
+    .sidebar{
+        position:relative;
+
+        width:100%;
+        height:auto;
+
+        border-right:none;
+
+        border-bottom:
+        1px solid rgba(255,255,255,.1);
+    }
+
+    .logout{
+        position:relative;
+
+        left:auto;
+        right:auto;
+        bottom:auto;
+
+        margin-top:20px;
+    }
+
+    .main{
+        margin-left:0;
+
+        padding:20px;
+    }
+
+    .topbar{
+        align-items:flex-start;
+
+        gap:15px;
+    }
+
+    .profile{
+        display:none;
+    }
+
+    .stats{
+        grid-template-columns:
+        1fr 1fr;
+    }
+
+}
+
+
+@media(max-width:480px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .actions{
+        grid-template-columns:1fr;
+    }
+
+    .emergency-grid{
+        grid-template-columns:
+        repeat(3,1fr);
+    }
+
+    .welcome h1{
+        font-size:23px;
+    }
+
+}
+
+</style></head><body><!-- =====================================================
+                     SIDEBAR
+===================================================== --><aside class="sidebar"><!-- LOGO -->
+
+<div class="logo">
+
+    <div class="logo-icon">
+        CR
+    </div>
+
+    <div class="logo-text">
+        Crime <span>Reporting</span>
+    </div>
+
+</div>
+
+
+<!-- MENU TITLE -->
+
+<div class="menu-title">
+    Main Menu
+</div>
+
+
+<!-- MENU -->
+
+<ul class="menu">
+
+
+    <!-- DASHBOARD -->
+
+    <li>
+
+        <a href="Dashboard.html"
+           class="active">
+
+            <span class="icon">
+                🏠
+            </span>
+
+            Dashboard
+
+        </a>
+
+    </li>
+
+
+    <!-- REPORT CRIME -->
+
+    <li>
+
+        <a href="Report.html">
+
+            <span class="icon">
+                🚨
+            </span>
+
+            Report Crime
+
+        </a>
+
+    </li>
+
+
+    <!-- COMPLAINT STATUS -->
+
+    <li>
+
+        <a href="Status.html">
+
+            <span class="icon">
+                📊
+            </span>
+
+            Complaint Status
+
+        </a>
+
+    </li>
+
+
+    <!-- MY COMPLAINT -->
+
+    <li>
+
+        <a href="My_Complaint.html">
+
+            <span class="icon">
+                📋
+            </span>
+
+            My Complaint
+
+        </a>
+
+    </li>
+
+
+    <!-- MY PROFILE -->
+
+    <li>
+
+        <a href="My_profile.html">
+
+            <span class="icon">
+                👤
+            </span>
+
+            My Profile
+
+        </a>
+
+    </li>
+
+
+    <!-- CONTACT US -->
+
+    <li>
+
+        <a href="Contact_us.html">
+
+            <span class="icon">
+                📞
+            </span>
+
+            Contact Us
+
+        </a>
+
+    </li>
+
+
+    <!-- ABOUT US -->
+
+    <li>
+
+        <a href="About_us.html">
+
+            <span class="icon">
+                ℹ️
+            </span>
+
+            About Us
+
+        </a>
+
+    </li>
+
+
+</ul>
+
+
+<!-- LOGOUT -->
+
+<div class="logout">
+
+    <a href="Login.html">
+
+        <span>
+            🚪
+        </span>
+
+        Logout
+
+    </a>
+
+</div>
+
+</aside><!-- =====================================================
+                       MAIN
+===================================================== --><main class="main"><!-- ================= TOP BAR ================= -->
+
+<div class="topbar">
+
+
+    <div class="welcome">
+
+        <h1>
+            Welcome Back 👋
+        </h1>
+
+        <p>
+            Manage your complaints and account from here.
+        </p>
+
+    </div>
+
+
+    <!-- PROFILE -->
+
+    <div class="profile">
+
+        <div class="avatar">
+            U
+        </div>
+
+        <div class="profile-info">
+
+            User
+
+            <small>
+                Citizen Account
+            </small>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+                     STATISTICS
+===================================================== -->
+
+<div class="stats">
+
+
+    <!-- TOTAL -->
+
+    <div class="stat-card">
+
+        <div class="stat-top">
+
+            <div>
+
+                <p>
+                    Total Complaints
+                </p>
+
+                <h2>
+                    00
+                </h2>
+
+            </div>
+
+            <div class="stat-icon">
+                📋
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PENDING -->
+
+    <div class="stat-card">
+
+        <div class="stat-top">
+
+            <div>
+
+                <p>
+                    Pending
+                </p>
+
+                <h2>
+                    00
+                </h2>
+
+            </div>
+
+            <div class="stat-icon">
+                ⏳
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- IN PROGRESS -->
+
+    <div class="stat-card">
+
+        <div class="stat-top">
+
+            <div>
+
+                <p>
+                    In Progress
+                </p>
+
+                <h2>
+                    00
+                </h2>
+
+            </div>
+
+            <div class="stat-icon">
+                🔄
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RESOLVED -->
+
+    <div class="stat-card">
+
+        <div class="stat-top">
+
+            <div>
+
+                <p>
+                    Resolved
+                </p>
+
+                <h2>
+                    00
+                </h2>
+
+            </div>
+
+            <div class="stat-icon">
+                ✓
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+                   CONTENT GRID
+===================================================== -->
+
+<div class="content-grid">
+
+
+    <!-- ================= LEFT ================= -->
+
+    <div>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <div class="card">
+
+
+            <div class="card-header">
+
+                <h2>
+                    Quick Actions
+                </h2>
+
+            </div>
+
+
+            <div class="actions">
+
+
+                <!-- REPORT -->
+
+                <a href="Report.html"
+                   class="action">
+
+                    <div class="action-icon">
+                        🚨
+                    </div>
+
+                    <h3>
+                        Report Crime
+                    </h3>
+
+                    <p>
+                        Submit a new crime complaint securely.
+                    </p>
+
+                </a>
+
+
+                <!-- COMPLAINT STATUS -->
+
+                <a href="Complaint_Status.html"
+                   class="action">
+
+                    <div class="action-icon">
+                        📊
+                    </div>
+
+                    <h3>
+                        Complaint Status
+                    </h3>
+
+                    <p>
+                        Check the current status of your complaint.
+                    </p>
+
+                </a>
+
+
+                <!-- MY COMPLAINT -->
+
+                <a href="My_Complaint.html"
+                   class="action">
+
+                    <div class="action-icon">
+                        📋
+                    </div>
+
+                    <h3>
+                        My Complaint
+                    </h3>
+
+                    <p>
+                        View and track your submitted complaints.
+                    </p>
+
+                </a>
+
+
+                <!-- PROFILE -->
+
+                <a href="Profile.html"
+                   class="action">
+
+                    <div class="action-icon">
+                        👤
+                    </div>
+
+                    <h3>
+                        My Profile
+                    </h3>
+
+                    <p>
+                        View and manage your account information.
+                    </p>
+
+                </a>
+
+
+                <!-- CONTACT -->
+
+                <a href="Contact_us.html"
+                   class="action">
+
+                    <div class="action-icon">
+                        📞
+                    </div>
+
+                    <h3>
+                        Contact Us
+                    </h3>
+
+                    <p>
+                        Contact us for assistance and support.
+                    </p>
+
+                </a>
+
+
+                <!-- ABOUT -->
+
+                <a href="About_us.html"
+                   class="action">
+
+                    <div class="action-icon">
+                        ℹ️
+                    </div>
+
+                    <h3>
+                        About Us
+                    </h3>
+
+                    <p>
+                        Learn more about the Crime Reporting System.
+                    </p>
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+                   RECENT COMPLAINTS
+        ===================================================== -->
+
+        <div class="card"
+             style="margin-top:20px;">
+
+
+            <div class="card-header">
+
+                <h2>
+                    Recent Complaints
+                </h2>
+
+                <a href="My_Complaint.html">
+                    View All
+                </a>
+
+            </div>
+
+
+            <!-- COMPLAINT 1 -->
+
+            <div class="complaint">
+
+                <div>
+
+                    <div class="complaint-id">
+                        Complaint #CR-0001
+                    </div>
+
+                    <div class="complaint-name">
+                        No complaints submitted yet
+                    </div>
+
+                    <div class="date">
+                        --
+                    </div>
+
+                </div>
+
+                <span class="status pending">
+                    Pending
+                </span>
+
+            </div>
+
+
+            <!-- COMPLAINT 2 -->
+
+            <div class="complaint">
+
+                <div>
+
+                    <div class="complaint-id">
+                        Complaint #CR-0002
+                    </div>
+
+                    <div class="complaint-name">
+                        Your complaint will appear here
+                    </div>
+
+                    <div class="date">
+                        --
+                    </div>
+
+                </div>
+
+                <span class="status progress">
+                    In Progress
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= RIGHT ================= -->
+
+    <div>
+
+
+        <!-- =====================================================
+                        EMERGENCY
+        ===================================================== -->
+
+        <div class="card">
+
+
+            <div class="card-header">
+
+                <h2>
+                    🚨 Emergency Numbers
+                </h2>
+
+            </div>
+
+
+            <div class="emergency-grid">
+
+
+                <div class="emergency-box">
+
+                    <strong>
+                        112
+                    </strong>
+
+                    <span>
+                        Police
+                    </span>
+
+                </div>
+
+
+                <div class="emergency-box">
+
+                    <strong>
+                        108
+                    </strong>
+
+                    <span>
+                        Ambulance
+                    </span>
+
+                </div>
+
+
+                <div class="emergency-box">
+
+                    <strong>
+                        101
+                    </strong>
+
+                    <span>
+                        Fire
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+                        SAFETY
+        ===================================================== -->
+
+        <div class="safety">
+
+
+            <h3>
+                ⚠️ Safety Information
+            </h3>
+
+
+            <p>
+
+                Never share your OTP, password or
+                banking information with anyone.
+
+                Keep your personal information private
+                and report suspicious activity immediately.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+                        LAW & AWARENESS
+        ================

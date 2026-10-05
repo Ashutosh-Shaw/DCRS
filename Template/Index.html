@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Crime Reporting System</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+
+    background:
+    radial-gradient(circle at 10% 10%,#123f70,transparent 35%),
+    radial-gradient(circle at 90% 90%,#06486d,transparent 35%),
+    #061326;
+
+    color:white;
+
+    overflow-x:hidden;
+}
+
+
+/* ASHOKA CHAKRA WATERMARK */
+
+.chakra{
+    position:fixed;
+
+    right:-120px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:520px;
+    height:520px;
+
+    border:3px solid rgba(50,180,255,.07);
+
+    border-radius:50%;
+
+    z-index:0;
+
+    pointer-events:none;
+}
+
+.chakra::before{
+    content:"";
+
+    position:absolute;
+
+    inset:35px;
+
+    border:2px solid rgba(50,180,255,.06);
+
+    border-radius:50%;
+}
+
+
+/* CHAKRA SPOKES */
+
+.spokes{
+    position:absolute;
+
+    inset:50%;
+
+    width:2px;
+    height:92%;
+
+    background:rgba(50,180,255,.06);
+
+    transform-origin:center;
+}
+
+.spokes:nth-child(1){
+    transform:translate(-50%,-50%) rotate(0deg);
+}
+
+.spokes:nth-child(2){
+    transform:translate(-50%,-50%) rotate(30deg);
+}
+
+.spokes:nth-child(3){
+    transform:translate(-50%,-50%) rotate(60deg);
+}
+
+.spokes:nth-child(4){
+    transform:translate(-50%,-50%) rotate(90deg);
+}
+
+.spokes:nth-child(5){
+    transform:translate(-50%,-50%) rotate(120deg);
+}
+
+.spokes:nth-child(6){
+    transform:translate(-50%,-50%) rotate(150deg);
+}
+
+
+/* NAVBAR */
+
+.navbar{
+    height:72px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 7%;
+
+    background:rgba(3,17,36,.78);
+
+    border-bottom:1px solid rgba(255,255,255,.09);
+
+    backdrop-filter:blur(15px);
+
+    position:relative;
+
+    z-index:5;
+}
+
+
+/* LOGO */
+
+.logo{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.logo-icon{
+    width:43px;
+    height:43px;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    border-radius:12px;
+
+    background:linear-gradient(
+        135deg,
+        #00b7ff,
+        #0055ff
+    );
+
+    font-weight:bold;
+}
+
+.logo-text{
+    font-size:17px;
+
+    font-weight:bold;
+}
+
+.logo-text span{
+    color:#35baff;
+}
+
+
+/* NAVIGATION */
+
+.nav-links{
+    display:flex;
+
+    align-items:center;
+
+    gap:25px;
+
+    list-style:none;
+}
+
+.nav-links a{
+    text-decoration:none;
+
+    color:#aebed1;
+
+    font-size:13px;
+
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:#36bdff;
+}
+
+
+/* HERO */
+
+.hero{
+    position:relative;
+
+    z-index:1;
+
+    min-height:510px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    padding:60px 20px 40px;
+}
+
+.hero-content{
+    max-width:800px;
+}
+
+
+/* INDIAN FLAG LINE */
+
+.flag-line{
+    width:90px;
+
+    height:3px;
+
+    margin:0 auto 22px;
+
+    background:linear-gradient(
+        90deg,
+        #ff9933,
+        white,
+        #138808
+    );
+
+    border-radius:10px;
+}
+
+
+/* SMALL CHAKRA */
+
+.chakra-small{
+    width:70px;
+    height:70px;
+
+    margin:0 auto 18px;
+
+    border:3px solid rgba(80,190,255,.7);
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#36bdff;
+
+    font-size:30px;
+
+    font-weight:bold;
+}
+
+
+/* HEADING */
+
+.hero h1{
+    font-size:42px;
+
+    letter-spacing:.5px;
+
+    margin-bottom:12px;
+}
+
+.hero h1 span{
+    color:#35baff;
+}
+
+.hero h2{
+    font-size:16px;
+
+    color:#d4dfeb;
+
+    font-weight:normal;
+
+    margin-bottom:18px;
+}
+
+.hero p{
+    max-width:680px;
+
+    margin:auto;
+
+    color:#91a5ba;
+
+    font-size:13px;
+
+    line-height:1.8;
+}
+
+
+/* BUTTONS */
+
+.buttons{
+    display:flex;
+
+    justify-content:center;
+
+    gap:15px;
+
+    margin-top:30px;
+}
+
+.btn{
+    min-width:170px;
+
+    padding:14px 24px;
+
+    border-radius:11px;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    transition:.3s;
+}
+
+
+/* SIGN UP / REPORT */
+
+.report{
+    color:white;
+
+    background:linear-gradient(
+        135deg,
+        #008cff,
+        #0055ff
+    );
+
+    box-shadow:
+    0 10px 25px rgba(0,110,255,.25);
+}
+
+
+/* LOGIN */
+
+.login{
+    color:#dce8f5;
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid rgba(255,255,255,.16);
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+
+/* INFORMATION SECTION */
+
+.info-section{
+    position:relative;
+
+    z-index:2;
+
+    max-width:1100px;
+
+    margin:auto;
+
+    padding:10px 25px 45px;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:20px;
+}
+
+
+/* INFORMATION CARD */
+
+.info-card{
+    padding:25px;
+
+    border-radius:19px;
+
+    background:rgba(255,255,255,.065);
+
+    border:1px solid rgba(255,255,255,.1);
+
+    backdrop-filter:blur(12px);
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.18);
+}
+
+
+/* CARD TITLE */
+
+.info-title{
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:18px;
+}
+
+.info-title h3{
+    font-size:17px;
+}
+
+.info-icon{
+    width:38px;
+    height:38px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    background:rgba(0,140,255,.13);
+
+    font-size:18px;
+}
+
+
+/* LAW LIST */
+
+.law-list{
+    list-style:none;
+}
+
+.law-list li{
+    padding:11px 0;
+
+    color:#aebdd0;
+
+    font-size:12px;
+
+    line-height:1.6;
+
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.law-list li:last-child{
+    border-bottom:none;
+}
+
+.law-list span{
+    color:#36bdff;
+
+    margin-right:8px;
+}
+
+
+/* EMERGENCY */
+
+.emergency-grid{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:10px;
+}
+
+.emergency-box{
+    padding:15px;
+
+    text-align:center;
+
+    border-radius:12px;
+
+    background:rgba(0,0,0,.15);
+
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.emergency-number{
+    font-size:22px;
+
+    font-weight:bold;
+
+    color:#ff7777;
+
+    margin-bottom:5px;
+}
+
+.emergency-box p{
+    color:#91a3b7;
+
+    font-size:10px;
+}
+
+
+/* FOOTER */
+
+footer{
+    position:relative;
+
+    z-index:2;
+
+    padding:22px;
+
+    text-align:center;
+
+    color:#62758b;
+
+    font-size:11px;
+
+    border-top:1px solid rgba(255,255,255,.07);
+}
+
+
+/* MOBILE */
+
+@media(max-width:750px){
+
+    .navbar{
+        padding:0 20px;
+    }
+
+    .nav-links{
+        gap:12px;
+    }
+
+    .nav-links li:nth-child(2),
+    .nav-links li:nth-child(3){
+        display:none;
+    }
+
+    .hero{
+        padding-top:45px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .buttons{
+        flex-direction:column;
+
+        align-items:center;
+    }
+
+    .btn{
+        width:90%;
+
+        max-width:300px;
+    }
+
+    .info-section{
+        grid-template-columns:1fr;
+
+        padding-left:18px;
+
+        padding-right:18px;
+    }
+
+    .chakra{
+        width:350px;
+        height:350px;
+
+        right:-190px;
+    }
+}
+
+
+/* SMALL MOBILE */
+
+@media(max-width:450px){
+
+    .logo-text{
+        font-size:14px;
+    }
+
+    .navbar{
+        height:65px;
+    }
+
+    .hero h1{
+        font-size:27px;
+    }
+
+    .hero h2{
+        font-size:14px;
+    }
+
+    .emergency-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ASHOKA CHAKRA BACKGROUND -->
+
+<div class="chakra">
+
+    <div class="spokes"></div>
+    <div class="spokes"></div>
+    <div class="spokes"></div>
+    <div class="spokes"></div>
+    <div class="spokes"></div>
+    <div class="spokes"></div>
+
+</div>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            CR
+        </div>
+
+        <div class="logo-text">
+            Crime <span>Reporting System</span>
+        </div>
+
+    </div>
+
+
+    <ul class="nav-links">
+
+        <!-- HOME -->
+        <li>
+            <a href="/">
+                Home
+            </a>
+        </li>
+
+
+        <!-- ABOUT -->
+        <li>
+            <a href="About.html">
+                About Us
+            </a>
+        </li>
+
+
+        <!-- CONTACT -->
+        <li>
+            <a href="Contact.html">
+                Contact
+            </a>
+        </li>
+
+
+        <!-- SIGNUP -->
+        <li>
+            <a href="Signup">
+                Sign Up
+            </a>
+        </li>
+
+
+        <!-- LOGIN -->
+        <li>
+            <a href="/login">
+                Login
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<!-- HERO SECTION -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+
+        <!-- INDIAN FLAG LINE -->
+
+        <div class="flag-line"></div>
+
+
+        <!-- ASHOKA CHAKRA -->
+
+        <div class="chakra-small">
+            ☸
+        </div>
+
+
+        <!-- MAIN HEADING -->
+
+        <h1>
+            Crime <span>Reporting System</span>
+        </h1>
+
+
+        <h2>
+            Report • Track • Stay Safe
+        </h2>
+
+
+        <p>
+
+            A digital platform designed to help citizens
+            report incidents, submit important information
+            and track their complaints through a secure
+            and accessible system.
+
+        </p>
+
+
+        <!-- MAIN BUTTONS -->
+
+        <div class="buttons">
+
+
+            <!-- REPORT BUTTON
+                 GOES TO SIGNUP FIRST -->
+
+            <a
+                href="Report.html"
+                class="btn report">
+
+                🚨 Report a Crime
+
+            </a>
+
+
+            <!-- SIGNUP BUTTON -->
+
+            <a
+                href="Signup.html"
+                class="btn login">
+
+                🔐 Sign Up
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- INFORMATION SECTION -->
+
+<section class="info-section">
+
+
+    <!-- LAW & SAFETY CARD -->
+
+    <div class="info-card">
+
+
+        <div class="info-title">
+
+            <div class="info-icon">
+                ⚖️
+            </div>
+
+            <h3>
+                Law & Safety Information
+            </h3>
+
+        </div>
+
+
+        <ul class="law-list">
+
+
+            <li>
+                <span>✓</span>
+                Never share your OTP, password or PIN with anyone.
+            </li>
+
+
+            <li>
+                <span>✓</span>
+                Do not share banking or card information with unknown persons.
+            </li>
+
+
+            <li>
+                <span>✓</span>
+                Provide truthful and accurate information while reporting a crime.
+            </li>
+
+
+            <li>
+                <span>✓</span>
+                Keep your Complaint ID safe for future status tracking.
+            </li>
+
+
+            <li>
+                <span>✓</span>
+                In an immediate emergency, contact the appropriate emergency service.
+            </li>
+
+
+        </ul>
+
+    </div>
+
+
+    <!-- EMERGENCY CARD -->
+
+    <div class="info-card">
+
+
+        <div class="info-title">
+
+            <div class="info-icon">
+                🚨
+            </div>
+
+            <h3>
+                Emergency Numbers
+            </h3>
+
+        </div>
+
+
+        <div class="emergency-grid">
+
+
+            <div class="emergency-box">
+
+                <div class="emergency-number">
+                    112
+                </div>
+
+                <p>
+                    Police / Emergency
+                </p>
+
+            </div>
+
+
+            <div class="emergency-box">
+
+                <div class="emergency-number">
+                    108
+                </div>
+
+                <p>
+                    Ambulance
+                </p>
+
+            </div>
+
+
+            <div class="emergency-box">
+
+                <div class="emergency-number">
+                    101
+                </div>
+
+                <p>
+                    Fire
+                </p>
+
+            </div>
+
+
+            <div class="emergency-box">
+
+                <div class="emergency-number">
+                    1930
+                </div>
+
+                <p>
+                    Cyber Crime
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    © 2026 Crime Reporting System
+    • Secure • Responsible • Citizen Focused
+
+</footer>
+
+
+</body>
+
+</html>
