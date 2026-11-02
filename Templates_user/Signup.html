@@ -1,0 +1,946 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DCRS | Sign Up & Sign In</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #07152f, #102b52, #07152f);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            width: 100%;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,.12);
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #55c8ff;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #e1eaf7;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #55c8ff;
+        }
+
+        .main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 35px 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 510px;
+            background: rgba(10, 27, 54, .96);
+            border: 1px solid rgba(255,255,255,.13);
+            border-radius: 18px;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.35);
+        }
+
+        .top-line {
+            height: 5px;
+            width: 100%;
+            border-radius: 10px;
+            background: linear-gradient(
+                to right,
+                #ff9933 0 33.33%,
+                #fff 33.33% 66.66%,
+                #138808 66.66% 100%
+            );
+            margin-bottom: 25px;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .heading h1 {
+            font-size: 29px;
+            margin-bottom: 9px;
+        }
+
+        .heading h1 span {
+            color: #55c8ff;
+        }
+
+        .heading p {
+            color: #b8c7dd;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+            padding: 5px;
+            background: #07162d;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tab {
+            width: 50%;
+            border: none;
+            border-radius: 7px;
+            padding: 12px;
+            background: transparent;
+            color: #aebfd5;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .tab.active {
+            background: #168bd0;
+            color: white;
+        }
+
+        .form-panel {
+            display: none;
+        }
+
+        .form-panel.active {
+            display: block;
+        }
+
+        .form-title {
+            font-size: 21px;
+            margin-bottom: 7px;
+        }
+
+        .form-description {
+            color: #aebfd5;
+            font-size: 13px;
+            margin-bottom: 22px;
+            line-height: 1.5;
+        }
+
+        .field {
+            margin-bottom: 17px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #e4edf9;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 13px 14px;
+            background: #081a33;
+            border: 1px solid #2b4261;
+            border-radius: 8px;
+            outline: none;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .field input::placeholder {
+            color: #8294ad;
+        }
+
+        .field input:focus {
+            border-color: #55c8ff;
+        }
+
+        .otp-row {
+            display: flex;
+            gap: 7px;
+            margin-top: 9px;
+            flex-wrap: wrap;
+        }
+
+        .otp-row input {
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .small-btn {
+            border: 1px solid #168bd0;
+            background: #102c4b;
+            color: #76d5ff;
+            padding: 10px 11px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .small-btn:hover {
+            background: #17466f;
+        }
+
+        .small-btn:disabled {
+            opacity: .55;
+            cursor: not-allowed;
+        }
+
+        .primary-btn {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            background: linear-gradient(90deg, #168bd0, #25b6e9);
+            border-radius: 8px;
+            color: white;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .primary-btn:hover:not(:disabled) {
+            filter: brightness(1.08);
+        }
+
+        .primary-btn:disabled {
+            background: #526174;
+            color: #cbd5e1;
+            opacity: .65;
+            cursor: not-allowed;
+        }
+
+        .status {
+            display: none;
+            padding: 11px 12px;
+            margin-bottom: 17px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+        .status.show {
+            display: block;
+        }
+
+        .status.success {
+            color: #a7f3c0;
+            background: rgba(22,163,74,.12);
+            border: 1px solid rgba(22,163,74,.4);
+        }
+
+        .status.error {
+            color: #ffb4b4;
+            background: rgba(220,38,38,.12);
+            border: 1px solid rgba(220,38,38,.4);
+        }
+
+        .status.info {
+            color: #b9e8ff;
+            background: rgba(22,139,208,.12);
+            border: 1px solid rgba(22,139,208,.4);
+        }
+
+        .verified {
+            display: none;
+            color: #86efac;
+            font-size: 12px;
+            margin-top: 7px;
+        }
+
+        .verified.show {
+            display: block;
+        }
+
+        .terms {
+            color: #9aacc4;
+            font-size: 11px;
+            text-align: center;
+            margin-top: 15px;
+            line-height: 1.6;
+        }
+
+        .switch-text {
+            text-align: center;
+            margin-top: 20px;
+            color: #b8c7dd;
+            font-size: 13px;
+        }
+
+        .switch-text button {
+            background: none;
+            border: none;
+            color: #55c8ff;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 18px;
+            color: #8498b3;
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 17px 5%;
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .container {
+                padding: 24px 19px;
+            }
+
+            .heading h1 {
+                font-size: 25px;
+            }
+
+            .otp-row input {
+                flex-basis: 100%;
+            }
+
+            .small-btn {
+                min-height: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">DCRS <span>Crime Reporting System</span></div>
+    <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+    </ul>
+</nav>
+
+<main class="main">
+    <div class="container">
+
+        <div class="top-line"></div>
+
+        <div class="heading">
+            <h1>Welcome to <span>DCRS</span></h1>
+            <p>Your safety matters to us.<br>
+               Sign in or create your citizen account.</p>
+        </div>
+
+        <div class="tabs">
+            <button type="button" class="tab active" id="signupTab">
+                Sign Up
+            </button>
+
+            <button type="button" class="tab" id="signinTab">
+                Sign In
+            </button>
+        </div>
+
+        <div id="pageStatus" class="status"
+             role="status" aria-live="polite"></div>
+
+        <!-- SIGN UP -->
+
+        <section class="form-panel active" id="signupPanel">
+
+            <h2 class="form-title">Create Account</h2>
+            <p class="form-description">
+                Verify your email and mobile number to register.
+            </p>
+
+            <form id="signupForm" action="/signup" method="POST">
+
+                <div class="field">
+                    <label for="signupName">Full Name</label>
+                    <input
+                        type="text"
+                        id="signupName"
+                        name="name"
+                        placeholder="Enter your full name"
+                        minlength="2"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="signupEmail">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="signupEmail"
+                        name="email"
+                        placeholder="Enter your email address"
+                        autocomplete="email"
+                        required
+                    >
+
+                    <div class="otp-row">
+                        <input
+                            type="text"
+                            id="emailOtp"
+                            placeholder="6-digit email OTP"
+                            inputmode="numeric"
+                            maxlength="6"
+                            autocomplete="one-time-code"
+                            aria-label="Email OTP"
+                        >
+
+                        <button type="button" class="small-btn"
+                                id="sendEmailOtp">
+                            Send Email OTP
+                        </button>
+
+                        <button type="button" class="small-btn"
+                                id="verifyEmailOtp">
+                            Verify
+                        </button>
+                    </div>
+
+                    <div class="verified" id="emailVerifiedMessage">
+                        Email verified successfully.
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="signupMobile">Mobile Number</label>
+
+                    <input
+                        type="tel"
+                        id="signupMobile"
+                        name="mobile"
+                        placeholder="10-digit Indian mobile number"
+                        pattern="[6-9][0-9]{9}"
+                        maxlength="10"
+                        inputmode="numeric"
+                        autocomplete="tel-national"
+                        required
+                    >
+
+                    <div class="otp-row">
+                        <input
+                            type="text"
+                            id="mobileOtp"
+                            placeholder="6-digit SMS OTP"
+                            inputmode="numeric"
+                            maxlength="6"
+                            autocomplete="one-time-code"
+                            aria-label="Mobile SMS OTP"
+                        >
+
+                        <button type="button" class="small-btn"
+                                id="sendMobileOtp">
+                            Send SMS OTP
+                        </button>
+
+                        <button type="button" class="small-btn"
+                                id="verifyMobileOtp">
+                            Verify
+                        </button>
+                    </div>
+
+                    <div class="verified" id="mobileVerifiedMessage">
+                        Mobile number verified successfully.
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="signupPassword">Create Password</label>
+                    <input
+                        type="password"
+                        id="signupPassword"
+                        name="password"
+                        placeholder="Minimum 8 characters"
+                        minlength="8"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirm_password"
+                        placeholder="Re-enter your password"
+                        minlength="8"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <!-- Text always stays Create Account -->
+                <button
+                    type="submit"
+                    class="primary-btn"
+                    id="createAccount"
+                    disabled
+                >
+                    Create Account
+                </button>
+
+                <p class="terms">
+                    Both OTPs must be verified and passwords must match
+                    before creating your account.
+                </p>
+
+            </form>
+
+            <p class="switch-text">
+                Already have an account?
+                <button type="button" id="goToSignin">Sign In</button>
+            </p>
+
+        </section>
+
+        <!-- SIGN IN -->
+
+        <section class="form-panel" id="signinPanel">
+
+            <h2 class="form-title">Welcome Back</h2>
+            <p class="form-description">
+                Sign in to access your DCRS dashboard.
+            </p>
+
+            <form id="signinForm" action="/login" method="POST">
+
+                <div class="field">
+                    <label for="signinEmail">Email Address</label>
+                    <input
+                        type="email"
+                        id="signinEmail"
+                        name="email"
+                        placeholder="Enter your registered email"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="signinPassword">Password</label>
+                    <input
+                        type="password"
+                        id="signinPassword"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="primary-btn">
+                    Sign In
+                </button>
+
+            </form>
+
+            <p class="switch-text">
+                Don't have an account?
+                <button type="button" id="goToSignup">
+                    Create Account
+                </button>
+            </p>
+
+        </section>
+
+    </div>
+</main>
+
+<footer class="footer">
+    Digital Crime Reporting System | Citizen Portal
+</footer>
+
+<script>
+    // TAB SWITCHING
+
+    const signupTab = document.getElementById("signupTab");
+    const signinTab = document.getElementById("signinTab");
+    const signupPanel = document.getElementById("signupPanel");
+    const signinPanel = document.getElementById("signinPanel");
+    const pageStatus = document.getElementById("pageStatus");
+
+    function showStatus(message, type = "info") {
+        pageStatus.textContent = message;
+        pageStatus.className = "status show " + type;
+    }
+
+    function clearStatus() {
+        pageStatus.textContent = "";
+        pageStatus.className = "status";
+    }
+
+    function showSignup() {
+        signupPanel.classList.add("active");
+        signinPanel.classList.remove("active");
+        signupTab.classList.add("active");
+        signinTab.classList.remove("active");
+        clearStatus();
+    }
+
+    function showSignin() {
+        signinPanel.classList.add("active");
+        signupPanel.classList.remove("active");
+        signinTab.classList.add("active");
+        signupTab.classList.remove("active");
+        clearStatus();
+    }
+
+    signupTab.addEventListener("click", showSignup);
+    signinTab.addEventListener("click", showSignin);
+    document.getElementById("goToSignin").addEventListener("click", showSignin);
+    document.getElementById("goToSignup").addEventListener("click", showSignup);
+
+
+    // FORM ELEMENTS
+
+    const signupForm = document.getElementById("signupForm");
+    const signupEmail = document.getElementById("signupEmail");
+    const signupMobile = document.getElementById("signupMobile");
+    const emailOtp = document.getElementById("emailOtp");
+    const mobileOtp = document.getElementById("mobileOtp");
+    const signupPassword = document.getElementById("signupPassword");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const createAccountButton = document.getElementById("createAccount");
+
+    const emailVerifiedMessage =
+        document.getElementById("emailVerifiedMessage");
+
+    const mobileVerifiedMessage =
+        document.getElementById("mobileVerifiedMessage");
+
+    const sendEmailButton = document.getElementById("sendEmailOtp");
+    const verifyEmailButton = document.getElementById("verifyEmailOtp");
+    const sendMobileButton = document.getElementById("sendMobileOtp");
+    const verifyMobileButton = document.getElementById("verifyMobileOtp");
+
+    let emailVerified = false;
+    let mobileVerified = false;
+
+    let verifiedEmailAddress = "";
+    let verifiedMobileNumber = "";
+
+    // Initially disabled; button text remains unchanged.
+    createAccountButton.disabled = true;
+
+
+    // CREATE ACCOUNT BUTTON STATE
+
+    function updateCreateAccountButton() {
+        const emailCorrect =
+            emailVerified &&
+            verifiedEmailAddress ===
+                signupEmail.value.trim().toLowerCase();
+
+        const mobileCorrect =
+            mobileVerified &&
+            verifiedMobileNumber === signupMobile.value.trim();
+
+        const passwordsMatch =
+            signupPassword.value.length >= 8 &&
+            signupPassword.value === confirmPassword.value;
+
+        const allFieldsValid = signupForm.checkValidity();
+
+        createAccountButton.disabled = !(
+            emailCorrect &&
+            mobileCorrect &&
+            passwordsMatch &&
+            allFieldsValid
+        );
+
+        // Never change the button's label.
+        createAccountButton.textContent = "Create Account";
+    }
+
+    function invalidateEmailVerification() {
+        emailVerified = false;
+        verifiedEmailAddress = "";
+        emailVerifiedMessage.classList.remove("show");
+        updateCreateAccountButton();
+    }
+
+    function invalidateMobileVerification() {
+        mobileVerified = false;
+        verifiedMobileNumber = "";
+        mobileVerifiedMessage.classList.remove("show");
+        updateCreateAccountButton();
+    }
+
+    signupEmail.addEventListener("input", invalidateEmailVerification);
+    signupMobile.addEventListener("input", invalidateMobileVerification);
+
+    signupPassword.addEventListener("input", updateCreateAccountButton);
+    confirmPassword.addEventListener("input", updateCreateAccountButton);
+    signupForm.addEventListener("input", updateCreateAccountButton);
+    signupForm.addEventListener("change", updateCreateAccountButton);
+
+
+    // JSON REQUEST HELPER
+
+    async function postJSON(url, payload) {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        let data;
+
+        try {
+            data = await response.json();
+        } catch {
+            throw new Error(
+                "Unexpected server response. Check your Flask backend."
+            );
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                data.error || data.message || "Request failed."
+            );
+        }
+
+        return data;
+    }
+
+
+    // SEND EMAIL OTP
+
+    sendEmailButton.addEventListener("click", async () => {
+        const email = signupEmail.value.trim().toLowerCase();
+
+        if (!signupEmail.checkValidity() || !email) {
+            showStatus("Please enter a valid email address first.", "error");
+            signupEmail.focus();
+            return;
+        }
+
+        sendEmailButton.disabled = true;
+        showStatus("Sending email OTP...", "info");
+
+        try {
+            const data = await postJSON(
+                "/send-signup-email-otp",
+                { email: email }
+            );
+
+            invalidateEmailVerification();
+
+            showStatus(
+                data.message || "Email OTP sent. Check Inbox and Spam.",
+                "success"
+            );
+        } catch (error) {
+            showStatus(error.message, "error");
+        } finally {
+            sendEmailButton.disabled = false;
+        }
+    });
+
+
+    // VERIFY EMAIL OTP
+
+    verifyEmailButton.addEventListener("click", async () => {
+        const email = signupEmail.value.trim().toLowerCase();
+        const otp = emailOtp.value.trim();
+
+        if (!signupEmail.checkValidity() || !email) {
+            showStatus("Enter a valid email address first.", "error");
+            return;
+        }
+
+        if (!/^\d{6}$/.test(otp)) {
+            showStatus("Enter the 6-digit email OTP.", "error");
+            return;
+        }
+
+        verifyEmailButton.disabled = true;
+        showStatus("Verifying email OTP...", "info");
+
+        try {
+            const data = await postJSON(
+                "/verify-signup-email-otp",
+                { email: email, otp: otp }
+            );
+
+            emailVerified = true;
+            verifiedEmailAddress = email;
+            emailVerifiedMessage.classList.add("show");
+
+            updateCreateAccountButton();
+
+            showStatus(
+                data.message || "Email verified successfully.",
+                "success"
+            );
+        } catch (error) {
+            invalidateEmailVerification();
+            showStatus(error.message, "error");
+        } finally {
+            verifyEmailButton.disabled = false;
+        }
+    });
+
+
+    // SEND MOBILE SMS OTP
+
+    sendMobileButton.addEventListener("click", async () => {
+        const mobile = signupMobile.value.trim();
+
+        if (!/^[6-9]\d{9}$/.test(mobile)) {
+            showStatus(
+                "Enter a valid 10-digit Indian mobile number.",
+                "error"
+            );
+            signupMobile.focus();
+            return;
+        }
+
+        sendMobileButton.disabled = true;
+        showStatus("Sending SMS OTP...", "info");
+
+        try {
+            const data = await postJSON(
+                "/send-signup-otp",
+                { mobile: mobile }
+            );
+
+            invalidateMobileVerification();
+
+            showStatus(
+                data.message || "SMS OTP sent successfully.",
+                "success"
+            );
+        } catch (error) {
+            showStatus(error.message, "error");
+        } finally {
+            sendMobileButton.disabled = false;
+        }
+    });
+
+
+    // VERIFY MOBILE SMS OTP
+
+    verifyMobileButton.addEventListener("click", async () => {
+        const mobile = signupMobile.value.trim();
+        const otp = mobileOtp.value.trim();
+
+        if (!/^[6-9]\d{9}$/.test(mobile)) {
+            showStatus(
+                "Enter a valid 10-digit mobile number.",
+                "error"
+            );
+            return;
+        }
+
+        if (!/^\d{6}$/.test(otp)) {
+            showStatus("Enter the 6-digit SMS OTP.", "error");
+            return;
+        }
+
+        verifyMobileButton.disabled = true;
+        showStatus("Verifying mobile OTP...", "info");
+
+        try {
+            const data = await postJSON(
+                "/verify-signup-otp",
+                { mobile: mobile, otp: otp }
+            );
+
+            mobileVerified = true;
+            verifiedMobileNumber = mobile;
+            mobileVerifiedMessage.classList.add("show");
+
+            updateCreateAccountButton();
+
+            showStatus(
+                data.message || "Mobile verified successfully.",
+                "success"
+            );
+        } catch (error) {
+            invalidateMobileVerification();
+            showStatus(error.message, "error");
+        } finally {
+            verifyMobileButton.disabled = false;
+        }
+    });
+
+
+    // FINAL SIGNUP VALIDATION
+
+    signupForm.addEventListener("submit", function(event) {
+        const email = signupEmail.value.trim().toLowerCase();
+        const mobile = signupMobile.value.trim();
+
+        const emailCorrect =
+            emailVerified && verifiedEmailAddress === email;
+
+        const mobileCorrect =
+            mobileVerified && verifiedMobileNumber === mobile;
+
+        const passwordsMatch =
+            signupPassword.value.length >= 8 &&
+            signupPassword.value === confirmPassword.value;
+
+        if (!emailCorrect || !mobileCorrect || !passwordsMatch) {
+            event.preventDefault();
+            updateCreateAccountButton();
+
+            showStatus(
+                "Verify both OTPs and enter matching passwords before creating your account.",
+                "error"
+            );
+            return;
+        }
+
+        if (!signupForm.checkValidity()) {
+            event.preventDefault();
+            signupForm.reportValidity();
+            return;
+        }
+
+        showStatus("Creating your account...", "info");
+    });
+
+    // Initial state
+    updateCreateAccountButton();
+</script>
+
+</body>
+</html>

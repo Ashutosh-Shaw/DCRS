@@ -1,0 +1,447 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Report Crime | DCRS</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",Arial,sans-serif}
+body{min-height:100vh;color:#edf4ff;background:radial-gradient(circle at top right,#123e70,transparent 35%),linear-gradient(135deg,#061326,#0b1d36 55%,#071225)}
+header{padding:18px 6%;background:rgba(3,13,29,.9);border-bottom:1px solid #24456c}
+.logo{color:#62b5ff;font-size:23px;font-weight:800}.logo span{color:white}
+.flag-line{height:4px;background:linear-gradient(to right,#ff9933 33.33%,white 33.33% 66.66%,#138808 66.66%)}
+.container{max-width:1000px;width:92%;margin:35px auto}
+.heading{text-align:center;margin-bottom:28px}
+h1{font-size:clamp(27px,4vw,38px);color:#70c2ff;margin-bottom:10px}
+.heading p,.help{color:#b7c9e3;line-height:1.6}
+.notice{background:rgba(255,153,51,.09);border:1px solid rgba(255,153,51,.5);color:#ffe0b9;padding:14px 16px;border-radius:12px;margin-bottom:22px;line-height:1.6;font-size:14px}
+.form-card{background:rgba(15,35,62,.9);border:1px solid #294d75;border-radius:18px;padding:28px;margin-bottom:24px;box-shadow:0 12px 35px #0003}
+.section-title{color:#76c6ff;font-size:20px;margin-bottom:22px;padding-bottom:12px;border-bottom:1px solid #294765}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.field{min-width:0}.full{grid-column:1/-1}
+label{display:block;margin-bottom:8px;color:#e1ecff;font-size:14px;font-weight:600}
+.required{color:#ff8d8d}
+input,select,textarea{width:100%;padding:13px 14px;border-radius:9px;border:1px solid #365579;outline:none;background:#091a30;color:#f3f7ff;font-size:14px}
+input:focus,select:focus,textarea:focus{border-color:#57b5ff;box-shadow:0 0 0 3px #57b5ff20}
+input::placeholder,textarea::placeholder{color:#8196b2}
+textarea{resize:vertical;min-height:100px;line-height:1.6}
+input[type=file]{padding:10px}
+.help{font-size:12px;margin-top:7px}
+.verify-box{margin-top:12px;padding:14px;background:#041121a6;border:1px solid #294765;border-radius:10px}
+.verify-row{display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.verify-row input{flex:1;min-width:120px}
+.small-btn{border:1px solid #398bd1;border-radius:8px;padding:12px;background:#123d67;color:white;cursor:pointer;font-weight:600}
+.small-btn:disabled{opacity:.55;cursor:not-allowed}
+.verify-status{font-size:12px;color:#b6c9e1;line-height:1.5}
+.verified{color:#80f0ad}.error{color:#ffaaaa}
+.demo-otp{display:none;margin-top:10px;padding:12px;border:1px dashed #53b8ff;border-radius:8px;color:#83d3ff}
+.checkbox-row{display:flex;align-items:flex-start;gap:10px;color:#c7d6eb;font-size:13px;line-height:1.6}
+.checkbox-row input{width:auto;margin-top:4px;accent-color:#45adff}
+.submit-btn{display:block;width:100%;border:none;border-radius:10px;padding:16px;margin-top:24px;background:linear-gradient(90deg,#0875cf,#16a4e9);color:white;font-size:16px;font-weight:800;cursor:pointer}
+.submit-btn:disabled{background:#35465b;color:#aab8ca;cursor:not-allowed;opacity:.7}
+.emergency{text-align:center;padding:20px;border:1px solid #365579;border-radius:14px;background:#091a30bf;margin-bottom:25px;line-height:1.9}
+.emergency strong{color:#ffadad}.emergency a{color:#75c5ff}
+footer{text-align:center;padding:24px 12px;color:#8da5c4;font-size:13px;border-top:1px solid #203b5d}
+[hidden]{display:none!important}
+@media(max-width:650px){
+.container{margin:25px auto}.form-card{padding:19px}
+.form-grid{grid-template-columns:1fr}.full{grid-column:auto}
+.verify-row input{flex-basis:100%}.small-btn{width:100%}
+}
+</style>
+</head>
+<body>
+<header><div class="logo">DCRS <span>| Citizen Portal</span></div></header>
+<div class="flag-line"></div>
+
+<main class="container">
+<div class="heading">
+<h1>Report a Crime</h1>
+<p>Report an incident through the Digital Crime Reporting System.</p>
+</div>
+
+<div class="notice"><strong>Important:</strong> If you are in immediate danger, contact emergency services directly. Please provide accurate information to the best of your knowledge.</div>
+
+<form id="crimeForm" method="POST" action="{{ url_for('report_crime') }}" enctype="multipart/form-data">
+
+<section class="form-card">
+<h2 class="section-title">01. Complainant Details</h2>
+<div class="form-grid">
+
+<div class="field">
+<label for="full_name">Full Name <span class="required">*</span></label>
+<input id="full_name" name="full_name" placeholder="Enter your full name" required>
+</div>
+
+<div class="field">
+<label for="relation">You are reporting as <span class="required">*</span></label>
+<select id="relation" name="relation" required>
+<option value="">Select an option</option>
+<option value="Victim">Victim</option>
+<option value="Witness">Witness</option>
+<option value="On behalf of someone">On behalf of someone</option>
+<option value="Other">Other</option>
+</select>
+</div>
+
+<div class="field full">
+<label for="mobile">Mobile Number <span class="required">*</span></label>
+<input type="tel" id="mobile" name="mobile" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit mobile number" required>
+
+<div class="verify-box">
+<div class="verify-row">
+<button class="small-btn" id="sendPhoneBtn" type="button" onclick="sendOTP('mobile')">Send Mobile OTP</button>
+<span id="phoneStatus" class="verify-status">Mobile number not verified</span>
+</div>
+<div id="mobileDemoBox" class="demo-otp" aria-live="polite">
+Demo OTP: <strong id="mobileDemoOtp"></strong>
+<p class="help">Demo only: no real SMS is sent.</p>
+</div>
+<label for="phone_otp">Enter Mobile OTP</label>
+<div class="verify-row">
+<input id="phone_otp" inputmode="numeric" maxlength="6" placeholder="6-digit OTP" autocomplete="one-time-code">
+<button class="small-btn" id="verifyPhoneBtn" type="button" onclick="verifyOTP('mobile')">Verify OTP</button>
+</div>
+</div>
+</div>
+
+<div class="field full">
+<label for="email">Email Address <span class="required">*</span></label>
+<input type="email" id="email" name="email" placeholder="example@email.com" required>
+<div class="verify-box">
+<div class="verify-row">
+<button class="small-btn" id="sendEmailBtn" type="button" onclick="sendOTP('email')">Send Email OTP</button>
+<span id="emailStatus" class="verify-status">Email not verified</span>
+</div>
+<label for="email_otp">Enter Email OTP</label>
+<div class="verify-row">
+<input id="email_otp" inputmode="numeric" maxlength="6" placeholder="6-digit OTP" autocomplete="one-time-code">
+<button class="small-btn" id="verifyEmailBtn" type="button" onclick="verifyOTP('email')">Verify OTP</button>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="form-card">
+<h2 class="section-title">02. Crime / Incident Details</h2>
+<div class="form-grid">
+<div class="field">
+<label for="crime_type">Crime Category <span class="required">*</span></label>
+<select id="crime_type" name="crime_type" required>
+<option value="">Select crime category</option>
+<option>Theft</option>
+<option>Cyber Crime / Online Fraud</option>
+<option>Harassment</option>
+<option>Missing Person</option>
+<option>Physical Assault</option>
+<option>Fraud / Cheating</option>
+<option>Women Safety</option>
+<option>Property-related Incident</option>
+<option>Other</option>
+</select>
+</div>
+
+<div class="field">
+<label for="crime_date">Incident Date <span class="required">*</span></label>
+<input type="date" id="crime_date" name="crime_date" required>
+</div>
+
+<div class="field">
+<label for="crime_time">Approximate Time</label>
+<input type="time" id="crime_time" name="crime_time">
+</div>
+
+<div class="field">
+<label for="district">District / City <span class="required">*</span></label>
+<input id="district" name="district" placeholder="Enter district or city" required>
+</div>
+
+<div class="field full">
+<label for="location">Incident Location <span class="required">*</span></label>
+<input id="location" name="location" placeholder="Area, street or landmark" required>
+</div>
+
+<div class="field full">
+<label for="description">Describe the Incident <span class="required">*</span></label>
+<textarea id="description" name="description" minlength="20" placeholder="Explain what happened..." required></textarea>
+<p class="help">Enter factual details.</p>
+</div>
+</div>
+</section>
+
+<section class="form-card" id="roleDetailsSection">
+<h2 class="section-title">03. <span id="roleSectionTitle">Victim Details</span></h2>
+<p class="help" style="margin-top:-12px;margin-bottom:18px">Fields change automatically according to your selection above.</p>
+
+<div class="form-grid" id="victimFields">
+<div class="field">
+<label for="victim_name">Victim Name <span class="required">*</span></label>
+<input id="victim_name" name="victim_name" placeholder="Enter victim's name">
+</div>
+<div class="field">
+<label for="victim_mobile">Victim Mobile Number</label>
+<input id="victim_mobile" name="victim_mobile" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number">
+</div>
+<div class="field full">
+<label for="victim_address">Victim Address</label>
+<textarea id="victim_address" name="victim_address" rows="2" placeholder="Victim's address, if known"></textarea>
+</div>
+</div>
+
+<div class="form-grid" id="witnessFields" hidden>
+<div class="field">
+<label for="witness_name">Witness Name <span class="required">*</span></label>
+<input id="witness_name" name="witness_name" placeholder="Enter witness's name">
+</div>
+<div class="field">
+<label for="witness_mobile">Witness Mobile Number</label>
+<input id="witness_mobile" name="witness_mobile" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number">
+</div>
+<div class="field full">
+<label for="witness_observation">What did the witness observe? <span class="required">*</span></label>
+<textarea id="witness_observation" name="witness_observation" minlength="5" placeholder="Describe what was seen or heard"></textarea>
+</div>
+</div>
+
+<div class="form-grid" id="behalfFields" hidden>
+<div class="field">
+<label for="person_name">Person's Name <span class="required">*</span></label>
+<input id="person_name" name="person_name" placeholder="Name of the person you are reporting for">
+</div>
+<div class="field">
+<label for="person_mobile">Person's Mobile Number</label>
+<input id="person_mobile" name="person_mobile" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number">
+</div>
+<div class="field">
+<label for="relationship_to_person">Your Relationship <span class="required">*</span></label>
+<input id="relationship_to_person" name="relationship_to_person" placeholder="e.g. parent, friend, colleague">
+</div>
+<div class="field full">
+<label for="person_address">Person's Address</label>
+<textarea id="person_address" name="person_address" rows="2" placeholder="Address, if known"></textarea>
+</div>
+</div>
+
+<div class="form-grid" id="otherFields" hidden>
+<div class="field full">
+<label for="other_role">Please explain your role <span class="required">*</span></label>
+<input id="other_role" name="other_role" placeholder="Explain why you are reporting">
+</div>
+<div class="field full">
+<label for="other_details">Additional Details</label>
+<textarea id="other_details" name="other_details" rows="3" placeholder="Any additional relevant details"></textarea>
+</div>
+</div>
+</section>
+
+<section class="form-card">
+<h2 class="section-title">04. Evidence / Supporting Files</h2>
+<div class="form-grid">
+<div class="field full">
+<label for="photo">Upload Evidence Photo</label>
+<input type="file" id="photo" name="photo" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+<p class="help">Optional. JPG, JPEG, PNG or WEBP only. Maximum size: 5 MB.</p>
+</div>
+</div>
+</section>
+
+<section class="form-card">
+<h2 class="section-title">05. Declaration</h2>
+<label class="checkbox-row">
+<input type="checkbox" id="declaration" name="declaration" required>
+<span>I confirm that the information provided is accurate to the best of my knowledge. I understand that this submission does not itself guarantee registration of an official FIR.</span>
+</label>
+<button type="submit" class="submit-btn" id="submitBtn" disabled>Submit Crime Report</button>
+<p class="help" id="submitHelp" style="text-align:center;margin-top:12px">Verify your mobile number and email address to enable submission.</p>
+</section>
+</form>
+
+<div class="emergency">
+<strong>Emergency Help</strong><br>
+Police Emergency: <strong>112</strong><br>
+Cyber Crime Helpline: <strong>1930</strong><br>
+Cyber Crime Portal: <a href="https://cybercrime.gov.in/" target="_blank" rel="noopener noreferrer">cybercrime.gov.in</a>
+</div>
+</main>
+
+<footer>Digital Crime Reporting System (DCRS) | A citizen-focused academic project</footer>
+
+<script>
+const verified = {mobile:false, email:false};
+const sentTo = {mobile:"", email:""};
+const form = document.getElementById("crimeForm");
+const submitBtn = document.getElementById("submitBtn");
+const submitHelp = document.getElementById("submitHelp");
+const relationSelect = document.getElementById("relation");
+
+const roleConfigs = {
+  "Victim": {title:"Victim Details", panel:"victimFields", required:["victim_name"]},
+  "Witness": {title:"Witness Details", panel:"witnessFields", required:["witness_name","witness_observation"]},
+  "On behalf of someone": {title:"Person You Are Reporting For", panel:"behalfFields", required:["person_name","relationship_to_person"]},
+  "Other": {title:"Other Reporter Details", panel:"otherFields", required:["other_role"]}
+};
+
+function updateRoleFields() {
+  const role = relationSelect.value;
+  const config = roleConfigs[role] || roleConfigs["Victim"];
+  document.getElementById("roleSectionTitle").textContent =
+    role ? config.title : "Additional Details";
+
+  ["victimFields","witnessFields","behalfFields","otherFields"].forEach(id => {
+    const panel = document.getElementById(id);
+    const active = Boolean(role) && id === config.panel;
+    panel.hidden = !active;
+    panel.querySelectorAll("input,textarea,select").forEach(input => {
+      input.disabled = !active;
+      input.required = active && config.required.includes(input.id);
+    });
+  });
+}
+relationSelect.addEventListener("change", updateRoleFields);
+updateRoleFields();
+
+function currentValue(type) {
+  const value = document.getElementById(type).value.trim();
+  return type === "email" ? value.toLowerCase() : value;
+}
+
+function setStatus(type, message, success=false) {
+  const el = document.getElementById(type === "mobile" ? "phoneStatus" : "emailStatus");
+  el.textContent = message;
+  el.className = "verify-status " + (success ? "verified" : "error");
+}
+
+function updateSubmitButton() {
+  const ok = verified.mobile && verified.email &&
+    sentTo.mobile === currentValue("mobile") &&
+    sentTo.email === currentValue("email");
+  submitBtn.disabled = !ok;
+  submitHelp.textContent = ok
+    ? "Mobile and email verified. You can submit your report."
+    : "Verify your mobile number and email address to enable submission.";
+}
+
+function invalidate(type) {
+  verified[type] = false;
+  sentTo[type] = "";
+  document.getElementById(type === "mobile" ? "phone_otp" : "email_otp").value = "";
+  if (type === "mobile") document.getElementById("mobileDemoBox").style.display = "none";
+  setStatus(type, type === "mobile" ? "Mobile number not verified" : "Email not verified");
+  updateSubmitButton();
+}
+document.getElementById("mobile").addEventListener("input", () => invalidate("mobile"));
+document.getElementById("email").addEventListener("input", () => invalidate("email"));
+
+async function postForm(url, fields) {
+  const response = await fetch(url, {
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded"},
+    body:new URLSearchParams(fields)
+  });
+  let result;
+  try { result = await response.json(); }
+  catch { throw new Error("Unexpected server response. Check your Flask route."); }
+  if (!response.ok || result.success === false || result.error) {
+    throw new Error(result.message || result.error || "Request failed.");
+  }
+  return result;
+}
+
+async function sendOTP(type) {
+  const value = currentValue(type);
+  if (!value) {
+    alert(type === "mobile" ? "Enter your mobile number first." : "Enter your email first.");
+    return;
+  }
+  if (type === "mobile" && !/^[6-9]\d{9}$/.test(value)) {
+    alert("Enter a valid 10-digit Indian mobile number."); return;
+  }
+  if (type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+    alert("Enter a valid email address."); return;
+  }
+
+  verified[type] = false;
+  sentTo[type] = "";
+  updateSubmitButton();
+
+  const button = document.getElementById(type === "mobile" ? "sendPhoneBtn" : "sendEmailBtn");
+  button.disabled = true;
+  try {
+    const endpoint = type === "mobile" ? "/report/send-mobile-otp" : "/report/send-email-otp";
+    const result = await postForm(endpoint, {[type]:value});
+    sentTo[type] = value;
+
+    if (type === "mobile") {
+      if (!result.demo_otp) throw new Error("Backend did not return demo_otp. Check the mobile OTP route.");
+      document.getElementById("mobileDemoOtp").textContent = result.demo_otp;
+      document.getElementById("mobileDemoBox").style.display = "block";
+      setStatus("mobile", "Demo OTP generated. Enter the OTP shown above.");
+    } else {
+      setStatus("email", "OTP sent. Check your Inbox and Spam folder.");
+      alert("Email OTP sent. Check your Inbox and Spam folder.");
+    }
+  } catch (error) {
+    setStatus(type, error.message);
+    alert(error.message);
+  } finally {
+    button.disabled = false;
+    updateSubmitButton();
+  }
+}
+
+async function verifyOTP(type) {
+  const value = currentValue(type);
+  const otp = document.getElementById(type === "mobile" ? "phone_otp" : "email_otp").value.trim();
+
+  if (!sentTo[type] || sentTo[type] !== value) {
+    alert("Send a new OTP for the current contact details."); return;
+  }
+  if (!/^\d{6}$/.test(otp)) {
+    setStatus(type, "Enter a valid 6-digit OTP.");
+    alert("Enter exactly 6 digits."); return;
+  }
+
+  const button = document.getElementById(type === "mobile" ? "verifyPhoneBtn" : "verifyEmailBtn");
+  button.disabled = true;
+  try {
+    const result = await postForm("/report/verify-otp", {
+      kind:type, otp:otp, destination:value
+    });
+    verified[type] = true;
+    setStatus(type, result.message || "Verified successfully.", true);
+  } catch (error) {
+    verified[type] = false;
+    setStatus(type, error.message);
+    alert(error.message);
+  } finally {
+    button.disabled = false;
+    updateSubmitButton();
+  }
+}
+
+form.addEventListener("submit", function(event) {
+  if (!form.reportValidity()) {
+    event.preventDefault(); return;
+  }
+  if (!verified.mobile || !verified.email ||
+      sentTo.mobile !== currentValue("mobile") ||
+      sentTo.email !== currentValue("email")) {
+    event.preventDefault();
+    alert("Please verify both mobile number and email address.");
+    return;
+  }
+
+  const file = document.getElementById("photo");
+  if (file.files.length && file.files[0].size > 5 * 1024 * 1024) {
+    event.preventDefault();
+    alert("Photo exceeds 5 MB. Please choose a smaller image.");
+  }
+});
+
+updateSubmitButton();
+</script>
+</body>
+</html>

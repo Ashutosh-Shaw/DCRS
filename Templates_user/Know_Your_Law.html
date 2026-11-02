@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Know Your Laws | DCRS</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #07152e, #0b2854, #07152e);
+    color: #fff;
+    min-height: 100vh;
+}
+
+.tricolour-line {
+    height: 4px;
+    background: linear-gradient(to right,
+        #ff9933 33.33%, #fff 33.33% 66.66%, #138808 66.66%);
+}
+
+/* Navbar */
+.navbar {
+    min-height: 76px;
+    padding: 15px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+    background: rgba(5, 17, 39, .95);
+    border-bottom: 1px solid rgba(75, 163, 255, .25);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.logo-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #1688ff, #0752c7);
+    box-shadow: 0 0 18px #1688ff55;
+    font-size: 18px;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.logo-text span {
+    margin-top: 4px;
+    color: #45caff;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: #dceaff;
+    text-decoration: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background: #1688ff30;
+    color: #fff;
+}
+
+/* Main layout: top to bottom */
+.container {
+    width: 100%;
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 35px 20px 50px;
+}
+
+.hero {
+    text-align: center;
+    margin: 15px 0 28px;
+}
+
+.eyebrow {
+    color: #45caff;
+    font-size: 12px;
+    letter-spacing: 3px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.hero h1 {
+    font-size: clamp(29px, 5vw, 42px);
+    margin-bottom: 12px;
+}
+
+.hero h1 span {
+    color: #45caff;
+}
+
+.hero p {
+    max-width: 650px;
+    margin: auto;
+    color: #b9cce7;
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+/* Search bar */
+.search-box {
+    display: flex;
+    gap: 10px;
+    max-width: 760px;
+    margin: 0 auto 20px;
+    padding: 9px;
+    border: 1px solid #56aaff55;
+    border-radius: 14px;
+    background: #07152ebf;
+    box-shadow: 0 10px 30px #0003;
+}
+
+.search-box input {
+    flex: 1;
+    min-width: 0;
+    padding: 13px 14px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 15px;
+}
+
+.search-box input::placeholder {
+    color: #9cb4d5;
+}
+
+.search-box button {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 9px;
+    color: white;
+    background: linear-gradient(135deg, #1688ff, #0752c7);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.quick-search {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-bottom: 32px;
+}
+
+.quick-search button {
+    padding: 8px 13px;
+    border: 1px solid #6baaff44;
+    border-radius: 20px;
+    background: #ffffff0b;
+    color: #cfe3ff;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.quick-search button:hover {
+    background: #1688ff33;
+}
+
+/* Rotating law card */
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.section-heading h2,
+.results-section h2 {
+    font-size: 22px;
+}
+
+.live-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #70f0ae;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #28db83;
+    box-shadow: 0 0 10px #28db83;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    50% { opacity: .35; }
+}
+
+.law-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 315px;
+    padding: 30px;
+    border: 1px solid #65b5ff44;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #102e59, #091a37);
+    box-shadow: 0 15px 40px #0003;
+}
+
+.law-card::after {
+    content: "§";
+    position: absolute;
+    right: 25px;
+    top: -40px;
+    font-size: 210px;
+    font-weight: bold;
+    color: #ffffff08;
+    pointer-events: none;
+}
+
+.law-content {
+    position: relative;
+    z-index: 1;
+}
+
+.law-category {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 20px;
+    color: #6fd4ff;
+    background: #1688ff20;
+    border: 1px solid #1688ff44;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 17px;
+}
+
+.law-card h3 {
+    font-size: clamp(22px, 4vw, 30px);
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.section-number {
+    color: #55c9ff;
+    font-weight: bold;
+}
+
+.law-card p {
+    max-width: 750px;
+    color: #c4d5eb;
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+.law-card .law-note {
+    margin-top: 17px;
+    color: #94b8e8;
+    font-size: 12px;
+}
+
+.law-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+}
+
+.action-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #6baaff55;
+    background: #ffffff0b;
+    color: #e5f2ff;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.action-btn:hover {
+    background: #1688ff30;
+}
+
+/* Only navigation arrows; no counter or progress line */
+.rotation-controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 18px;
+}
+
+.arrow-buttons {
+    display: flex;
+    gap: 9px;
+}
+
+.arrow-buttons button {
+    width: 42px;
+    height: 40px;
+    border-radius: 9px;
+    border: 1px solid #65b5ff55;
+    background: #ffffff0b;
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.arrow-buttons button:hover {
+    background: #1688ff44;
+}
+
+/* Search results */
+.results-section {
+    margin-top: 35px;
+}
+
+.results-section h2 {
+    margin-bottom: 16px;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.result-card {
+    padding: 20px;
+    border: 1px solid #65b5ff30;
+    border-radius: 13px;
+    background: #102749bb;
+}
+
+.result-card h3 {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.result-card p {
+    color: #bbcee7;
+    line-height: 1.7;
+    font-size: 13px;
+}
+
+.result-section {
+    color: #55c9ff;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.result-card button {
+    margin-top: 14px;
+    padding: 8px 12px;
+    border: 1px solid #65b5ff55;
+    border-radius: 7px;
+    background: #1688ff20;
+    color: white;
+    cursor: pointer;
+}
+
+.no-results {
+    padding: 25px;
+    color: #c4d5eb;
+    text-align: center;
+    border: 1px dashed #65b5ff55;
+    border-radius: 12px;
+    grid-column: 1 / -1;
+    line-height: 1.7;
+}
+
+.official-box {
+    margin-top: 35px;
+    padding: 22px;
+    border-radius: 14px;
+    background: #ffffff08;
+    border: 1px solid #ffffff18;
+}
+
+.official-box h3 {
+    margin-bottom: 10px;
+}
+
+.official-box p {
+    color: #b9cce7;
+    line-height: 1.7;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.official-box a {
+    color: #55c9ff;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.footer {
+    padding: 20px;
+    text-align: center;
+    color: #8ea8ca;
+    font-size: 12px;
+    border-top: 1px solid #ffffff12;
+}
+
+@media (max-width: 650px) {
+    .navbar {
+        justify-content: center;
+    }
+
+    .nav-links {
+        justify-content: center;
+    }
+
+    .container {
+        padding: 25px 14px 35px;
+    }
+
+    .search-box button {
+        padding: 12px 14px;
+    }
+
+    .law-card {
+        padding: 22px 18px;
+        min-height: 350px;
+    }
+
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-heading h2,
+    .results-section h2 {
+        font-size: 19px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="tricolour-line"></div>
+
+<header class="navbar">
+    <div class="logo">
+        <div class="logo-icon">CR</div>
+        <div class="logo-text">
+            Crime
+            <span>Reporting System</span>
+        </div>
+    </div>
+
+    <nav class="nav-links">
+        <a href="Dashboard.html">Dashboard</a>
+        <a href="Report_crime.html">Report Crime</a>
+        <a href="My_Complaint.html">My Complaints</a>
+        <a href="My_profile.html">My Profile</a>
+        <a href="Know_Your_Law.html" class="active">Know Your Laws</a>
+        <a href="logout">Logout</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <!-- 1. Heading -->
+    <section class="hero">
+        <div class="eyebrow">CITIZEN LEGAL AWARENESS</div>
+        <h1>Know Your <span>Laws</span></h1>
+        <p>
+            Understand your rights, explore important Indian laws,
+            and learn about legal provisions in simple language.
+        </p>
+    </section>
+
+    <!-- 2. Search bar -->
+    <form class="search-box" id="searchForm">
+        <input
+            type="search"
+            id="lawSearch"
+            placeholder="Search law, section number or keyword..."
+            aria-label="Search laws"
+        >
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- 3. Quick searches -->
+    <div class="quick-search">
+        <button type="button" data-query="theft">Theft</button>
+        <button type="button" data-query="cheating">Online Fraud / Cheating</button>
+        <button type="button" data-query="stalking">Stalking</button>
+        <button type="button" data-query="cyber">Cyber Crime</button>
+        <button type="button" data-query="dowry">Dowry</button>
+    </div>
+
+    <!-- 4. Rotating law card -->
+    <section id="rotatingSection">
+        <div class="section-heading">
+            <h2>Important Laws</h2>
+            <div class="live-label">
+                <span class="live-dot"></span>
+                AUTO ROTATION
+            </div>
+        </div>
+
+        <article class="law-card" aria-live="polite">
+            <div class="law-content">
+                <span class="law-category" id="lawCategory"></span>
+
+                <h3 id="lawTitle"></h3>
+
+                <p id="lawDescription"></p>
+
+                <p class="law-note" id="lawNote"></p>
+
+                <div class="law-actions">
+                    <a
+                        class="action-btn"
+                        id="officialLink"
+                        href="https://www.indiacode.nic.in/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        View Official Legal Source ↗
+                    </a>
+
+                    <button class="action-btn" id="pauseButton" type="button">
+                        Pause Rotation
+                    </button>
+                </div>
+            </div>
+        </article>
+
+        <!-- Only Previous / Next buttons -->
+        <div class="rotation-controls">
+            <div class="arrow-buttons">
+                <button id="previousButton" type="button"
+                    aria-label="Previous law">‹</button>
+                <button id="nextButton" type="button"
+                    aria-label="Next law">›</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Search results -->
+    <section class="results-section hidden" id="resultsSection">
+        <h2 id="resultsHeading">Search Results</h2>
+        <div class="results-grid" id="resultsGrid"></div>
+    </section>
+
+    <!-- 6. Legal information -->
+    <section class="official-box">
+        <h3>Important Legal Information</h3>
+        <p>
+            These summaries are for educational purposes and are not legal
+            advice. The applicable provision and consequences depend on the
+            facts, statutory wording and exceptions. Automatic rotation
+            changes the displayed card; it does not mean that laws are
+            being updated in real time.
+        </p>
+
+        <p style="margin-top: 10px;">
+            Official references:
+            <a href="https://www.indiacode.nic.in/"
+               target="_blank" rel="noopener noreferrer">India Code</a>
+            ·
+            <a href="https://www.mha.gov.in/en/commoncontent/new-criminal-laws"
+               target="_blank" rel="noopener noreferrer">Ministry of Home Affairs</a>
+            ·
+            <a href="https://cytrain.ncrb.gov.in/staticpage/web_pages/Index.html"
+               target="_blank" rel="noopener noreferrer">NCRB</a>
+        </p>
+    </section>
+
+</main>
+
+<footer class="footer">
+    Digital Crime Reporting System (DCRS) | Know Your Laws
+</footer>
+
+<script>
+const laws = [
+    {
+        category: "Property Offence",
+        title: "Theft",
+        section: "BNS Section 303",
+        description:
+            "Theft generally involves dishonestly taking movable property out of another person's possession without their consent.",
+        note: "Check the full section for its legal ingredients, exceptions and consequences.",
+        keywords: "theft stealing stolen property chori property",
+        source: "https://www.indiacode.nic.in/"
+    },
+    {
+        category: "Fraud",
+        title: "Cheating",
+        section: "BNS Section 318",
+        description:
+            "This provision deals with cheating. The facts and the applicable subsection matter when assessing a case.",
+        note: "Not every broken promise or disagreement automatically amounts to cheating.",
+        keywords: "cheating fraud scam online fraud deception",
+        source: "https://www.indiacode.nic.in/"
+    },
+    {
+        category: "Women's Safety",
+        title: "Stalking",
+        section: "BNS Section 78",
+        description:
+            "This provision addresses specified conduct involving stalking a woman, including certain repeated contact despite clear disinterest and monitoring electronic communications, subject to legal exceptions.",
+        note: "Read the full section to understand its elements and exceptions.",
+        keywords: "stalking following harassment women safety online monitoring",
+        source: "https://www.indiacode.nic.in/"
+    },
+    {
+        category: "Cyber Crime",
+        title: "Identity Theft",
+        section: "IT Act Section 66C",
+        description:
+            "This provision addresses fraudulent or dishonest use of another person's specified electronic signature, password or other unique identification feature.",
+        note: "Preserve relevant messages, transaction records and other evidence.",
+        keywords: "cyber crime identity theft password digital identity hacking",
+        source: "https://www.indiacode.nic.in/"
+    },
+    {
+        category: "Cyber Crime",
+        title: "Online Personation Fraud",
+        section: "IT Act Section 66D",
+        description:
+            "This provision addresses cheating by personation using a communication device or computer resource.",
+        note: "For online financial fraud, promptly contact your bank and India's cybercrime reporting channels.",
+        keywords: "cyber online fraud impersonation fake profile scam digital",
+        source: "https://www.indiacode.nic.in/"
+    },
+    {
+        category: "Personal Safety",
+        title: "Voluntarily Causing Hurt",
+        section: "BNS Section 115",
+        description:
+            "This section addresses voluntarily causing hurt. The circumstances and statutory requirements determine how it applies.",
+        note: "Medical records and other evidence may be relevant to an investigation.",
+        keywords: "hurt injury assault physical violence maarpeet",
+        source: "https://www.indiacode.nic.in/"
+    },
+    {
+        category: "Women's Safety",
+        title: "Sexual Harassment",
+        section: "BNS Section 75",
+        description:
+            "This section specifies forms of sexual harassment and associated legal consequences.",
+        note: "The conduct must be assessed against the wording and requirements of the section.",
+        keywords: "sexual harassment women safety inappropriate behaviour",
+        source: "https://www.indiacode.nic.in/"
+    },
+    {
+        category: "Women's Safety",
+        title: "Assault or Criminal Force Against a Woman",
+        section: "BNS Section 74",
+        description:
+            "This provision concerns assault or criminal force against a woman with the intent specified in the section.",
+        note: "The legal ingredients and circumstances are important to its application.",
+        keywords: "assault woman safety force harassment",
+        source: "https://www.indiacode.nic.in/"
+    },
+    {
+        category: "Family Protection",
+        title: "Dowry Demand",
+        section: "Dowry Prohibition Act, 1961 — Section 4",
+        description:
+            "Section 4 addresses demanding dowry from specified relatives or guardians of a bride or bridegroom, subject to the Act's wording.",
+        note: "Dowry-related issues may involve additional provisions depending on the facts.",
+        keywords: "dowry dahej marriage family demand bride groom",
+        source: "https://www.indiacode.nic.in/"
+    },
+    {
+        category: "Criminal Procedure",
+        title: "Information About a Cognizable Offence",
+        section: "BNSS Section 173",
+        description:
+            "This provision deals with information relating to cognizable offences and the procedure for recording it, including specified electronic information and safeguards.",
+        note: "Consult the full section for applicable procedures and requirements.",
+        keywords: "FIR police complaint cognizable offence report crime procedure",
+        source: "https://www.indiacode.nic.in/"
+    }
+];
+
+const ROTATION_DELAY = 4000;
+
+let currentIndex = 0;
+let rotationTimer = null;
+let isPaused = false;
+
+const titleElement = document.getElementById("lawTitle");
+const categoryElement = document.getElementById("lawCategory");
+const descriptionElement = document.getElementById("lawDescription");
+const noteElement = document.getElementById("lawNote");
+const linkElement = document.getElementById("officialLink");
+const pauseButton = document.getElementById("pauseButton");
+const resultsSection = document.getElementById("resultsSection");
+
+function renderLaw(index) {
+    currentIndex = (index + laws.length) % laws.length;
+    const law = laws[currentIndex];
+
+    categoryElement.textContent = law.category;
+    titleElement.textContent = law.title + " — " + law.section;
+    descriptionElement.textContent = law.description;
+    noteElement.textContent = law.note;
+    linkElement.href = law.source;
+}
+
+function stopRotation() {
+    if (rotationTimer !== null) {
+        clearInterval(rotationTimer);
+        rotationTimer = null;
+    }
+}
+
+function startRotation() {
+    stopRotation();
+
+    if (isPaused) return;
+
+    rotationTimer = setInterval(function() {
+        if (document.hidden) return;
+        if (!resultsSection.classList.contains("hidden")) return;
+
+        renderLaw(currentIndex + 1);
+    }, ROTATION_DELAY);
+}
+
+function setPaused(paused) {
+    isPaused = paused;
+    pauseButton.textContent = isPaused
+        ? "Resume Rotation"
+        : "Pause Rotation";
+
+    if (isPaused) {
+        stopRotation();
+    } else {
+        startRotation();
+    }
+}
+
+document.getElementById("nextButton").addEventListener("click", function() {
+    renderLaw(currentIndex + 1);
+});
+
+document.getElementById("previousButton").addEventListener("click", function() {
+    renderLaw(currentIndex - 1);
+});
+
+pauseButton.addEventListener("click", function() {
+    setPaused(!isPaused);
+});
+
+function searchLaws(query) {
+    const normalizedQuery = query.trim().toLowerCase();
+    const resultsGrid = document.getElementById("resultsGrid");
+    const resultsHeading = document.getElementById("resultsHeading");
+
+    if (!normalizedQuery) {
+        resultsSection.classList.add("hidden");
+        startRotation();
+        return;
+    }
+
+    const matches = laws.filter(function(law) {
+        const searchableText = [
+            law.title,
+            law.section,
+            law.category,
+            law.description,
+            law.note,
+            law.keywords
+        ].join(" ").toLowerCase();
+
+        return searchableText.includes(normalizedQuery);
+    });
+
+    resultsSection.classList.remove("hidden");
+    resultsHeading.textContent = "Search Results (" + matches.length + ")";
+    resultsGrid.replaceChildren();
+
+    if (matches.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "no-results";
+        empty.textContent =
+            "No matching law found in this demo's 10 entries. Try another keyword or section number.";
+        resultsGrid.appendChild(empty);
+        return;
+    }
+
+    matches.forEach(function(law) {
+        const card = document.createElement("article");
+        card.className = "result-card";
+
+        const section = document.createElement("div");
+        section.className = "result-section";
+        section.textContent = law.section;
+
+        const heading = document.createElement("h3");
+        heading.textContent = law.title;
+
+        const description = document.createElement("p");
+        description.textContent = law.description;
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = "Show in Rotating Laws";
+
+        button.addEventListener("click", function() {
+            renderLaw(laws.indexOf(law));
+            resultsSection.classList.add("hidden");
+
+            document.getElementById("rotatingSection")
+                .scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        card.append(section, heading, description, button);
+        resultsGrid.appendChild(card);
+    });
+}
+
+document.getElementById("searchForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    searchLaws(document.getElementById("lawSearch").value);
+});
+document.querySelector(".search-box button").addEventListener("click", function() {
+    searchLaws(document.getElementById("lawSearch").value);
+});
+
+document.getElementById("lawSearch").addEventListener("input", function() {
+    if (this.value.trim()) {
+        searchLaws(this.value);
+    } else {
+        resultsSection.classList.add("hidden");
+        startRotation();
+    }
+});
+
+document.querySelectorAll("[data-query]").forEach(function(button) {
+    button.addEventListener("click", function() {
+        const query = this.dataset.query;
+        document.getElementById("lawSearch").value = query;
+        searchLaws(query);
+
+        resultsSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    });
+});
+
+renderLaw(0);
+startRotation();
+</script>
+
+</body>
+</html>

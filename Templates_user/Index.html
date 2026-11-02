@@ -1,0 +1,517 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crime Reporting System</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 10% 10%, #123f70, transparent 35%),
+        radial-gradient(circle at 90% 90%, #06486d, transparent 35%),
+        #061326;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* Background Chakra */
+.chakra {
+    position: fixed;
+    right: -130px;
+    top: 30%;
+    width: 480px;
+    height: 480px;
+    border: 3px solid rgba(50,180,255,.08);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.chakra::before {
+    content: "☸";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 420px;
+    color: rgba(50,180,255,.055);
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    z-index: 1;
+    min-height: 510px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 65px 20px;
+}
+
+.hero-content {
+    max-width: 780px;
+}
+
+.flag-line {
+    width: 90px;
+    height: 4px;
+    margin: 0 auto 22px;
+    border-radius: 10px;
+    background: linear-gradient(
+        90deg,
+        #ff9933 33%,
+        white 33% 66%,
+        #138808 66%
+    );
+}
+
+.chakra-icon {
+    width: 66px;
+    height: 66px;
+    margin: 0 auto 20px;
+    display: grid;
+    place-items: center;
+    border: 2px solid #35baff;
+    border-radius: 50%;
+    color: #35baff;
+    font-size: 40px;
+}
+
+.hero h1 {
+    font-size: clamp(28px, 5vw, 43px);
+    margin-bottom: 15px;
+}
+
+.hero h1 span {
+    color: #35baff;
+}
+
+.hero h2 {
+    font-size: 16px;
+    color: #d4dfeb;
+    font-weight: normal;
+    margin-bottom: 18px;
+}
+
+.hero p {
+    max-width: 680px;
+    margin: auto;
+    color: #91a5ba;
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 28px;
+}
+
+.btn {
+    display: inline-block;
+    min-width: 165px;
+    padding: 14px 22px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: .3s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+}
+
+.report {
+    color: white;
+    background: linear-gradient(135deg, #008cff, #0055ff);
+    box-shadow: 0 8px 25px rgba(0,110,255,.25);
+}
+
+.signup {
+    color: #dce8f5;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.18);
+}
+
+.login-link {
+    display: inline-block;
+    margin-top: 22px;
+    color: #35baff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+/* Information Section */
+.info-section {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: auto;
+    padding: 10px 22px 50px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.info-card {
+    padding: 25px;
+    border-radius: 18px;
+    background: rgba(255,255,255,.065);
+    border: 1px solid rgba(255,255,255,.1);
+    box-shadow: 0 15px 40px rgba(0,0,0,.18);
+}
+
+.info-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.info-icon {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: rgba(0,140,255,.15);
+    color: #35baff;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.info-title h3 {
+    font-size: 17px;
+}
+
+.law-list {
+    list-style: none;
+}
+
+.law-list li {
+    padding: 12px 0;
+    color: #b3c3d5;
+    font-size: 13px;
+    line-height: 1.7;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.law-list li:last-child {
+    border-bottom: none;
+}
+
+.law-list span {
+    color: #35baff;
+    margin-right: 8px;
+}
+
+/* Emergency */
+.emergency-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.emergency-box {
+    padding: 18px 10px;
+    text-align: center;
+    border-radius: 12px;
+    background: rgba(0,0,0,.15);
+    border: 1px solid rgba(255,255,255,.07);
+}
+
+.emergency-number {
+    font-size: 25px;
+    font-weight: bold;
+    color: #ff7777;
+    margin-bottom: 8px;
+}
+
+.emergency-box p {
+    color: #a5b6c9;
+    font-size: 12px;
+}
+
+.call-link {
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+    color: #35baff;
+    text-decoration: none;
+}
+
+.call-link:hover {
+    text-decoration: underline;
+}
+
+/* About Section */
+.about {
+    position: relative;
+    z-index: 1;
+    padding: 45px 20px;
+    text-align: center;
+    background: rgba(255,255,255,.025);
+}
+
+.about h2 {
+    margin-bottom: 16px;
+    font-size: 26px;
+}
+
+.about p {
+    max-width: 760px;
+    margin: auto;
+    color: #9eb1c6;
+    line-height: 1.9;
+    font-size: 14px;
+}
+
+.page-link {
+    display: inline-block;
+    margin-top: 18px;
+    color: #35baff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.page-link:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    position: relative;
+    z-index: 1;
+    padding: 22px;
+    text-align: center;
+    color: #8295aa;
+    font-size: 12px;
+    line-height: 1.9;
+    border-top: 1px solid rgba(255,255,255,.08);
+}
+
+footer a {
+    color: #35baff;
+    text-decoration: none;
+    margin: 0 8px;
+    display: inline-block;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 750px) {
+    .info-section {
+        grid-template-columns: 1fr;
+    }
+
+    .chakra {
+        width: 330px;
+        height: 330px;
+        right: -220px;
+    }
+
+    .chakra::before {
+        font-size: 280px;
+    }
+
+    .hero {
+        min-height: 460px;
+    }
+}
+
+@media (max-width: 420px) {
+    .info-card {
+        padding: 20px;
+    }
+
+    .btn {
+        min-width: 145px;
+        padding: 13px 16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="chakra"></div>
+
+<!-- HERO SECTION: NO NAVIGATION BAR -->
+<section class="hero">
+    <div class="hero-content">
+
+        <div class="flag-line"></div>
+        <div class="chakra-icon">☸</div>
+
+        <h1>Crime <span>Reporting System</span></h1>
+
+        <h2>Report | Track | Stay Safe</h2>
+
+        <p>
+            A digital platform designed to help citizens report incidents,
+            submit supporting evidence and track complaint status through
+            a simple, accessible and secure system.
+        </p>
+
+        <div class="buttons">
+            <a href="{{ url_for('login') }}" class="btn report">
+                Report a Crime
+            </a>
+
+            <a href="{{ url_for('signup') }}" class="btn signup">
+                Create Account
+            </a>
+        </div>
+
+        <a href="{{ url_for('login') }}" class="login-link">
+            Already have an account? Login
+        </a>
+
+    </div>
+</section>
+
+<!-- INFORMATION SECTION -->
+<section class="info-section">
+
+    <div class="info-card" id="safety">
+
+        <div class="info-title">
+            <div class="info-icon">LAW</div>
+            <h3>Law & Safety Information</h3>
+        </div>
+
+        <ul class="law-list">
+            <li>
+                <span>✓</span>
+                Never share your OTP, password or PIN.
+            </li>
+
+            <li>
+                <span>✓</span>
+                Provide truthful and accurate complaint details.
+            </li>
+
+            <li>
+                <span>✓</span>
+                Keep evidence and your Complaint ID safe.
+            </li>
+
+            <li>
+                <span>✓</span>
+                Avoid sharing sensitive personal information publicly.
+            </li>
+
+            <li>
+                <span>✓</span>
+                Contact emergency services if someone is in immediate danger.
+            </li>
+        </ul>
+
+        <a href="{{ url_for('know_your_law') }}" class="page-link">
+            Know Your Law
+        </a>
+
+    </div>
+
+    <div class="info-card" id="emergency">
+
+        <div class="info-title">
+            <div class="info-icon">SOS</div>
+            <h3>Emergency Numbers</h3>
+        </div>
+
+        <div class="emergency-grid">
+
+            <div class="emergency-box">
+                <div class="emergency-number">112</div>
+                <p>Emergency Response</p>
+            </div>
+
+            <div class="emergency-box">
+                <div class="emergency-number">108</div>
+                <p>Ambulance</p>
+            </div>
+
+            <div class="emergency-box">
+                <div class="emergency-number">101</div>
+                <p>Fire Services</p>
+            </div>
+
+            <div class="emergency-box">
+                <div class="emergency-number">1930</div>
+                <p>Cyber Financial Fraud</p>
+            </div>
+
+        </div>
+
+        <a class="call-link" href="tel:112">
+            Call Emergency Helpline
+        </a>
+
+    </div>
+
+</section>
+
+<!-- ABOUT SECTION -->
+<section class="about" id="about">
+
+    <h2>About Our System</h2>
+
+    <p>
+        The Digital Crime Reporting System is a student project intended
+        to simplify online complaint submission. It provides a common
+        interface for citizens to submit complaints, upload supporting
+        evidence and check complaint progress. Any AI-assisted analysis
+        requires a separate implementation and human review.
+    </p>
+
+    <a href="{{ url_for('about') }}" class="page-link">
+        Read More About Us
+    </a>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+
+    © 2026 Crime Reporting System<br>
+    Secure | Responsible | Citizen Focused
+
+    <p style="margin-top:12px">
+        <a href="{{ url_for('signup') }}">Sign Up</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('about') }}">About Us</a>
+        <a href="{{ url_for('know_your_law') }}">Know Your Law</a>
+        <a href="{{ url_for('contact') }}">Contact Us</a>
+    </p>
+
+</footer>
+
+</body>
+</html>

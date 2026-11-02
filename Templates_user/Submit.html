@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Submitted | DCRS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #061326, #12365c);
+            color: white;
+            padding: 20px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 450px;
+            padding: 30px;
+            text-align: center;
+            background: #102440;
+            border: 1px solid #31577f;
+            border-radius: 16px;
+            box-shadow: 0 0 25px #07101f;
+        }
+
+        .check {
+            font-size: 55px;
+            color: #72edaa;
+        }
+
+        h1 {
+            color: #72c5ff;
+            font-size: 27px;
+        }
+
+        p {
+            color: #cbd9ed;
+            line-height: 1.6;
+        }
+
+        .complaint-id {
+            margin: 25px 0;
+            padding: 20px 10px;
+            background: #07172b;
+            border: 1px dashed #72c5ff;
+            border-radius: 10px;
+        }
+
+        .complaint-id small {
+            display: block;
+            margin-bottom: 12px;
+            color: #b5c9e2;
+        }
+
+        .complaint-id strong {
+            color: #72c5ff;
+            font-size: 25px;
+            overflow-wrap: anywhere;
+        }
+
+        button, a {
+            display: inline-block;
+            padding: 12px 16px;
+            margin: 6px 3px;
+            border: none;
+            border-radius: 8px;
+            background: #087ed0;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover, a:hover {
+            background: #159fe9;
+        }
+
+        .note {
+            font-size: 12px;
+            color: #9fb4ce;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="check">&#10003;</div>
+
+        <h1>Complaint Submitted!</h1>
+
+        <p>Your complaint has been submitted successfully.</p>
+
+        <div class="complaint-id">
+            <small>Your Unique Complaint Number</small>
+            <strong id="complaintId">{{ complaint_id }}</strong>
+        </div>
+
+        <button type="button" onclick="copyID()">
+            Copy Complaint ID
+        </button>
+
+        <p id="message" class="note"></p>
+
+       
+       <!-- Connected to Complaint Status Page -->
+       <a href="{{ url_for('complaint_status') }}">
+         Track Complaint
+         </a>
+
+         <!-- Connected to Dashboard -->
+         <a href="{{ url_for('dashboard') }}">
+         Dashboard
+         </a>
+
+
+        <p class="note">
+            Keep your complaint number safe for future reference.
+        </p>
+    </div>
+
+    <script>
+        async function copyID() {
+            const id = document.getElementById("complaintId").textContent.trim();
+            const message = document.getElementById("message");
+
+            try {
+                await navigator.clipboard.writeText(id);
+                message.textContent = "Complaint ID copied!";
+            } catch (error) {
+                message.textContent = "Please copy manually: " + id;
+            }
+        }
+    </script>
+</body>
+</html>

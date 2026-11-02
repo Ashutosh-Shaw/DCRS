@@ -1,0 +1,475 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Complaints | DCRS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #061326, #102d50, #071225);
+            color: #edf4ff;
+        }
+
+        header {
+            padding: 18px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: #061326;
+            border-bottom: 1px solid #294765;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 800;
+            color: #72c5ff;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        nav {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #dceaff;
+            font-size: 14px;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #72c5ff;
+        }
+
+        .flag-line {
+            height: 4px;
+            background: linear-gradient(
+                to right,
+                #ff9933 33.33%,
+                white 33.33% 66.66%,
+                #138808 66.66%
+            );
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 92%;
+            margin: 35px auto;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .heading h1 {
+            color: #72c5ff;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .heading p {
+            color: #b8cbe4;
+            line-height: 1.6;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: #102440;
+            border: 1px solid #31577f;
+            border-radius: 13px;
+            padding: 22px;
+            text-align: center;
+        }
+
+        .stat-card h2 {
+            color: #72c5ff;
+            font-size: 30px;
+            margin: 0 0 8px;
+        }
+
+        .stat-card p {
+            color: #b8cbe4;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .card {
+            background: #102440;
+            border: 1px solid #31577f;
+            border-radius: 15px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 25px #030c18;
+        }
+
+        .card h2 {
+            color: #72c5ff;
+            margin-top: 0;
+            font-size: 21px;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            min-width: 0;
+            padding: 13px;
+            color: white;
+            background: #07172b;
+            border: 1px solid #365579;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #72c5ff;
+        }
+
+        button,
+        .btn {
+            display: inline-block;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 17px;
+            background: #087ed0;
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        button:hover,
+        .btn:hover {
+            background: #159fe9;
+        }
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 720px;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 15px 12px;
+            border-bottom: 1px solid #294765;
+            font-size: 13px;
+        }
+
+        th {
+            background: #091a30;
+            color: #72c5ff;
+        }
+
+        td {
+            color: #e0eafa;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .pending {
+            color: #ffe29a;
+            background: #5b4717;
+        }
+
+        .review {
+            color: #9dd7ff;
+            background: #173f61;
+        }
+
+        .progress {
+            color: #d1b6ff;
+            background: #402b60;
+        }
+
+        .resolved {
+            color: #91f0b4;
+            background: #164b35;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 35px 15px;
+            color: #b8cbe4;
+            line-height: 1.8;
+        }
+
+        .empty h3 {
+            color: #72c5ff;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 28px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 12px;
+            color: #8da5c4;
+            border-top: 1px solid #294765;
+            font-size: 13px;
+        }
+
+        @media (max-width: 650px) {
+            header {
+                padding: 17px 5%;
+            }
+
+            nav {
+                gap: 12px;
+            }
+
+            nav a {
+                font-size: 12px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .search-row {
+                flex-direction: column;
+            }
+
+            .heading h1 {
+                font-size: 27px;
+            }
+
+            .card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">DCRS <span>| Citizen Portal</span></div>
+
+    <nav>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('report_crime') }}">Report Crime</a>
+        <a class="active" href="{{ url_for('my_complaints') }}">My Complaints</a>
+        <a href="{{ url_for('profile') }}">My Profile</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+</header>
+
+<div class="flag-line"></div>
+
+<main class="container">
+
+    <div class="heading">
+        <h1>My Complaints</h1>
+        <p>View your submitted complaints and track their current status.</p>
+    </div>
+
+    <!-- SUMMARY CARDS -->
+    <section class="stats">
+        <div class="stat-card">
+            <h2>{{ total_complaints|default(0) }}</h2>
+            <p>Total Complaints</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ pending_complaints|default(0) }}</h2>
+            <p>Pending Complaints</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ resolved_complaints|default(0) }}</h2>
+            <p>Resolved Complaints</p>
+        </div>
+    </section>
+
+    <!-- SEARCH -->
+    <section class="card">
+        <h2>Find a Complaint</h2>
+
+        <div class="search-row">
+            <input type="text"
+                   id="searchInput"
+                   placeholder="Search by Complaint ID or crime type">
+
+            <select id="statusFilter">
+                <option value="">All Statuses</option>
+                <option value="pending">Pending</option>
+                <option value="under review">Under Review</option>
+                <option value="in progress">In Progress</option>
+                <option value="resolved">Resolved</option>
+            </select>
+
+            <button type="button" onclick="filterComplaints()">Search</button>
+        </div>
+    </section>
+
+    <!-- COMPLAINT LIST -->
+    <section class="card">
+        <h2>Complaint History</h2>
+
+        {% if complaints %}
+
+        <div class="table-wrap">
+            <table id="complaintTable">
+                <thead>
+                    <tr>
+                        <th>Complaint ID</th>
+                        <th>Crime Type</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in complaints %}
+                    <tr>
+                        <td>{{ item.complaint_id }}</td>
+                        <td>{{ item.crime_type }}</td>
+                        <td>{{ item.crime_date or 'Not Available' }}</td>
+                        <td>
+                            {% set current_status = item.status|lower %}
+
+                            {% if current_status == 'resolved' %}
+                                <span class="status resolved">Resolved</span>
+                            {% elif current_status == 'under review' %}
+                                <span class="status review">Under Review</span>
+                            {% elif current_status == 'in progress' %}
+                                <span class="status progress">In Progress</span>
+                            {% else %}
+                                <span class="status pending">{{ item.status }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn"
+                               href="{{ url_for('complaint_status', complaint_id=item.complaint_id) }}">
+                                View Status
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <p id="noResults" class="empty" style="display:none;">
+            No matching complaints found.
+        </p>
+
+        {% else %}
+
+        <div class="empty">
+            <h3>No Complaints Yet</h3>
+            <p>You have not submitted any complaints.</p>
+            <a class="btn" href="{{ url_for('report_crime') }}">Report a Crime</a>
+        </div>
+
+        {% endif %}
+    </section>
+
+    <div class="actions">
+        <a class="btn" href="{{ url_for('report_crime') }}">+ Report New Crime</a>
+        <a class="btn" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+    </div>
+
+</main>
+
+<footer>
+    Digital Crime Reporting System (DCRS) | Citizen Portal
+</footer>
+
+<script>
+    function filterComplaints() {
+        const searchValue =
+            document.getElementById("searchInput").value.toLowerCase().trim();
+
+        const statusValue =
+            document.getElementById("statusFilter").value.toLowerCase();
+
+        const table = document.getElementById("complaintTable");
+        const noResults = document.getElementById("noResults");
+
+        if (!table) return;
+
+        const rows = table.querySelectorAll("tbody tr");
+        let visibleCount = 0;
+
+        rows.forEach(row => {
+            const text = row.innerText.toLowerCase();
+            const status = row.cells[3].innerText.toLowerCase();
+
+            const matchesSearch = text.includes(searchValue);
+            const matchesStatus =
+                statusValue === "" || status.includes(statusValue);
+
+            if (matchesSearch && matchesStatus) {
+                row.style.display = "";
+                visibleCount++;
+            } else {
+                row.style.display = "none";
+            }
+        });
+
+        if (noResults) {
+            noResults.style.display = visibleCount === 0 ? "block" : "none";
+        }
+    }
+
+    document.getElementById("searchInput")
+        .addEventListener("input", filterComplaints);
+
+    document.getElementById("statusFilter")
+        .addEventListener("change", filterComplaints);
+</script>
+
+</body>
+</html>

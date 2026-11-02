@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Details | DCRS</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 30px;
+            background: #061326;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+        }
+
+        .card {
+            background: #14243a;
+            border: 1px solid #31577f;
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 20px;
+        }
+
+        h1, h2 {
+            color: #35baff;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .item {
+            background: #091a30;
+            padding: 15px;
+            border-radius: 7px;
+            overflow-wrap: anywhere;
+        }
+
+        .item strong {
+            display: block;
+            color: #72c5ff;
+            margin-bottom: 8px;
+        }
+
+        .description {
+            background: #091a30;
+            padding: 18px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+        }
+
+        a {
+            color: white;
+            background: #087ed0;
+            padding: 12px 18px;
+            border-radius: 7px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        @media(max-width:600px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <h1>Complete Complaint Details</h1>
+
+    <div class="card">
+        <h2>Citizen Information</h2>
+        <div class="grid">
+            <div class="item">
+                <strong>Full Name</strong>
+                {{ complaint.full_name or 'N/A' }}
+            </div>
+
+            <div class="item">
+                <strong>Email</strong>
+                {{ complaint.email or 'N/A' }}
+            </div>
+
+            <div class="item">
+                <strong>Mobile</strong>
+                {{ complaint.mobile or 'N/A' }}
+            </div>
+
+            <div class="item">
+                <strong>Complaint ID</strong>
+                {{ complaint.complaint_id }}
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Crime Information</h2>
+        <div class="grid">
+            <div class="item">
+                <strong>Crime Type</strong>
+                {{ complaint.crime_type or 'N/A' }}
+            </div>
+
+            <div class="item">
+                <strong>Location</strong>
+                {{ complaint.location or 'N/A' }}
+            </div>
+
+            <div class="item">
+                <strong>Crime Date</strong>
+                {{ complaint.crime_date or 'N/A' }}
+            </div>
+
+            <div class="item">
+                <strong>Crime Time</strong>
+                {{ complaint.crime_time or 'N/A' }}
+            </div>
+
+            <div class="item">
+                <strong>Status</strong>
+                {{ complaint.status or 'Pending' }}
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Incident Description</h2>
+        <div class="description">{{ complaint.description or 'No description available.' }}</div>
+    </div>
+
+    <div class="card">
+        <h2>Uploaded Evidence</h2>
+
+        {% if complaint.photo %}
+            <img
+                src="{{ url_for('static', filename='uploads/' ~ complaint.photo) }}"
+                alt="Complaint Evidence">
+        {% else %}
+            <p>No photograph uploaded.</p>
+        {% endif %}
+    </div>
+
+    <a href="{{ url_for('admin_dashboard') }}">
+        ← Back to Admin Dashboard
+    </a>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,556 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DCRS | Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #ffffff;
+            background:
+                radial-gradient(circle at 10% 10%, #123f70, transparent 35%),
+                radial-gradient(circle at 90% 90%, #06486d, transparent 35%),
+                #061326;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .navbar {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 18px;
+            padding: 16px 5%;
+            background: rgba(3, 17, 36, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            color: #ffffff;
+            font-size: 19px;
+            font-weight: bold;
+        }
+
+        .logo span,
+        .welcome h1 span,
+        .section-title span {
+            color: #35baff;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 17px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #c1d0e0;
+            font-size: 13px;
+            transition: 0.25s;
+        }
+
+        .nav-links a:hover {
+            color: #35baff;
+        }
+
+        .main {
+            max-width: 1200px;
+            margin: auto;
+            padding: 35px 24px 50px;
+        }
+
+        .welcome {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .welcome h1 {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .welcome p {
+            color: #a5b8cc;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .welcome-badge {
+            padding: 12px 17px;
+            border: 1px solid rgba(53, 186, 255, 0.3);
+            border-radius: 12px;
+            color: #79d4ff;
+            background: rgba(0, 140, 255, 0.08);
+            font-size: 13px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            margin: 30px 0 18px;
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            min-width: 0;
+            padding: 23px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 17px;
+            background: rgba(255, 255, 255, 0.055);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.13);
+            backdrop-filter: blur(10px);
+            transition: transform 0.25s, border-color 0.25s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(53, 186, 255, 0.35);
+        }
+
+        .action-card {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .action-icon {
+            width: 49px;
+            height: 49px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 17px;
+            border-radius: 13px;
+            background: rgba(0, 140, 255, 0.15);
+            font-size: 24px;
+        }
+
+        .card h3 {
+            font-size: 17px;
+            margin-bottom: 11px;
+        }
+
+        .card p {
+            color: #a5b8cc;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .action-card p {
+            flex: 1;
+            margin-bottom: 20px;
+        }
+
+        .action-btn {
+            display: inline-block;
+            padding: 11px 15px;
+            border-radius: 9px;
+            color: #ffffff;
+            background: linear-gradient(135deg, #008cff, #0055ff);
+            font-size: 12px;
+            font-weight: bold;
+            transition: 0.25s;
+        }
+
+        .action-btn:hover {
+            box-shadow: 0 5px 16px rgba(0, 140, 255, 0.25);
+            filter: brightness(1.12);
+        }
+
+        .lower-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 18px;
+            margin-top: 28px;
+        }
+
+        .complaint-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            color: #dce8f5;
+            font-size: 13px;
+        }
+
+        .complaint-link:last-child {
+            border-bottom: none;
+        }
+
+        .complaint-link span {
+            color: #35baff;
+            font-size: 20px;
+        }
+
+        .complaint-link:hover {
+            color: #35baff;
+        }
+
+        .emergency-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .emergency-box {
+            padding: 17px 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .emergency-box h3 {
+            margin-bottom: 7px;
+            color: #ff8585;
+            font-size: 23px;
+        }
+
+        .emergency-box p {
+            font-size: 11px;
+        }
+
+        .notice {
+            margin-top: 25px;
+            padding: 22px;
+            border: 1px solid rgba(53, 186, 255, 0.2);
+            border-radius: 14px;
+            background: rgba(0, 140, 255, 0.07);
+        }
+
+        .notice h3 {
+            margin-bottom: 10px;
+            color: #35baff;
+            font-size: 16px;
+        }
+
+        .notice p {
+            margin-bottom: 16px;
+        }
+
+        footer {
+            padding: 24px 15px;
+            text-align: center;
+            color: #8295aa;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            font-size: 12px;
+            line-height: 2.2;
+        }
+
+        footer a {
+            display: inline-block;
+            margin: 0 4px;
+            color: #c1d0e0;
+        }
+
+        footer a:hover {
+            color: #35baff;
+        }
+
+        @media (max-width: 900px) {
+            .navbar {
+                flex-direction: column;
+            }
+
+            .nav-links {
+                gap: 13px;
+            }
+
+            .actions {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .lower-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .main {
+                padding: 25px 15px 35px;
+            }
+
+            .welcome h1 {
+                font-size: 25px;
+            }
+
+            .actions {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 19px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="logo">
+            🛡️ Crime <span>Reporting System</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('report_crime') }}">Report Crime</a></li>
+            <li><a href="{{ url_for('my_complaints') }}">My Complaint</a></li>
+            <li><a href="{{ url_for('profile') }}">My Profile</a></li>
+            <li><a href="{{ url_for('complaint_status') }}">Complaint Status</a></li>
+            <li><a href="{{ url_for('know_your_law') }}">Know Your Laws</a></li>
+            <li><a href="{{ url_for('about') }}">About Us</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+        <!-- WELCOME SECTION -->
+        <section class="welcome">
+            <div>
+                <h1>
+                    Welcome,
+                    <span>{{ session.get('user_name', 'Citizen') }}!</span>
+                </h1>
+
+                <p>
+                    Welcome to your Digital Crime Reporting System dashboard.<br>
+                    Report incidents, manage complaints and check their status.
+                </p>
+            </div>
+
+            <div class="welcome-badge">
+                🛡️ Citizen Dashboard
+            </div>
+        </section>
+
+        <!-- QUICK ACTIONS -->
+        <h2 class="section-title">
+            Quick <span>Actions</span>
+        </h2>
+
+        <section class="actions">
+
+            <div class="card action-card">
+                <div class="action-icon">🚨</div>
+                <h3>Report a Crime</h3>
+                <p>
+                    Submit a new complaint with incident details and
+                    supporting evidence.
+                </p>
+                <a href="{{ url_for('report_crime') }}" class="action-btn">
+                    Report Now →
+                </a>
+            </div>
+
+            <div class="card action-card">
+                <div class="action-icon">📂</div>
+                <h3>My Complaints</h3>
+                <p>
+                    View your submitted complaints and their latest
+                    available information.
+                </p>
+                <a href="{{ url_for('my_complaints') }}" class="action-btn">
+                    View Complaints →
+                </a>
+            </div>
+
+            <div class="card action-card">
+                <div class="action-icon">👤</div>
+                <h3>My Profile</h3>
+                <p>
+                    View and manage your account information and
+                    personal details.
+                </p>
+                <a href="{{ url_for('profile') }}" class="action-btn">
+                    Open Profile →
+                </a>
+            </div>
+
+            <div class="card action-card">
+                <div class="action-icon">📊</div>
+                <h3>Complaint Status</h3>
+                <p>
+                    Check the current status of your submitted complaints.
+                </p>
+                <a href="{{ url_for('complaint_status') }}" class="action-btn">
+                    Check Status →
+                </a>
+            </div>
+
+            <div class="card action-card">
+                <div class="action-icon">⚖️</div>
+                <h3>Know Your Laws</h3>
+                <p>
+                    Learn about basic legal rights and useful safety
+                    information.
+                </p>
+                <a href="{{ url_for('know_your_law') }}" class="action-btn">
+                    Read Information →
+                </a>
+            </div>
+
+            <div class="card action-card">
+                <div class="action-icon">ℹ️</div>
+                <h3>About DCRS</h3>
+                <p>
+                    Learn about the purpose of the Digital Crime
+                    Reporting System.
+                </p>
+                <a href="{{ url_for('about') }}" class="action-btn">
+                    About Website →
+                </a>
+            </div>
+
+            <div class="card action-card">
+                <div class="action-icon">📩</div>
+                <h3>Contact Us</h3>
+                <p>
+                    Have a question or need help using the website?
+                    Contact our support team.
+                </p>
+                <a href="{{ url_for('contact') }}" class="action-btn">
+                    Contact Us →
+                </a>
+            </div>
+
+        </section>
+
+        <!-- LOWER SECTION -->
+        <section class="lower-grid">
+
+            <!-- COMPLAINT CENTRE -->
+            <div class="card">
+                <h3>📌 Complaint Centre</h3>
+                <p>
+                    Use these shortcuts to manage your complaints
+                    and account.
+                </p>
+
+                <a href="{{ url_for('report_crime') }}" class="complaint-link">
+                    Submit a New Complaint <span>→</span>
+                </a>
+
+                <a href="{{ url_for('complaint_status') }}" class="complaint-link">
+                    Check Complaint Status <span>→</span>
+                </a>
+
+                <a href="{{ url_for('my_complaints') }}" class="complaint-link">
+                 View My Complaints <span>→</span>
+                </a>
+
+                <a href="{{ url_for('profile') }}" class="complaint-link">
+                    View Account Details <span>→</span>
+                </a>
+            </div>
+
+            <!-- EMERGENCY NUMBERS -->
+            <div class="card" id="emergency">
+                <h3>🚨 Emergency Numbers</h3>
+                <p>
+                    For immediate assistance in India, contact
+                    the appropriate emergency service.
+                </p>
+
+                <div class="emergency-grid">
+
+                    <div class="emergency-box">
+                        <h3>112</h3>
+                        <p>Emergency Response</p>
+                    </div>
+
+                    <div class="emergency-box">
+                        <h3>108</h3>
+                        <p>Ambulance</p>
+                    </div>
+
+                    <div class="emergency-box">
+                        <h3>101</h3>
+                        <p>Fire Services</p>
+                    </div>
+
+                    <div class="emergency-box">
+                        <h3>1930</h3>
+                        <p>Cyber Financial Fraud</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- SAFETY NOTICE -->
+        <section class="notice" id="laws">
+            <h3>⚖️ Know Your Rights & Stay Safe</h3>
+
+            <p>
+                Provide accurate information when submitting a complaint.
+                Keep relevant evidence safe and never share your OTP or
+                password. For urgent danger, contact emergency services
+                directly. This section provides general safety information
+                and is not a substitute for legal advice.
+            </p>
+
+            <a href="{{ url_for('know_your_law') }}" class="action-btn">
+                Know Your Laws →
+            </a>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2026 Digital Crime Reporting System<br>
+
+        <a href="{{ url_for('dashboard') }}">Dashboard</a> |
+        <a href="{{ url_for('report_crime') }}">Report Crime</a> |
+        <a href="{{ url_for('my_complaints') }}">My Complaint</a> |
+        <a href="{{ url_for('profile') }}">My Profile</a> |
+        <a href="{{ url_for('complaint_status') }}">Complaint Status</a> |
+        <a href="{{ url_for('know_your_law') }}">Know Your Laws</a> |
+        <a href="{{ url_for('about') }}">About Us</a> |
+        <a href="{{ url_for('contact') }}">Contact Us</a> |
+        <a href="{{ url_for('logout') }}">Logout</a>
+
+        <br>
+        Secure • Responsible • Citizen Focused
+    </footer>
+
+</body>
+</html>

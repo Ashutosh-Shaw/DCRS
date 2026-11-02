@@ -1,0 +1,620 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | DCRS</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #07152e, #0b2854, #07152e);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* Indian tricolour line */
+        .tricolour-line {
+            height: 4px;
+            background: linear-gradient(
+                to right,
+                #ff9933 0%,
+                #ff9933 33.33%,
+                #ffffff 33.33%,
+                #ffffff 66.66%,
+                #138808 66.66%,
+                #138808 100%
+            );
+        }
+
+        /* Navigation bar */
+        .navbar {
+            width: 100%;
+            min-height: 76px;
+            padding: 15px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            background: rgba(5, 17, 39, 0.92);
+            border-bottom: 1px solid rgba(75, 163, 255, 0.25);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Original logo structure */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #ffffff;
+            white-space: nowrap;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 19px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #1688ff, #0752c7);
+            box-shadow: 0 0 18px rgba(22, 136, 255, 0.35);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-text span {
+            margin-top: 3px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: #45caff;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #dceaff;
+            font-size: 14px;
+            padding: 10px 13px;
+            border-radius: 8px;
+            transition: 0.25s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #ffffff;
+            background: rgba(30, 136, 255, 0.2);
+        }
+
+        .nav-links a.logout {
+            background: #d9364f;
+            color: white;
+        }
+
+        .nav-links a.logout:hover {
+            background: #b91f38;
+        }
+
+        /* Main page */
+        .page-container {
+            width: 100%;
+            max-width: 1050px;
+            margin: 45px auto;
+            padding: 0 20px 40px;
+        }
+
+        .page-heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-heading h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .page-heading p {
+            color: #b9cce7;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Profile card */
+        .profile-card {
+            max-width: 760px;
+            margin: auto;
+            padding: 32px;
+            background: rgba(14, 35, 69, 0.88);
+            border: 1px solid rgba(92, 170, 255, 0.28);
+            border-radius: 18px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 25px;
+            margin-bottom: 28px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .avatar {
+            width: 88px;
+            height: 88px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1688ff, #0749a9);
+            color: #ffffff;
+            font-size: 34px;
+            font-weight: bold;
+            border: 3px solid rgba(99, 190, 255, 0.5);
+        }
+
+        .profile-heading {
+            min-width: 0;
+        }
+
+        .profile-heading h2 {
+            font-size: 23px;
+            margin-bottom: 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .profile-heading p {
+            color: #a9c3e8;
+            font-size: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: rgba(31, 190, 119, 0.14);
+            border: 1px solid rgba(31, 190, 119, 0.4);
+            color: #6ff0b1;
+            font-size: 12px;
+        }
+
+        /* Form fields */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            min-width: 0;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            color: #d8e8ff;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px 14px;
+            border-radius: 9px;
+            border: 1px solid rgba(117, 173, 239, 0.3);
+            outline: none;
+            color: #ffffff;
+            background: rgba(4, 17, 39, 0.65);
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #28a5ff;
+            box-shadow: 0 0 0 3px rgba(40, 165, 255, 0.12);
+        }
+
+        .form-group input:disabled {
+            color: #c4d2e6;
+            opacity: 0.9;
+            cursor: not-allowed;
+        }
+
+        .form-group small {
+            color: #9eb6d7;
+            font-size: 12px;
+        }
+
+        /* Buttons */
+        .button-row {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn {
+            border: none;
+            outline: none;
+            padding: 12px 22px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: 0.25s;
+        }
+
+        .btn-primary {
+            color: #ffffff;
+            background: linear-gradient(135deg, #1688ff, #0752c7);
+            box-shadow: 0 5px 15px rgba(22, 136, 255, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(22, 136, 255, 0.35);
+        }
+
+        .btn-secondary {
+            color: #dceaff;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .message {
+            margin-bottom: 20px;
+            padding: 12px 15px;
+            border-radius: 9px;
+            background: rgba(31, 190, 119, 0.12);
+            border: 1px solid rgba(31, 190, 119, 0.35);
+            color: #8df5bd;
+            display: none;
+        }
+
+        .footer {
+            padding: 20px;
+            text-align: center;
+            color: #8ea8ca;
+            font-size: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                justify-content: center;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .nav-links {
+                width: 100%;
+            }
+
+            .nav-links a {
+                padding: 9px 10px;
+                font-size: 13px;
+            }
+
+            .page-container {
+                margin-top: 30px;
+            }
+
+            .page-heading h1 {
+                font-size: 27px;
+            }
+
+            .profile-card {
+                padding: 22px 18px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .form-group.full-width {
+                grid-column: auto;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .profile-header {
+                align-items: flex-start;
+                gap: 14px;
+            }
+
+            .avatar {
+                width: 66px;
+                height: 66px;
+                font-size: 27px;
+            }
+
+            .profile-heading h2 {
+                font-size: 19px;
+            }
+
+            .button-row {
+                flex-direction: column;
+            }
+
+            .button-row .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="tricolour-line"></div>
+
+    <header class="navbar">
+        <div class="logo">
+            <div class="logo-icon">CR</div>
+            <div class="logo-text">
+                Crime
+                <span>Reporting System</span>
+            </div>
+        </div>
+
+        <!-- Connected navigation links -->
+        <nav class="nav-links">
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+
+    <a href="{{ url_for('report_crime') }}">
+        Report Crime
+    </a>
+
+    <a href="{{ url_for('my_complaints') }}">
+        My Complaints
+    </a>
+
+    <a href="{{ url_for('profile') }}" class="active">
+        My Profile
+    </a>
+
+    <a href="{{ url_for('logout') }}" class="logout">
+        Logout
+    </a>
+</nav>
+    </header>
+
+    <main class="page-container">
+
+        <div class="page-heading">
+            <h1>My Profile</h1>
+            <p>Manage your personal information and account details.</p>
+        </div>
+
+        <section class="profile-card">
+
+            <div id="successMessage" class="message">
+                Profile updated successfully.
+            </div>
+
+            <div class="profile-header">
+                <div class="avatar" id="avatar">
+                    {{ (profile['name'] or 'U')[0]|upper }}
+                </div>
+
+                <div class="profile-heading">
+                    <h2 id="displayName">
+                        {{ profile['name'] or 'Citizen User' }}
+                    </h2>
+
+                    <p>
+                        {{ profile['email'] or 'Email not provided' }}
+                    </p>
+
+                    <span class="status">Citizen Account</span>
+                </div>
+            </div>
+
+            <form id="profileForm" method="POST"
+                  action="{{ url_for('profile') }}">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value="{{ profile['name' or ''] }}"
+                            required
+                            disabled
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value="{{ profile['email' or ''] }}"
+                            required
+                            disabled
+                        >
+                        <small>Use an email address you can access.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mobile">Mobile Number</label>
+                        <input
+                            type="tel"
+                            id="mobile"
+                            name="mobile"
+                            value="{{ profile['mobile' or ''] }}"
+                            pattern="[0-9]{10}"
+                            maxlength="10"
+                            disabled
+                        >
+                        <small>Enter a 10-digit mobile number.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user_id">User ID</label>
+                        <input
+                            type="text"
+                            id="user_id"
+                            value="{{ profile['id' or ''] }}"
+                            disabled
+                        >
+                        <small>User ID cannot be edited.</small>
+                    </div>
+
+                </div>
+
+                <div class="button-row">
+                    <button
+                        type="button"
+                        id="cancelButton"
+                        class="btn btn-secondary"
+                        style="display: none;"
+                        onclick="cancelEdit()">
+                        Cancel
+                    </button>
+
+                    <button
+                        type="button"
+                        id="editButton"
+                        class="btn btn-primary"
+                        onclick="enableEdit()">
+                        Edit Profile
+                    </button>
+
+                    <button
+                        type="submit"
+                        id="saveButton"
+                        class="btn btn-primary"
+                        style="display: none;">
+                        Save Changes
+                    </button>
+                </div>
+
+            </form>
+        </section>
+    </main>
+
+    <footer class="footer">
+        Digital Crime Reporting System (DCRS) | Citizen Portal
+    </footer>
+
+    <script>
+        const form = document.getElementById("profileForm");
+        const editButton = document.getElementById("editButton");
+        const saveButton = document.getElementById("saveButton");
+        const cancelButton = document.getElementById("cancelButton");
+        const displayName = document.getElementById("displayName");
+        const avatar = document.getElementById("avatar");
+
+        const editableFields = [
+            document.getElementById("name"),
+            document.getElementById("email"),
+            document.getElementById("mobile")
+        ];
+
+        let originalValues = {};
+
+        function saveOriginalValues() {
+            originalValues = {};
+
+            editableFields.forEach(function(field) {
+                originalValues[field.id] = field.value;
+            });
+        }
+
+        function enableEdit() {
+            saveOriginalValues();
+
+            editableFields.forEach(function(field) {
+                field.disabled = false;
+            });
+
+            editButton.style.display = "none";
+            saveButton.style.display = "inline-block";
+            cancelButton.style.display = "inline-block";
+
+            document.getElementById("name").focus();
+        }
+
+        function cancelEdit() {
+            editableFields.forEach(function(field) {
+                field.value = originalValues[field.id] ?? field.value;
+                field.disabled = true;
+            });
+
+            editButton.style.display = "inline-block";
+            saveButton.style.display = "none";
+            cancelButton.style.display = "none";
+        }
+
+        form.addEventListener("submit", function(event) {
+            const mobile = document.getElementById("mobile").value.trim();
+
+            if (mobile && !/^[0-9]{10}$/.test(mobile)) {
+                event.preventDefault();
+                alert("Please enter a valid 10-digit mobile number.");
+                return;
+            }
+
+            // The Flask route must handle POST and save the updated fields.
+        });
+
+        // Update the avatar and heading while typing.
+        document.getElementById("name").addEventListener("input", function() {
+            const name = this.value.trim();
+            displayName.textContent = name || "Citizen User";
+            avatar.textContent = name ? name.charAt(0).toUpperCase() : "U";
+        });
+    </script>
+
+</body>
+</html>

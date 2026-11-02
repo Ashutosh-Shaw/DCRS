@@ -1,0 +1,430 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Assignment | DCRS</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 10% 10%, #123f70, transparent 35%),
+        radial-gradient(circle at 90% 90%, #06486d, transparent 35%),
+        #061326;
+    color: #fff;
+}
+
+.chakra {
+    position: fixed;
+    right: -100px;
+    top: 20%;
+    width: 400px;
+    height: 400px;
+    border: 3px solid rgba(50,180,255,.05);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.chakra::before {
+    content: "☸";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 350px;
+    color: rgba(50,180,255,.035);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 18px 6%;
+    background: rgba(3,17,36,.92);
+    border-bottom: 1px solid rgba(255,255,255,.09);
+    position: relative;
+    z-index: 1;
+}
+
+.logo {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.logo span, h1 span {
+    color: #35baff;
+}
+
+.navbar a {
+    color: #b8c7d9;
+    text-decoration: none;
+    font-size: 13px;
+    margin-left: 18px;
+}
+
+.navbar a:hover {
+    color: #35baff;
+}
+
+.tricolour {
+    display: flex;
+    height: 4px;
+}
+
+.tricolour div { flex: 1; }
+.saffron { background: #ff9933; }
+.white { background: #fff; }
+.green { background: #138808; }
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: auto;
+    padding: 40px 22px;
+    position: relative;
+    z-index: 1;
+}
+
+.heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.badge {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 8px 13px;
+    border-radius: 20px;
+    background: rgba(0,140,255,.12);
+    border: 1px solid rgba(53,186,255,.22);
+    color: #72d0ff;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #aebed1;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.btn {
+    padding: 12px 16px;
+    border-radius: 9px;
+    background: linear-gradient(135deg,#008cff,#0055ff);
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 16px;
+    margin-bottom: 25px;
+}
+
+.card, .table-card {
+    background: rgba(255,255,255,.055);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 15px;
+    box-shadow: 0 18px 45px rgba(0,0,0,.2);
+    backdrop-filter: blur(12px);
+}
+
+.card { padding: 22px; }
+
+.stat-label {
+    color: #aebed1;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+.stat-value {
+    color: #72d0ff;
+    font-size: 27px;
+    font-weight: bold;
+}
+
+.table-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 22px;
+    border-bottom: 1px solid rgba(255,255,255,.09);
+}
+
+.table-top h2 { font-size: 18px; }
+
+.search {
+    width: 100%;
+    max-width: 340px;
+    padding: 13px;
+    border-radius: 9px;
+    outline: none;
+    border: 1px solid rgba(255,255,255,.13);
+    background: rgba(0,0,0,.2);
+    color: #fff;
+}
+
+.search:focus { border-color: #35baff; }
+
+.table-wrap { overflow-x: auto; }
+
+table {
+    width: 100%;
+    min-width: 950px;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+    padding: 16px;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    font-size: 12px;
+}
+
+th {
+    color: #72d0ff;
+    background: rgba(0,0,0,.16);
+    text-transform: uppercase;
+    font-size: 11px;
+}
+
+td { color: #dce8f5; }
+
+tbody tr:hover {
+    background: rgba(53,186,255,.045);
+}
+
+.case-id {
+    color: #72d0ff;
+    font-weight: bold;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 9px;
+    border-radius: 7px;
+    font-size: 11px;
+    background: rgba(0,140,255,.12);
+    border: 1px solid rgba(53,186,255,.2);
+    color: #72d0ff;
+}
+
+.status.resolved {
+    color: #86efac;
+    background: rgba(34,197,94,.1);
+    border-color: rgba(34,197,94,.2);
+}
+
+.status.rejected {
+    color: #fca5a5;
+    background: rgba(239,68,68,.1);
+    border-color: rgba(239,68,68,.2);
+}
+
+.empty {
+    padding: 35px;
+    text-align: center;
+    color: #aebed1;
+    font-size: 13px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #8092a8;
+    font-size: 11px;
+    line-height: 1.8;
+    border-top: 1px solid rgba(255,255,255,.07);
+    position: relative;
+    z-index: 1;
+}
+
+@media(max-width:700px) {
+    .stats { grid-template-columns: 1fr; }
+    .container { padding: 28px 14px; }
+    .navbar { padding: 18px 5%; }
+    h1 { font-size: 25px; }
+    .table-top { align-items: stretch; }
+    .search { max-width: none; }
+    .chakra { right: -200px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="chakra"></div>
+
+<nav class="navbar">
+    <div class="logo">
+        🛡️ Crime <span>Reporting System</span>
+    </div>
+    <div>
+        <a href="{{ url_for('admin_dashboard') }}">← Dashboard</a>
+        <a href="{{ url_for('admin_logout') }}">Logout</a>
+    </div>
+</nav>
+
+<div class="tricolour">
+    <div class="saffron"></div>
+    <div class="white"></div>
+    <div class="green"></div>
+</div>
+
+<main class="container">
+
+    <section class="heading">
+        <div>
+            <div class="badge">ADMINISTRATOR ACCESS</div>
+            <h1>Case <span>Assignment</span></h1>
+            <p class="subtitle">
+                View reported crime cases, assigned police level and current status.
+            </p>
+        </div>
+        <a class="btn" href="{{ url_for('admin_dashboard') }}">
+            ← Back to Dashboard
+        </a>
+    </section>
+
+    <section class="stats">
+        <div class="card">
+            <p class="stat-label">Total Cases</p>
+            <p class="stat-value">{{ complaints|length }}</p>
+        </div>
+
+        <div class="card">
+            <p class="stat-label">Pending Cases</p>
+            <p class="stat-value">
+                {{ complaints|selectattr('status', 'equalto', 'Pending')|list|length }}
+            </p>
+        </div>
+
+        <div class="card">
+            <p class="stat-label">Resolved Cases</p>
+            <p class="stat-value">
+                {{ complaints|selectattr('status', 'equalto', 'Resolved')|list|length }}
+            </p>
+        </div>
+    </section>
+
+    <section class="table-card">
+        <div class="table-top">
+            <h2>Police Case Assignment</h2>
+            <input
+                type="search"
+                id="search"
+                class="search"
+                placeholder="Search complaint, citizen or crime..."
+            >
+        </div>
+
+        <div class="table-wrap">
+            <table id="casesTable">
+                <thead>
+                    <tr>
+                        <th>Complaint ID</th>
+                        <th>Citizen Name</th>
+                        <th>Crime Type</th>
+                        <th>Crime Location</th>
+                        <th>Assigned Police Level</th>
+                        <th>Status</th>
+                        <th>Reported On</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for complaint in complaints %}
+                    <tr>
+                        <td class="case-id">
+                            {{ complaint.complaint_id }}
+                        </td>
+                        <td>{{ complaint.full_name }}</td>
+                        <td>{{ complaint.crime_type }}</td>
+                        <td>{{ complaint.location }}</td>
+                        <td>
+                            {{ complaint.assigned_level or 'Not Assigned' }}
+                        </td>
+                        <td>
+                            <span class="status
+                                {% if complaint.status == 'Resolved' %}resolved
+                                {% elif complaint.status == 'Rejected' %}rejected
+                                {% endif %}">
+                                {{ complaint.status }}
+                            </span>
+                        </td>
+                        <td>{{ complaint.created_at or '—' }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="empty">
+                            No crime cases have been reported yet.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div id="noResults" class="empty" style="display:none">
+                No matching cases found.
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 Digital Crime Reporting System</p>
+    <p>Admin Portal | Secure • Responsible • Citizen Focused</p>
+</footer>
+
+<script>
+const search = document.getElementById("search");
+const rows = document.querySelectorAll("#casesTable tbody tr");
+const noResults = document.getElementById("noResults");
+
+search.addEventListener("input", function () {
+    const query = this.value.toLowerCase().trim();
+    let visible = 0;
+
+    rows.forEach(row => {
+        if (row.querySelector(".empty")) return;
+
+        const match = row.textContent.toLowerCase().includes(query);
+        row.style.display = match ? "" : "none";
+
+        if (match) visible++;
+    });
+
+    noResults.style.display = visible === 0 ? "block" : "none";
+});
+</script>
+
+</body>
+</html>

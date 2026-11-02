@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Status | DCRS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: #edf4ff;
+            background: linear-gradient(135deg, #061326, #102d50, #071225);
+        }
+
+        header {
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: #061326;
+            border-bottom: 1px solid #294765;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 800;
+            color: #72c5ff;
+        }
+
+        .logo span { color: white; }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+
+        nav a {
+            color: #dceaff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        nav a:hover, nav a.active { color: #72c5ff; }
+
+        .flag-line {
+            height: 4px;
+            background: linear-gradient(to right,
+                #ff9933 33.33%, white 33.33% 66.66%, #138808 66.66%);
+        }
+
+        .container {
+            max-width: 900px;
+            width: 92%;
+            margin: 35px auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #72c5ff;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #b8cbe4;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            padding: 25px;
+            margin-bottom: 22px;
+            background: #102440;
+            border: 1px solid #31577f;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px #030c18;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #72c5ff;
+            border-bottom: 1px solid #31506e;
+            padding-bottom: 13px;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            min-width: 0;
+            padding: 13px;
+            background: #07172b;
+            border: 1px solid #365579;
+            border-radius: 8px;
+            color: white;
+            outline: none;
+        }
+
+        button, .btn {
+            display: inline-block;
+            padding: 13px 18px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            background: #087ed0;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        button:hover, .btn:hover { background: #159fe9; }
+
+        .help {
+            color: #9fb4ce;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .detail {
+            padding: 15px;
+            border-radius: 9px;
+            background: #091a30;
+            overflow-wrap: anywhere;
+        }
+
+        .detail small {
+            display: block;
+            color: #a9bfd9;
+            margin-bottom: 8px;
+        }
+
+        .detail strong { color: #f0f6ff; }
+
+        .status {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            background: #5b4717;
+            color: #ffe29a;
+            font-size: 13px;
+        }
+
+        .timeline { margin: 25px 0 10px 8px; }
+
+        .step {
+            position: relative;
+            padding: 0 0 28px 35px;
+            border-left: 2px solid #365579;
+            color: #9fb4ce;
+        }
+
+        .step:last-child {
+            border-left-color: transparent;
+            padding-bottom: 0;
+        }
+
+        .step::before {
+            content: "";
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #365579;
+        }
+
+        .step.done { color: #eaf4ff; }
+
+        .step.done::before {
+            background: #55d991;
+            box-shadow: 0 0 10px #55d991;
+        }
+
+        .step h3 { margin: 0 0 6px; font-size: 16px; }
+
+        .step p {
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .error { color: #ffaaaa; margin-top: 12px; }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 12px;
+            border-top: 1px solid #294765;
+            color: #8da5c4;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            header { padding: 17px 5%; }
+            nav { gap: 12px; }
+            nav a { font-size: 12px; }
+            .search-row { flex-direction: column; }
+            .details { grid-template-columns: 1fr; }
+            .card { padding: 19px; }
+            h1 { font-size: 27px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">DCRS <span>| Citizen Portal</span></div>
+
+    <nav>
+       
+<nav>
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('report_crime') }}">Report Crime</a>
+    <a class="active" href="{{ url_for('complaint_status') }}">My Complaints</a>
+    <a href="{{ url_for('profile') }}">My Profile</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</nav>
+
+</header>
+
+<div class="flag-line"></div>
+
+<main class="container">
+
+    <h1>My Complaint Status</h1>
+    <p class="subtitle">
+        Track your submitted complaint using its unique reference number.
+    </p>
+
+    <section class="card">
+        <h2>Search Complaint</h2>
+
+        <form action="/complaint-status" method="GET">
+            <div class="search-row">
+                <input
+                    type="text"
+                    name="complaint_id"
+                    placeholder="Enter your Complaint ID"
+                    value="{{ request.args.get('complaint_id', '') }}"
+                    required
+                >
+                <button type="submit">Track Status</button>
+            </div>
+        </form>
+
+        <p class="help">
+            Your Complaint ID is provided after submitting a report.
+        </p>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    </section>
+
+    {% if complaint %}
+    <section class="card">
+        <h2>Complaint Details</h2>
+
+        <div class="details">
+            <div class="detail">
+                <small>Complaint ID</small>
+                <strong>{{ complaint.complaint_id }}</strong>
+            </div>
+
+            <div class="detail">
+                <small>Crime Category</small>
+                <strong>{{ complaint.crime_type }}</strong>
+            </div>
+
+            <div class="detail">
+                <small>Incident Date</small>
+               <strong>{{ complaint.crime_date or 'Not provided' }}</strong>
+            </div>
+
+            <div class="detail">
+                <small>Current Status</small>
+                <span class="status">{{ complaint.status }}</span>
+            </div>
+        </div>
+
+        <h2 style="margin-top:28px;">Status Progress</h2>
+
+        <div class="timeline">
+            <div class="step done">
+                <h3>Complaint Submitted</h3>
+                <p>Your complaint has been recorded in the portal.</p>
+            </div>
+
+            <div class="step {% if complaint.status in ['Under Review', 'In Progress', 'Resolved'] %}done{% endif %}">
+                <h3>Under Review</h3>
+                <p>The complaint is being reviewed.</p>
+            </div>
+
+            <div class="step {% if complaint.status in ['In Progress', 'Resolved'] %}done{% endif %}">
+                <h3>Action in Progress</h3>
+                <p>Follow-up action is in progress, if applicable.</p>
+            </div>
+
+            <div class="step {% if complaint.status == 'Resolved' %}done{% endif %}">
+                <h3>Resolved / Closed</h3>
+                <p>The complaint has been marked resolved, if confirmed.</p>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    {% if complaints %}
+    <section class="card">
+        <h2>My Submitted Complaints</h2>
+
+        {% for item in complaints %}
+        <div class="detail" style="margin-bottom:12px;">
+            <strong>{{ item.complaint_id }}</strong>
+            <p>
+                {{ item.crime_type }} —
+                <span class="status">{{ item.status }}</span>
+            </p>
+
+            <a class="btn"
+               href="/complaint-status?complaint_id={{ item.complaint_id }}">
+                View Status
+            </a>
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+
+    
+<div class="actions">
+    <a class="btn" href="{{ url_for('report_crime') }}">
+        Report New Crime
+    </a>
+
+    <a class="btn" href="{{ url_for('dashboard') }}">
+        Back to Dashboard
+    </a>
+</div>
+
+
+</main>
+
+<footer>
+    Digital Crime Reporting System (DCRS) | Citizen Portal
+</footer>
+
+</body>
+</html>

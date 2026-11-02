@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Authentication | DCRS</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background:
+                radial-gradient(circle at 10% 10%, #123f70, transparent 35%),
+                radial-gradient(circle at 90% 90%, #06486d, transparent 35%),
+                #061326;
+            color: white;
+        }
+
+        .chakra {
+            position: fixed;
+            right: -100px;
+            top: 20%;
+            width: 400px;
+            height: 400px;
+            border: 3px solid rgba(50,180,255,.05);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .chakra::before {
+            content: "☸";
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            font-size: 350px;
+            color: rgba(50,180,255,.035);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: rgba(3,17,36,.92);
+            border-bottom: 1px solid rgba(255,255,255,.09);
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #35baff;
+        }
+
+        .tricolour {
+            display: flex;
+            height: 4px;
+        }
+
+        .tricolour div {
+            flex: 1;
+        }
+
+        .saffron { background: #ff9933; }
+        .white { background: #fff; }
+        .green { background: #138808; }
+
+        .main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 35px 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 460px;
+            padding: 32px;
+            border-radius: 20px;
+            background: rgba(255,255,255,.055);
+            border: 1px solid rgba(255,255,255,.12);
+            box-shadow: 0 18px 45px rgba(0,0,0,.25);
+            backdrop-filter: blur(12px);
+        }
+
+        .admin-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 16px;
+            display: grid;
+            place-items: center;
+            border-radius: 18px;
+            background: rgba(0,140,255,.14);
+            border: 1px solid rgba(53,186,255,.22);
+            font-size: 33px;
+        }
+
+        .badge {
+            display: table;
+            margin: 0 auto 18px;
+            padding: 8px 13px;
+            border-radius: 20px;
+            background: rgba(0,140,255,.12);
+            border: 1px solid rgba(53,186,255,.2);
+            color: #72d0ff;
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 27px;
+            margin-bottom: 10px;
+        }
+
+        h1 span {
+            color: #35baff;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #aebed1;
+            font-size: 13px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        /* Sign In / Sign Up Tabs */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            padding: 5px;
+            margin-bottom: 25px;
+            background: rgba(0,0,0,.2);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 11px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: #aebed1;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg,#008cff,#0055ff);
+            color: white;
+        }
+
+        /* Form Panels */
+        .form-panel {
+            display: none;
+        }
+
+        .form-panel.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #dce8f5;
+            font-size: 13px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px;
+            border-radius: 9px;
+            outline: none;
+            border: 1px solid rgba(255,255,255,.13);
+            background: rgba(0,0,0,.2);
+            color: white;
+            font-size: 13px;
+        }
+
+        .form-group input:focus {
+            border-color: #35baff;
+        }
+
+        .form-group input::placeholder {
+            color: #8295ac;
+        }
+
+        .password-wrap {
+            position: relative;
+        }
+
+        .password-wrap input {
+            padding-right: 65px;
+        }
+
+        .show-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            color: #72d0ff;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 9px;
+            background: linear-gradient(135deg,#008cff,#0055ff);
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            opacity: .9;
+        }
+
+        .message {
+            padding: 12px;
+            margin-bottom: 17px;
+            border-radius: 8px;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .error {
+            color: #fca5a5;
+            background: rgba(239,68,68,.12);
+            border: 1px solid rgba(239,68,68,.25);
+        }
+
+        .success {
+            color: #86efac;
+            background: rgba(34,197,94,.12);
+            border: 1px solid rgba(34,197,94,.25);
+        }
+
+        .security-note {
+            margin-top: 20px;
+            padding: 13px;
+            border-radius: 9px;
+            background: rgba(255,170,0,.06);
+            border: 1px solid rgba(255,170,0,.16);
+            color: #c3cddd;
+            font-size: 11px;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 20px;
+            color: #8092a8;
+            font-size: 11px;
+            line-height: 1.8;
+            border-top: 1px solid rgba(255,255,255,.07);
+        }
+
+        @media(max-width:500px) {
+            .auth-card {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="chakra"></div>
+
+<nav class="navbar">
+    <div class="logo">
+        🛡️ Crime <span>Reporting System</span>
+    </div>
+</nav>
+
+<div class="tricolour">
+    <div class="saffron"></div>
+    <div class="white"></div>
+    <div class="green"></div>
+</div>
+
+<main class="main">
+
+    <section class="auth-card">
+
+        <div class="admin-icon">🛡️</div>
+
+        <div class="badge">ADMINISTRATOR PORTAL</div>
+
+        <h1>Admin <span>Account</span></h1>
+
+        <p class="subtitle">
+            Sign in to your existing admin account or
+            create an account through the authorized process.
+        </p>
+
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button
+                type="button"
+                class="tab active"
+                id="signinTab">
+                Sign In
+            </button>
+
+            <button
+                type="button"
+                class="tab"
+                id="signupTab">
+                Sign Up
+            </button>
+        </div>
+
+        <!-- SIGN IN -->
+        <div class="form-panel active" id="signinPanel">
+
+            <form action="/admin/login" method="POST">
+
+                <div class="form-group">
+                    <label for="login_username">Admin Username</label>
+
+                    <input
+                        type="text"
+                        id="login_username"
+                        name="username"
+                        placeholder="Enter admin username"
+                        autocomplete="username"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="login_password">Password</label>
+
+                    <div class="password-wrap">
+                        <input
+                            type="password"
+                            id="login_password"
+                            name="password"
+                            placeholder="Enter password"
+                            autocomplete="current-password"
+                            required>
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            data-target="login_password">
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Sign In →
+                </button>
+
+            </form>
+        </div>
+
+        <!-- SIGN UP -->
+        <div class="form-panel" id="signupPanel">
+
+            <form action="/admin-register" method="POST" id="signupForm">
+
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter full name"
+                        maxlength="100"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg_username">Admin Username</label>
+
+                    <input
+                        type="text"
+                        id="reg_username"
+                        name="username"
+                        placeholder="Create username"
+                        minlength="4"
+                        maxlength="50"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter email address"
+                        maxlength="150"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg_password">Create Password</label>
+
+                    <div class="password-wrap">
+                        <input
+                            type="password"
+                            id="reg_password"
+                            name="password"
+                            placeholder="Create strong password"
+                            minlength="12"
+                            required>
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            data-target="reg_password">
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password</label>
+
+                    <div class="password-wrap">
+                        <input
+                            type="password"
+                            id="confirm_password"
+                            name="confirm_password"
+                            placeholder="Confirm password"
+                            minlength="12"
+                            required>
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            data-target="confirm_password">
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Create Admin Account →
+                </button>
+
+            </form>
+        </div>
+
+        <div class="security-note">
+            ⚠️ Admin registration must be restricted to authorized
+            personnel. Do not allow public visitors to grant themselves
+            administrator privileges.
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 Digital Crime Reporting System</p>
+    <p>Admin Portal | Secure • Responsible • Citizen Focused</p>
+</footer>
+
+<script>
+    const signinTab = document.getElementById("signinTab");
+    const signupTab = document.getElementById("signupTab");
+    const signinPanel = document.getElementById("signinPanel");
+    const signupPanel = document.getElementById("signupPanel");
+
+    function showSignin() {
+        signinPanel.classList.add("active");
+        signupPanel.classList.remove("active");
+
+        signinTab.classList.add("active");
+        signupTab.classList.remove("active");
+    }
+
+    function showSignup() {
+        signupPanel.classList.add("active");
+        signinPanel.classList.remove("active");
+
+        signupTab.classList.add("active");
+        signinTab.classList.remove("active");
+    }
+
+    signinTab.addEventListener("click", showSignin);
+    signupTab.addEventListener("click", showSignup);
+
+    document.querySelectorAll(".show-password").forEach(function(button) {
+        button.addEventListener("click", function() {
+            const input = document.getElementById(button.dataset.target);
+
+            if (input.type === "password") {
+                input.type = "text";
+                button.textContent = "Hide";
+            } else {
+                input.type = "password";
+                button.textContent = "Show";
+            }
+        });
+    });
+
+    document.getElementById("signupForm").addEventListener(
+        "submit",
+        function(event) {
+            const password = document.getElementById("reg_password").value;
+            const confirmPassword =
+                document.getElementById("confirm_password").value;
+
+            if (password !== confirmPassword) {
+                event.preventDefault();
+                alert("Passwords do not match.");
+            }
+        }
+    );
+</script>
+
+</body>
+</html>

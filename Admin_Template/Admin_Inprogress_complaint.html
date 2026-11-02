@@ -1,0 +1,487 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>In Progress Complaints | DCRS Admin</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    background: #071426;
+    color: #f4f7ff;
+    min-height: 100vh;
+}
+
+.tricolour {
+    height: 5px;
+    background: linear-gradient(to right,
+        #ff9933 0 33.33%,
+        #ffffff 33.33% 66.66%,
+        #138808 66.66% 100%);
+}
+
+header {
+    padding: 22px 4%;
+    background: #091a30;
+    border-bottom: 1px solid #263d59;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: #32b8ff;
+}
+
+.subtitle {
+    color: #a9bdd7;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    padding: 11px 17px;
+    border-radius: 8px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.btn-blue {
+    background: #087cff;
+    color: white;
+}
+
+.btn-outline {
+    background: transparent;
+    color: #dceaff;
+    border: 1px solid #385878;
+}
+
+.container {
+    width: 92%;
+    max-width: 1450px;
+    margin: 35px auto;
+}
+
+.welcome {
+    margin-bottom: 28px;
+}
+
+.welcome h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.welcome h1 span {
+    color: #32b8ff;
+}
+
+.welcome p {
+    color: #afc0d7;
+    line-height: 1.7;
+}
+
+.summary {
+    background: linear-gradient(140deg, #1b3d61, #15263d);
+    border: 1px solid #304964;
+    border-radius: 15px;
+    padding: 24px;
+    margin: 25px 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.summary h2 {
+    font-size: 17px;
+    color: #c4d6eb;
+    margin-bottom: 10px;
+}
+
+.count {
+    font-size: 35px;
+    font-weight: 800;
+    color: #86caff;
+}
+
+.summary p {
+    color: #a9bdd7;
+    font-size: 13px;
+    margin-top: 7px;
+}
+
+.summary-icon {
+    font-size: 48px;
+}
+
+.panel {
+    background: #0d2037;
+    border: 1px solid #263f5d;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.panel-heading {
+    padding: 22px;
+    border-bottom: 1px solid #263f5d;
+}
+
+.panel-heading h2 {
+    font-size: 20px;
+    margin-bottom: 7px;
+}
+
+.panel-heading p {
+    color: #a9bdd7;
+    font-size: 13px;
+}
+
+.filters {
+    display: flex;
+    gap: 12px;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.filters input {
+    flex: 1;
+    min-width: 220px;
+    background: #071426;
+    border: 1px solid #385472;
+    border-radius: 8px;
+    padding: 12px;
+    color: white;
+    outline: none;
+    font-size: 13px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 950px;
+}
+
+thead {
+    background: #193553;
+}
+
+th {
+    padding: 16px;
+    text-align: left;
+    color: #d9eaff;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+td {
+    padding: 16px;
+    border-top: 1px solid #233b55;
+    color: #d7e4f4;
+    font-size: 13px;
+}
+
+tbody tr:hover {
+    background: #142b45;
+}
+
+.id {
+    color: #48b9ff;
+    font-weight: 700;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    background: #173d67;
+    color: #86caff;
+}
+
+.status-form {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.status-form select {
+    background: #071426;
+    color: white;
+    border: 1px solid #385472;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+.status-form button {
+    background: #087cff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 9px 11px;
+    cursor: pointer;
+}
+
+.empty {
+    text-align: center;
+    padding: 35px;
+    color: #a9bdd7;
+}
+
+footer {
+    text-align: center;
+    color: #91a6c0;
+    padding: 25px 10px;
+    font-size: 12px;
+}
+
+@media(max-width: 600px) {
+    .welcome h1 {
+        font-size: 24px;
+    }
+
+    .container {
+        width: 94%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="tricolour"></div>
+
+<header>
+    <div>
+        <div class="logo">DCRS <span>ADMIN</span></div>
+        <div class="subtitle">Digital Crime Reporting System</div>
+    </div>
+
+    <div class="header-buttons">
+        <a href="Admin_Dashboard.html" class="btn btn-outline">
+            ← Dashboard
+        </a>
+
+        <a href="Admin_Total_Complaints.html" class="btn btn-blue">
+            All Complaints
+        </a>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="welcome">
+        <h1>In Progress <span>Complaints</span></h1>
+        <p>
+            Review complaints that are currently under review or investigation.
+            Monitor their status and update the records when necessary.
+        </p>
+    </section>
+
+    <section class="summary">
+        <div>
+            <h2>🔄 Complaints Under Review</h2>
+            <div class="count" id="progressCount">3</div>
+            <p>In-progress complaints in this demo</p>
+        </div>
+
+        <div class="summary-icon">📂</div>
+    </section>
+
+    <section class="panel">
+
+        <div class="panel-heading">
+            <h2>In Progress Complaint Records</h2>
+            <p>
+                Search by complaint ID, citizen name, crime category or location.
+            </p>
+        </div>
+
+        <div class="filters">
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search in-progress complaints...">
+        </div>
+
+        <div class="table-wrap">
+            <table id="complaintTable">
+                <thead>
+                    <tr>
+                        <th>Complaint ID</th>
+                        <th>Citizen Name</th>
+                        <th>Crime Category</th>
+                        <th>Date Submitted</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Update Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr class="complaint-row">
+                        <td class="id">CR-1002</td>
+                        <td>Amit Kumar</td>
+                        <td>Cyber Crime</td>
+                        <td>17-10-2026</td>
+                        <td>Lucknow</td>
+                        <td><span class="status">In Progress</span></td>
+                        <td>
+                            <form class="status-form">
+                                <select aria-label="Status for CR-1002">
+                                    <option>Pending</option>
+                                    <option selected>In Progress</option>
+                                    <option>Resolved</option>
+                                    <option>Rejected</option>
+                                </select>
+
+                                <button type="button" onclick="updateDemo(this)">
+                                    Update
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+
+                    <tr class="complaint-row">
+                        <td class="id">CR-1006</td>
+                        <td>Rohit Singh</td>
+                        <td>Online Fraud</td>
+                        <td>16-10-2026</td>
+                        <td>Gorakhpur</td>
+                        <td><span class="status">In Progress</span></td>
+                        <td>
+                            <form class="status-form">
+                                <select aria-label="Status for CR-1006">
+                                    <option>Pending</option>
+                                    <option selected>In Progress</option>
+                                    <option>Resolved</option>
+                                    <option>Rejected</option>
+                                </select>
+
+                                <button type="button" onclick="updateDemo(this)">
+                                    Update
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+
+                    <tr class="complaint-row">
+                        <td class="id">CR-1007</td>
+                        <td>Anjali Verma</td>
+                        <td>Harassment</td>
+                        <td>15-10-2026</td>
+                        <td>Kanpur</td>
+                        <td><span class="status">In Progress</span></td>
+                        <td>
+                            <form class="status-form">
+                                <select aria-label="Status for CR-1007">
+                                    <option>Pending</option>
+                                    <option selected>In Progress</option>
+                                    <option>Resolved</option>
+                                    <option>Rejected</option>
+                                </select>
+
+                                <button type="button" onclick="updateDemo(this)">
+                                    Update
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="noResults" class="empty" style="display:none;">
+            No in-progress complaints match your search.
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    DCRS — Digital Crime Reporting System
+    <br><br>
+    Admin Panel | For authorized administrative use
+</footer>
+
+<script>
+const searchInput = document.getElementById("searchInput");
+
+function filterComplaints() {
+    const search = searchInput.value.toLowerCase().trim();
+    const rows = document.querySelectorAll(".complaint-row");
+
+    let visible = 0;
+
+    rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        const currentStatus = row.querySelector(".status")
+            .innerText.toLowerCase().trim();
+
+        const show =
+            currentStatus === "in progress" && text.includes(search);
+
+        row.style.display = show ? "" : "none";
+
+        if (show) visible++;
+    });
+
+    document.getElementById("progressCount").innerText = visible;
+
+    document.getElementById("noResults").style.display =
+        visible === 0 ? "block" : "none";
+}
+
+function updateDemo(button) {
+    const row = button.closest("tr");
+    const selectedStatus = row.querySelector("select").value;
+
+    row.querySelector(".status").innerText = selectedStatus;
+
+    filterComplaints();
+
+    alert(
+        "Demo status changed to: " + selectedStatus +
+        ". Database mein save karne ke liye backend chahiye."
+    );
+}
+
+searchInput.addEventListener("input", filterComplaints);
+
+filterComplaints();
+</script>
+
+</body>
+</html>

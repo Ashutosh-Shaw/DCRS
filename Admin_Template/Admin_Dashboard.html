@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | DCRS</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 10% 10%, #123f70, transparent 35%),
+                radial-gradient(circle at 90% 90%, #06486d, transparent 35%),
+                #061326;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .chakra {
+            position: fixed;
+            right: -130px;
+            top: 25%;
+            width: 420px;
+            height: 420px;
+            border: 3px solid rgba(50, 180, 255, .05);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .chakra::before {
+            content: "☸";
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            font-size: 360px;
+            color: rgba(50, 180, 255, .035);
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 18px;
+            padding: 18px 5%;
+            background: rgba(3, 17, 36, .92);
+            border-bottom: 1px solid rgba(255, 255, 255, .09);
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #35baff;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #b8c7d9;
+            font-size: 13px;
+        }
+
+        .nav-links a:hover {
+            color: #35baff;
+        }
+
+        .tricolour {
+            display: flex;
+            height: 4px;
+        }
+
+        .tricolour div {
+            flex: 1;
+        }
+
+        .saffron { background: #ff9933; }
+        .white { background: #fff; }
+        .green { background: #138808; }
+
+        /* MAIN */
+        .container {
+            max-width: 1250px;
+            margin: auto;
+            padding: 35px 22px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .welcome h1 {
+            font-size: 29px;
+            margin-bottom: 10px;
+        }
+
+        .welcome h1 span {
+            color: #35baff;
+        }
+
+        .welcome p {
+            color: #aebed1;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .admin-badge {
+            display: inline-block;
+            padding: 10px 15px;
+            background: rgba(0, 140, 255, .13);
+            border: 1px solid rgba(53, 186, 255, .25);
+            border-radius: 9px;
+            color: #72d0ff;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* SECTION TITLE */
+        .section-title {
+            font-size: 21px;
+            margin: 28px 0 17px;
+        }
+
+        .section-title span {
+            color: #35baff;
+        }
+
+        /* CARDS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 17px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, .055);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 15px;
+            padding: 22px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: rgba(0, 140, 255, .15);
+            font-size: 23px;
+        }
+
+        .stat-card p {
+            color: #aebed1;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .stat-card h2 {
+            font-size: 25px;
+        }
+
+        /* QUICK ACTIONS */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 17px;
+        }
+
+        .action-card h3 {
+            font-size: 16px;
+            margin: 12px 0 9px;
+        }
+
+        .action-card p {
+            color: #aebed1;
+            font-size: 12px;
+            line-height: 1.8;
+            margin-bottom: 17px;
+        }
+
+        .action-icon {
+            font-size: 28px;
+        }
+
+        .btn {
+            display: inline-block;
+            border: none;
+            text-decoration: none;
+            cursor: pointer;
+            padding: 11px 15px;
+            border-radius: 8px;
+            color: #fff;
+            background: linear-gradient(135deg, #008cff, #0055ff);
+            font-size: 12px;
+            font-weight: bold;
+            transition: .3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, .09);
+            border: 1px solid rgba(255, 255, 255, .14);
+        }
+
+        .btn-danger {
+            background: #a83242;
+        }
+
+        /* FILTERS */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .filter-bar input,
+        .filter-bar select {
+            min-width: 170px;
+            flex: 1;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, .13);
+            border-radius: 8px;
+            background: #0b1d35;
+            color: #fff;
+            outline: none;
+            font-size: 12px;
+        }
+
+        .filter-bar input:focus,
+        .filter-bar select:focus {
+            border-color: #35baff;
+        }
+
+        .filter-bar input::placeholder {
+            color: #8da1b8;
+        }
+
+        /* TABLE */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 850px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px 13px;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            font-size: 12px;
+            vertical-align: middle;
+        }
+
+        th {
+            color: #70ceff;
+            background: rgba(0, 0, 0, .13);
+            font-weight: bold;
+        }
+
+        td {
+            color: #d0dce9;
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, .025);
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 9px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .pending {
+            background: rgba(255, 193, 7, .13);
+            color: #ffd45e;
+        }
+
+        .progress {
+            background: rgba(0, 140, 255, .14);
+            color: #76d0ff;
+        }
+
+        .resolved {
+            background: rgba(34, 197, 94, .13);
+            color: #86efac;
+        }
+
+        .rejected {
+            background: rgba(239, 68, 68, .13);
+            color: #fca5a5;
+        }
+
+        .status-form {
+            display: flex;
+            gap: 7px;
+            align-items: center;
+        }
+
+        .status-form select {
+            padding: 8px;
+            max-width: 135px;
+            background: #0b1d35;
+            border: 1px solid rgba(255, 255, 255, .15);
+            border-radius: 7px;
+            color: #fff;
+            font-size: 11px;
+        }
+
+        .small-btn {
+            padding: 8px 10px;
+            font-size: 11px;
+        }
+
+        .empty {
+            text-align: center;
+            color: #9fb1c7;
+            padding: 30px;
+        }
+
+        /* NOTICE */
+        .notice {
+            margin-top: 25px;
+            padding: 18px;
+            background: rgba(255, 170, 0, .07);
+            border: 1px solid rgba(255, 170, 0, .2);
+            border-radius: 12px;
+        }
+
+        .notice h3 {
+            color: #ffc45c;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .notice p {
+            color: #c3cddd;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        /* FOOTER */
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 22px;
+            color: #8092a8;
+            font-size: 11px;
+            line-height: 1.8;
+            border-top: 1px solid rgba(255, 255, 255, .07);
+        }
+
+        @media (max-width: 950px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .actions-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                flex-direction: column;
+            }
+
+            .nav-links {
+                justify-content: center;
+                gap: 14px;
+            }
+
+            .container {
+                padding: 25px 14px;
+            }
+
+            .stats-grid,
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome h1 {
+                font-size: 24px;
+            }
+
+            .card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="chakra"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">
+        🛡️ Crime <span>Reporting System</span>
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="/admin/dashboard">Dashboard</a></li>
+        <li><a href="#complaints">Complaints</a></li>
+        <li><a href="#actions">Admin Actions</a></li>
+        <li><a href="{{ url_for('admin_logout') }}">Logout</a></li>
+    </ul>
+</nav>
+
+<div class="tricolour">
+    <div class="saffron"></div>
+    <div class="white"></div>
+    <div class="green"></div>
+</div>
+
+<main class="container">
+
+    <!-- WELCOME -->
+    <section class="welcome">
+        <div>
+            <h1>
+                Welcome, <span>{{ session.get('name', 'Admin') }}!</span>
+            </h1>
+
+            <p>
+                Manage complaints and review the information available
+                in the Digital Crime Reporting System.
+            </p>
+        </div>
+
+        <div class="admin-badge">
+            🛡️ ADMIN PANEL
+        </div>
+    </section>
+
+    <!-- STATISTICS -->
+    <h2 class="section-title">
+        Dashboard <span>Overview</span>
+    </h2>
+
+    <section class="stats-grid">
+
+        <div class="card stat-card">
+            <div class="stat-icon">📋</div>
+            <div>
+                <p>Total Complaints</p>
+                <h2>{{ total_complaints|default(0) }}</h2>
+            </div>
+        </div>
+
+        <div class="card stat-card">
+            <div class="stat-icon">⏳</div>
+            <div>
+                <p>Pending Complaints</p>
+                <h2>{{ pending_complaints|default(0) }}</h2>
+            </div>
+        </div>
+
+        <div class="card stat-card">
+            <div class="stat-icon">🔄</div>
+            <div>
+                <p>In Progress</p>
+                <h2>{{ in_progress_complaints|default(0) }}</h2>
+            </div>
+        </div>
+
+        <div class="card stat-card">
+            <div class="stat-icon">✅</div>
+            <div>
+                <p>Resolved Complaints</p>
+                <h2>{{ resolved_complaints|default(0) }}</h2>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ADMIN ACTIONS -->
+    <h2 class="section-title" id="actions">
+        Admin <span>Actions</span>
+    </h2>
+
+    <section class="actions-grid">
+
+        <div class="card action-card">
+            <div class="action-icon">📂</div>
+            <h3>Manage Complaints</h3>
+            <p>
+                Review submitted complaints and update their status
+                through the complaint management table.
+            </p>
+            <a href="#complaints" class="btn">View Complaints →</a>
+        </div>
+
+        <div class="card action-card">
+            <div class="action-icon">🔎</div>
+            <h3>Search Complaints</h3>
+            <p>
+                Search the complaint table using the complaint ID
+                or the complainant's name.
+            </p>
+            <a href="#complaints" class="btn">Search Now →</a>
+        </div>
+
+        <div class="card action-card">
+            <div class="action-icon">👥</div>
+            <h3>User Management</h3>
+            <p>
+                Access the user management page if the corresponding
+                backend route is configured.
+            </p>
+            <a href="{{ url_for('admin_users') }}" class="btn">
+    👥 Manage Users →
+</a>
+        </div>
+
+    </section>
+
+    <!-- COMPLAINTS TABLE -->
+    <h2 class="section-title" id="complaints">
+        Complaint <span>Management</span>
+    </h2>
+
+    <section class="card">
+
+        <p style="color:#aebed1; font-size:13px; line-height:1.8; margin-bottom:20px;">
+            Review complaint records and select an appropriate status.
+            Changes are submitted to the configured Flask backend.
+        </p>
+
+        <!-- SEARCH AND FILTER -->
+        <div class="filter-bar">
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search by complaint ID or name..."
+                aria-label="Search complaints"
+            >
+
+            <select id="statusFilter" aria-label="Filter by status">
+                <option value="">All Statuses</option>
+                <option value="pending">Pending</option>
+                <option value="in progress">In Progress</option>
+                <option value="resolved">Resolved</option>
+                <option value="rejected">Rejected</option>
+            </select>
+        </div>
+
+        <div class="table-wrapper">
+            <table id="complaintsTable">
+
+                <thead>
+                    <tr>
+                        <th>Complaint ID</th>
+                        <th>Citizen Name</th>
+                        <th>Crime Type</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Update Status</th>
+                    </tr>
+                </thead>
+
+               
+<tbody>
+
+    {% for complaint in complaints|default([]) %}
+
+    {% set current_status = complaint.status|default('Pending')|lower|trim %}
+
+    <tr
+        data-url="{{ url_for('admin_complaint_detail', complaint_id=complaint.complaint_id) }}"
+        onclick="window.location.href=this.dataset.url"
+        style="cursor:pointer;"
+    >
+
+        <td>
+            {{ complaint.complaint_id|default('N/A') }}
+        </td>
+
+        <td>
+            {{ complaint.full_name|default('N/A', true) }}
+        </td>
+
+        <td>
+            {{ complaint.crime_type|default(complaint.category|default('N/A')) }}
+        </td>
+
+        <td>
+            {{ complaint.date|default(complaint.created_at|default('N/A')) }}
+        </td>
+
+        <td>
+            {% if current_status == 'resolved' %}
+                <span class="status resolved">Resolved</span>
+            {% elif current_status == 'in progress' %}
+                <span class="status progress">In Progress</span>
+            {% elif current_status == 'rejected' %}
+                <span class="status rejected">Rejected</span>
+            {% else %}
+                <span class="status pending">
+                    {{ complaint.status|default('Pending') }}
+                </span>
+            {% endif %}
+        </td>
+
+        <td>
+            <form
+                action="{{ url_for('admin_update_complaint', complaint_id=complaint.complaint_id) }}"
+                method="POST"
+                class="status-form"
+                onclick="event.stopPropagation()"
+            >
+
+                <select name="status" required>
+                    <option value="Pending"
+                        {% if current_status == 'pending' %}selected{% endif %}>
+                        Pending
+                    </option>
+
+                    <option value="In Progress"
+                        {% if current_status == 'in progress' %}selected{% endif %}>
+                        In Progress
+                    </option>
+
+                    <option value="Resolved"
+                        {% if current_status == 'resolved' %}selected{% endif %}>
+                        Resolved
+                    </option>
+
+                    <option value="Rejected"
+                        {% if current_status == 'rejected' %}selected{% endif %}>
+                        Rejected
+                    </option>
+                </select>
+
+                <button type="submit" class="btn small-btn">
+                    Save
+                </button>
+
+            </form>
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</tbody>
+
+            </table>
+        </div>
+
+    </section>
+
+    <!-- NOTICE -->
+    <section class="notice">
+        <h3>⚠️ Admin Security Notice</h3>
+        <p>
+            This dashboard template must be protected by server-side
+            administrator authentication. Only authorized administrators
+            should be able to view complaint records or change complaint
+            statuses. Hiding a page link is not sufficient security.
+        </p>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2026 Digital Crime Reporting System</p>
+    <p>Admin Dashboard | Secure • Responsible • Citizen Focused</p>
+</footer>
+
+<!-- TABLE SEARCH -->
+<script>
+    const searchInput = document.getElementById("searchInput");
+    const statusFilter = document.getElementById("statusFilter");
+    const table = document.getElementById("complaintsTable");
+
+    function filterComplaints() {
+        const searchText = searchInput.value.toLowerCase().trim();
+        const selectedStatus = statusFilter.value.toLowerCase();
+
+        const rows = table.querySelectorAll("tbody tr");
+
+        rows.forEach(function(row) {
+            const rowText = row.innerText.toLowerCase();
+            const statusCell = row.cells[4];
+
+            if (!statusCell) {
+                return;
+            }
+
+            const statusText = statusCell.innerText.toLowerCase().trim();
+
+            const matchesSearch = rowText.includes(searchText);
+            const matchesStatus =
+                selectedStatus === "" ||
+                statusText.includes(selectedStatus);
+
+            row.style.display =
+                matchesSearch && matchesStatus ? "" : "none";
+        });
+    }
+
+    searchInput.addEventListener("input", filterComplaints);
+    statusFilter.addEventListener("change", filterComplaints);
+</script>
+
+</body>
+</html>
